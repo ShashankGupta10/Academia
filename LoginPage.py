@@ -1,165 +1,148 @@
+
+from PyQt5.QtWidgets import *
+from PyQt5 import QtWidgets,QtCore,QtGui
+
+from PyQt5.QtWidgets import QTabWidget
+from PyQt5.QtWidgets import QGraphicsOpacityEffect
+from PyQt5.QtGui import * 
+from PyQt5.QtCore import *
+from PyQt5.QtCore import QPropertyAnimation
+from pathlib import Path
 from tkinter import *
-from PIL import ImageTk, Image
+
+# from new import Shashank
+
+from urllib import *
+import sys
+import os
 
 
-class LoginPage:
-    def __init__(self, window):
-        self.window = window
-        self.window.geometry('1920x1080')
-        self.window.resizable(0, 0)
-        self.window.state('zoomed')
-        self.window.title('Login Page')
-
-        # ========================================================================
-        # ============================background image============================
-        # ========================================================================
-        self.bg_frame = Image.open("D:\Pyfon MPR\TkinterGUI\images\Background.jpg")
-        a = self.bg_frame.resize((1920,1080))
-        photo = ImageTk.PhotoImage(a)
-        self.bg_panel = Label(self.window, image=photo)
-        self.bg_panel.image = photo
-        self.bg_panel.pack(fill='both', expand='yes')
-        # ====== Login Frame =========================
-        self.lgn_frame = Frame(self.window, bg='#040405', width=950, height=600)
-        self.lgn_frame.place(x=300, y=115)
-
-        # ========================================================================
-        # ========================================================
-        # ========================================================================
-        self.txt = "WELCOME"
-        self.heading = Label(self.lgn_frame, text=self.txt, font=('yu gothic ui', 25, "bold"), bg="#040405",
-                             fg='white',
-                             bd=5,
-                             relief=FLAT)
-        self.heading.place(x=80, y=30, width=300, height=30)
-
-        # ========================================================================
-        # ============ Left Side Image ================================================
-        # ========================================================================
-        self.side_image = Image.open('D:\Pyfon MPR\TkinterGUI\images\Vector.png')
-        photo = ImageTk.PhotoImage(self.side_image)
-        self.side_image_label = Label(self.lgn_frame, image=photo, bg='#040405')
-        self.side_image_label.image = photo
-        self.side_image_label.place(x=5, y=100)
-
-        # ========================================================================
-        # ============ Sign In Image =============================================
-        # ========================================================================
-        self.sign_in_image = Image.open('D:\Pyfon MPR\TkinterGUI\images\Hyy.png')
-        photo = ImageTk.PhotoImage(self.sign_in_image)
-        self.sign_in_image_label = Label(self.lgn_frame, image=photo, bg='#040405')
-        self.sign_in_image_label.image = photo
-        self.sign_in_image_label.place(x=620, y=130)
-
-        # ========================================================================
-        # ============ Sign In label =============================================
-        # ========================================================================
-        self.sign_in_label = Label(self.lgn_frame, text="Sign In", bg="#040405", fg="white",
-                                    font=("yu gothic ui", 17, "bold"))
-        self.sign_in_label.place(x=650, y=240)
-
-        # ========================================================================
-        # ============================username====================================
-        # ========================================================================
-        self.username_label = Label(self.lgn_frame, text="Username", bg="#040405", fg="#4f4e4d",
-                                    font=("yu gothic ui", 13, "bold"))
-        self.username_label.place(x=550, y=300)
-
-        self.username_entry = Entry(self.lgn_frame, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
-                                    font=("yu gothic ui ", 12, "bold"), insertbackground = '#6b6a69')
-        self.username_entry.place(x=580, y=335, width=270)
-
-        self.username_line = Canvas(self.lgn_frame, width=300, height=2.0, bg="#bdb9b1", highlightthickness=0)
-        self.username_line.place(x=550, y=359)
-        # ===== Username icon =========
 
 
-        # self.username_icon = Image.open("D:\Pyfon MPR\irontend\images\username_icon.png")
-        # photo = ImageTk.PhotoImage(self.username_icon)
-        # self.username_icon_label = Label(self.lgn_frame, image=photo, bg='#040405')
-        # self.username_icon_label.image = photo
-        # self.username_icon_label.place(x=550, y=332)
+class HomePage(QMainWindow):
 
-        # ========================================================================
-        # ============================login button================================
-        # ========================================================================
-        self.lgn_button = Image.open("D:\Pyfon MPR\TkinterGUI\images\Btn1.png")
-        photo = ImageTk.PhotoImage(self.lgn_button)
-        self.lgn_button_label = Label(self.lgn_frame, image=photo, bg='#040405')
-        self.lgn_button_label.image = photo
-        self.lgn_button_label.place(x=550, y=450)
-        self.login = Button(self.lgn_button_label, text='LOGIN', font=("yu gothic ui", 13, "bold"), width=25, bd=0,
-                            bg='#3047ff', cursor='hand2', activebackground='#3047ff', fg='white')
-        self.login.place(x=20, y=10)
-        # ========================================================================
-        # ============================Forgot password=============================
-        # ========================================================================
-        self.forgot_button = Button(self.lgn_frame, text="Forgot Password ?",
-                                    font=("yu gothic ui", 13, "bold underline"), fg="white", relief=FLAT,
-                                    activebackground="#040405"
-                                    , borderwidth=0, background="#040405", cursor="hand2")
-        self.forgot_button.place(x=630, y=510)
-        # =========== Sign Up ==================================================
-        # self.sign_label = Label(self.lgn_frame, text='No account yet?', font=("yu gothic ui", 11, "bold"),
-        #                         relief=FLAT, borderwidth=0, background="#040405", fg='white')
-        # self.sign_label.place(x=550, y=560)
+    # def OpenWindow(self):
+    #     self.window = QtWidgets.QMainWindow()
+    #     self.ui = Shashank() 
+    #     self.ui.www(self.window)
 
-        # self.signup_img = ImageTk.PhotoImage(file='D:\Pyfon MPR\irontend\images\iegister.png')
-        # self.signup_button_label = Button(self.lgn_frame, image=self.signup_img, bg='#98a65d', cursor="hand2",
-        #                                   borderwidth=0, background="#040405", activebackground="#040405")
-        # self.signup_button_label.place(x=670, y=555, width=111, height=35)
+            
+    def __init__(self):
+        super().__init__()
+        
+        self.setWindowTitle("Home Page")
+        self.setGeometry(0,0,1920,1080)
 
-        # ========================================================================
-        # ============================password====================================
-        # ========================================================================
-        self.password_label = Label(self.lgn_frame, text="Password", bg="#040405", fg="#4f4e4d",
-                                    font=("yu gothic ui", 13, "bold"))
-        self.password_label.place(x=550, y=380)
+        self.navbar = QLabel(self)
+        self.navbar.setGeometry(0, 0, 1920, 100)
+        self.navbar.setStyleSheet("QLabel{ background: black; position: fixed;} ")
+        
 
-        self.password_entry = Entry(self.lgn_frame, highlightthickness=0, relief=FLAT, bg="#040405", fg="#6b6a69",
-                                    font=("yu gothic ui", 12, "bold"), show="*", insertbackground = '#6b6a69')
-        self.password_entry.place(x=580, y=416, width=244)
+        self.btn1 = QPushButton("Home" ,self.navbar)
+        self.btn1.setGeometry(300, 0, 200, 100)
+        self.btn1.setStyleSheet("QPushButton{ background: black; color: white; color: white}")
+        self.btn1.setFont(QFont('Times', 20))
 
-        self.password_line = Canvas(self.lgn_frame, width=300, height=2.0, bg="#bdb9b1", highlightthickness=0)
-        self.password_line.place(x=550, y=440)
-        # ======== Password icon ================
-        # self.password_icon = Image.open('D:\Pyfon MPR\irontend\images\password_icon.png')
-        # photo = ImageTk.PhotoImage(self.password_icon)
-        # self.password_icon_label = Label(self.lgn_frame, image=photo, bg='#040405')
-        # self.password_icon_label.image = photo
-        # self.password_icon_label.place(x=550, y=414)
-        # ========= show/hide password ==================================================================
-        self.show_image = ImageTk.PhotoImage \
-            (file='D:\Pyfon MPR\TkinterGUI\images\Show.png')
+        self.btn2 = QPushButton("Nothing" ,self.navbar)
+        self.btn2.setGeometry(600, 0, 200, 100)
+        self.btn2.setStyleSheet("QPushButton{ background: black; color: white; color: white}")
+        self.btn2.setFont(QFont('Times', 20))
 
-        self.hide_image = ImageTk.PhotoImage \
-            (file='D:\Pyfon MPR\TkinterGUI\images\Hide.png')
+        self.btn3 = QPushButton("About Us" ,self.navbar)
+        self.btn3.setGeometry(900, 0, 200, 100)
+        self.btn3.setStyleSheet("QPushButton{ background: black; color: white; color: #ECF2FF}")
+        self.btn3.setFont(QFont('Times', 20))
 
-        self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show, relief=FLAT,
-                                  activebackground="white"
-                                  , borderwidth=0, background="white", cursor="hand2")
-        self.show_button.place(x=860, y=420)
+        self.btn4 = QPushButton("Contact Us" ,self.navbar)
+        self.btn4.setGeometry(1200, 0, 200, 100)
+        self.btn4.setStyleSheet("QPushButton{ background: black; color: white; color: #ECF2FF}")
+        self.btn4.setFont(QFont('Times', 20))
 
-    def show(self):
-        self.hide_button = Button(self.lgn_frame, image=self.hide_image, command=self.hide, relief=FLAT,
-                                  activebackground="white"
-                                  , borderwidth=0, background="white", cursor="hand2")
-        self.hide_button.place(x=860, y=420)
-        self.password_entry.config(show='')
+        self.loginbox = QLabel(self)
+        self.loginbox.setGeometry(650,175,600,650)
+        self.loginbox.setStyleSheet("background-color: #BFACE2; border-radius: 80%;")
 
-    def hide(self):
-        self.show_button = Button(self.lgn_frame, image=self.show_image, command=self.show, relief=FLAT,
-                                  activebackground="white"
-                                  , borderwidth=0, background="white", cursor="hand2")
-        self.show_button.place(x=860, y=420)
-        self.password_entry.config(show='*')
+        self.loglabel = QLabel("LOG IN", self.loginbox)
+        self.loglabel.setGeometry(243, 40, 150, 50)
+        self.loglabel.setFont(QFont('Times', 20))
+        self.loglabel.setStyleSheet("font-weight: bold;")
+
+        icon = QIcon('D:\\Pyfon MPR\\TkinterGUI\\images\\usernameicon.png')
+        self.usernameicon = QPushButton("" ,self.loginbox)
+        self.usernameicon.setGeometry(90,200, 40, 40)
+        self.usernameicon.setIcon(icon)
+        size = QSize(35, 35)
+        self.usernameicon.setIconSize(size)
+
+        icon = QIcon('D:\\Pyfon MPR\\TkinterGUI\\images\\passwordicon.png')
+        self.passwordicon = QPushButton("" ,self.loginbox)
+        self.passwordicon.setGeometry(90,300, 40, 40)
+        self.passwordicon.setIcon(icon)
+        size = QSize(35, 35)
+        self.passwordicon.setIconSize(size)
+
+        self.textfield1 = QLineEdit(self)
+        self.textfield1.setGeometry(830, 375, 300, 40)
+        self.textfield1.setFont(QFont('Times',15))
+        self.textfield1.setStyleSheet("QLineEdit{background-color: black;color: white; border-radius: 20px; padding-left: 20px; padding-right: 20px}"
+                                      "QLineEdit:hover{ border: 2px solid; background-color: #15133C}")
+        
+
+        self.textfield2 = QLineEdit(self)
+        self.textfield2.setGeometry(830, 475, 300, 40)
+        self.textfield2.setFont(QFont('Times',15))
+        self.textfield2.setStyleSheet("QLineEdit{background-color: black;color: white; border-radius: 20px; padding-left: 20px; padding-right: 20px}"
+                                      "QLineEdit:hover{ border: 2px solid; background-color: #15133C}")
+        
+
+        self.btn5 = QPushButton("Forgot Password" ,self.loginbox)
+        self.btn5.setGeometry(310, 310, 200, 100)
+        self.btn5.setStyleSheet("QPushButton{ background: #BFACE2; color: black;}")
+        self.btn5.setFont(QFont('Times', 10))
+
+        self.btn5 = QPushButton("Log in" ,self.loginbox)
+        self.btn5.setGeometry(243, 435, 130, 70)
+        self.btn5.setStyleSheet("QPushButton{ background: #645CBB; color: black; border-radius: 20px;}"
+                                "QPushButton:hover{ background: #A084DC;border-radius: 10px;}")
+        self.btn5.setFont(QFont('Times', 17))
 
 
-def page():
-    window = Tk()
-    LoginPage(window)
-    window.mainloop()
+        self.footer = QLabel(self)
+        self.footer.setGeometry(0, 900, 1920, 100)
+        self.footer.setStyleSheet("QLabel{ background: black; position: fixed;} ")
+
+        self.label6 = QPushButton(self.footer)
+        self.label6.setGeometry(1750,0,150,100)
+        self.label6.setStyleSheet("color: white; background: black;")
+        self.label6.setText("@Academia 2023")
+        self.label6.setFont(QFont('Times', 10))
+
+        self.label7 = QPushButton(self.footer)
+        self.label7.setGeometry(1575,0,150,100)
+        self.label7.setStyleSheet("color: white; background: black;")
+        self.label7.setText("Terms of Use")
+        self.label7.setFont(QFont('Times', 10))
+
+        self.label8 = QPushButton(self.footer)
+        self.label8.setGeometry(1400,0,150,100)
+        self.label8.setStyleSheet("color: white; background: black;")
+        self.label8.setText("Privacy Policy")
+        self.label8.setFont(QFont('Times', 10))
+                                
+        self.label9 = QPushButton(self.footer)
+        self.label9.setGeometry(50,0,500,100)
+        self.label9.setStyleSheet("color: white; background: black;")
+        self.label9.setText("Copyright © 2023 Academia Inc. All rights reserved.")
+        self.label9.setFont(QFont('Times', 10))
+    
+        self.showMaximized()
+        self.show()
+
+App = QApplication(sys.argv)
+App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
+
+window = HomePage()
+
+sys.exit(App.exec())
 
 
-if __name__ == '__main__':
-    page()
