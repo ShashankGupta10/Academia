@@ -167,13 +167,13 @@ class Announcements(QMainWindow):
         self.message_textbox.returnPressed.connect(self.send_message)
 
         # Send Button
-        send_icon = QIcon('images/send-icon.png')
+        send_icon = QIcon('D:\python mpr final\Python-MPR-\images\send-icon.png')
         self.message_button = QPushButton("", self)
         self.message_button.setStyleSheet("border: none;")
         # self.message_button.setFont(QFont('Times', 12))
         # self.message_button.setStyleSheet("background-color: #464EB8; color: white; border-radius: 20px")
         self.message_button.setIcon(send_icon)
-        self.message_button.setGeometry(1800, 775, 50, 50)
+        self.message_button.setGeometry(1820, 775, 50, 50)
         size = QSize(50, 50)
         self.message_button.setIconSize(size)
         self.message_button.clicked.connect(self.send_message)
