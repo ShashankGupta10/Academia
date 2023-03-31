@@ -1,4 +1,5 @@
 
+
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets,QtCore,QtGui
 
@@ -9,23 +10,16 @@ from PyQt5.QtCore import *
 from PyQt5.QtCore import QPropertyAnimation
 from pathlib import Path
 from tkinter import *
-
-# from new import Shashank
-
+from pymongo import MongoClient
 from urllib import *
 import sys
-import os
 
 
 
+client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+db = client['IOP']
 
 class HomePage(QMainWindow):
-
-    # def OpenWindow(self):
-    #     self.window = QtWidgets.QMainWindow()
-    #     self.ui = Shashank() 
-    #     self.ui.www(self.window)
-
             
     def __init__(self):
         super().__init__()
@@ -74,6 +68,7 @@ class HomePage(QMainWindow):
         self.btn6.setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 20px; padding: 10px;}"
                                 "QPushButton:hover{ background: #A084DC;border-radius: 10px;}")
         self.btn6.setFont(QFont('Times', 12))
+        self.btn6.clicked.connect(self.on_click_upload)
         
   
 
@@ -117,22 +112,16 @@ class HomePage(QMainWindow):
         MobileNumbertxt.setStyleSheet("background-color: transparent;")
         MobileNumbertxt.setFont(QFont('Times', 12))
 
-
-
-       
-
-
       
         vbox = QVBoxLayout()
         vbox.setContentsMargins(100, 100, 500, 500)
         vbox.setSpacing(20)
 
-        self.btn1 = QPushButton("Upload  Image",self.panel1)
-        self.btn1.clicked.connect(self.getImage)
+        self.btn1 = QPushButton("Upload Image",self.panel1)
+        self.btn1.clicked.connect(self.select_image)
         # self.btn1.setFixedSize(100, 100)
         self.btn1.setGeometry(450,300,100,40)
-        self.btn1.setStyleSheet("QPushButton{background: #C47AFF; position: fixed;border-radius:15px;color: black;border-radius:20px;} QPushButton:hover borderradius:20px;")
-       
+        self.btn1.setStyleSheet("QPushButton{ background: #C47AFF; position: fixed;border-radius:15px;color: black;border-radius:20px;} QPushButton:hover borderradius:20px;")
         vbox.addWidget(self.btn1)
 
         self.label = QLabel("Upload product image",self)
@@ -140,27 +129,74 @@ class HomePage(QMainWindow):
         self.label.setStyleSheet("border:2px solid black;")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
 
-        vbox.addWidget(self.label)
 
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        vbox.addWidget(self.label)
         self.setLayout(vbox)
 
-        
-    
         self.showMaximized()
         self.show()
 
-    def getImage(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file')
 
-        imagePath = fname[0]
-        pixmap = QPixmap(imagePath)
+    def select_image(self):
+            options = QFileDialog.Options()
+            options |= QFileDialog.DontUseNativeDialog
+            global fileName
+            fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Image Files (*.png *.jpg *.jpeg)", options=options)
+            if fileName:
+                self.pixmap = QPixmap(fileName)
+                self.label.setPixmap(self.pixmap)
+                self.label.setFixedSize(200, 200)
+
+            
+
+    def on_click_upload(self):
+        product_name = self.title.toPlainText()
+        price = self.price.toPlainText()
+        description = self.description.toPlainText()
+        email = self.mail.toPlainText()
+        phone_number = self.number.toPlainText()
+        pixmap = QPixmap(fileName)
+        with open(fileName, 'rb') as f:
+            image_data = f.read()
+
+
+        db.Re_Shala.insert_one({"productName": product_name,
+                            "price": price,
+                            "description": description,
+                            "email": email,
+                            "phone_number": phone_number,
+                            "image": image_data
+                            })
         
-        self.label.setPixmap(QPixmap(pixmap))
-        self.label.setFixedSize(200,200)
-        self.label.setGeometry(500,200,200,200)
-        self.label.setStyleSheet("border:2px solid black;object-fit:contain;")
+    # def select_image(self):
+    # # Open a file dialog to select an image
+    #     global file_name
+    #     file_name, _ = QFileDialog.getOpenFileName(self, "Open Image", "", "Image Files (*.png *.jpg *.bmp)")
 
-        # self.resize(50,50)
+    #     if file_name:
+    #         print(f"Selected file: {file_name}")
+    #         if not os.path.exists(file_name):
+    #             print("Error: file does not exist.")
+    #         else:
+    #             pixmap = QPixmap(file_name)
+    #             if pixmap.isNull():
+    #                 print("Error: invalid image file.")
+    #             else:
+    #                 self.labeln.setPixmap(pixmap)
+    #                 self.labeln.setScaledContents(True)
+    #                 print(f"Label size: {self.labeln.size()}")
+    #                 print(f"Label visible: {self.labeln.isVisible()}")
+
+
+
+            # Store the image in the database
+        # with open(fileName, "rb") as image_file:
+        #         encoded_image = image_file.read()
+        #         global image_data
+        #         image_data = {"image": pymongo.Binary(encoded_image)}
+                
 
 
 
@@ -170,4 +206,5 @@ App.setStyleSheet("QMainWindow{background-color: #BFACE2}")
 window = HomePage()
 
 sys.exit(App.exec())
+
 
