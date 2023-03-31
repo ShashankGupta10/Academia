@@ -10,19 +10,26 @@ from PyQt5.QtCore import QPropertyAnimation
 from pathlib import Path
 from urllib import *
 import sys
-import os
+from pymongo import MongoClient
 
-HOST = ''
-PORT = 9999
+client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+db = client['IOP']
+
+
+resultProductName = db.Re_Shala.find_one({"price": "200"}, {"productName": 1})
+resultPrice = db.Re_Shala.find_one({"price": "200"}, {"price": 1})
+resultDescription = db.Re_Shala.find_one({"price": "200"}, {"description": 1})
+resultPhone = db.Re_Shala.find_one({"price": "200"}, {"phone_number": 1})
+resultEmail = db.Re_Shala.find_one({"price": "200"}, {"email": 1})
+resultImage = db.Re_Shala.find_one({"price": "200"}, {"image": 1})
+imageData = resultImage['image']
 
 class Announcements(QMainWindow):            
     def __init__(self):
         super().__init__()
         
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.setWindowTitle("Academia")
         self.setGeometry(0,0,1920,1080)
-
         self.navbar = QLabel(self)
         self.navbar.setGeometry(0, 0, 1920, 100)
         self.navbar.setStyleSheet("QLabel{ background: black; position: fixed;} ")
@@ -59,12 +66,16 @@ class Announcements(QMainWindow):
         #*********************#
 
         self.panel1 = QLabel(self)
+
         self.panel1.setGeometry(200,140,700,350)
-        self.panel1.setStyleSheet("QLabel{background: white;  border-radius: 20px; padding: 10px;}")
+        self.panel1.setStyleSheet("QLabel{ background: white;  border-radius: 20px; padding: 10px;}")
   
         self.panel2 = QLabel(self.panel1)
+        pixmap = QPixmap()
+        pixmap.loadFromData(imageData)
+        self.panel2.setPixmap(pixmap)  
         self.panel2.setGeometry(0,0,300,350)
-        self.panel2.setStyleSheet("QLabel{background: #82C3EC}")
+        self.panel2.setStyleSheet("QLabel{ background: #82C3EC}")
   
 
         productnametxt = QLabel(self.panel1)
@@ -101,22 +112,27 @@ class Announcements(QMainWindow):
 
 
         self.title = QLabel(self.panel1)
+        self.title.setText(resultProductName["productName"])
         self.title.setGeometry(450,10,220,50)
         self.title.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 5px; padding: 10px;}")
 
         self.price =QLabel(self.panel1)
+        self.price.setText(resultPrice["price"])
         self.price.setGeometry(450,70,220,50)
         self.price.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 5px; padding: 10px;}")
 
         self.description =QLabel(self.panel1)
+        self.description.setText(resultDescription["description"])
         self.description.setGeometry(450,130,220,70)
         self.description.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 5px; padding: 10px;}")
 
         self.mail = QLabel(self.panel1)
+        self.mail.setText(resultEmail["email"])
         self.mail.setGeometry(450,210,220,50)
         self.mail.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 5px; padding: 10px;}")
 
         self.number = QLabel(self.panel1)
+        self.number.setText(resultPhone["phone_number"])
         self.number.setGeometry(450,270,220,50)
         self.number.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 5px; padding: 10px;}")
 
