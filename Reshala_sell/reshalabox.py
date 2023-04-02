@@ -1,4 +1,5 @@
 
+
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets,QtCore,QtGui
 
@@ -205,4 +206,5 @@ App.setStyleSheet("QMainWindow{background-color: #BFACE2}")
 window = HomePage()
 
 sys.exit(App.exec())
+
 
