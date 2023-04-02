@@ -30,7 +30,6 @@ class HomePage(QMainWindow):
             
     def __init__(self):
         super().__init__()
-        
         self.setWindowTitle("Home Page")
         self.setGeometry(0,0,1366,768)
 
@@ -67,7 +66,7 @@ class HomePage(QMainWindow):
 
 
         self.label2 = QLabel(self.panel1)
-        self.pixmap = QPixmap("images\Chat-App-main\Chat-App-main\loginpage\smalllogo.png")
+        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
         self.label2.setGeometry(150, 10, 100, 100)
         
         size = QSize(200, 200)

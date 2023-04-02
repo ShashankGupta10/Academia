@@ -1,86 +1,91 @@
-# Import required modules
 import socket
 import threading
 
-HOST = '192.168.104.156'
-PORT = 9999 # You can use any port between 0 to 65535
-LISTENER_LIMIT = 5
-active_clients = [] # List of all currently connected users
+# Change these values as per your requirements
+HOST = '192.168.0.106'
+PORTS = [9996, 9997, 9998]
 
-# Function to listen for upcoming messages from a client
+# List of all connected clients
+active_clients = []
+
+# Maximum number of clients that can connect to the server
+LISTENER_LIMIT = 5
+
+# Function to listen for incoming messages from a client
 def listen_for_messages(client, username):
 
-    while 1:
+    while True:
+        try:
+            message = client.recv(2048).decode('utf-8')
+            if not message:
+                break
 
-        message = client.recv(2048).decode('utf-8')
-        if message != '':
-            
-            final_msg = username + '~' + message
+            final_msg = username + ': ' + message
             send_messages_to_all(final_msg)
+        except:
+            break
 
-        else:
-            print(f"The message send from client {username} is empty")
+    print(f"Client {username} disconnected")
+    client.close()
 
-
-# Function to send message to a single client
+# Function to send a message to a single client
 def send_message_to_client(client, message):
-
     client.sendall(message.encode())
 
-# Function to send any new message to all the clients that
-# are currently connected to this server
+# Function to send a new message to all connected clients
+# Function to send a new message to all connected clients
 def send_messages_to_all(message):
-    
-    for user in active_clients:
+    for user in active_clients[:]:
+        try:
+            send_message_to_client(user[1], message)
+        except:
+            print(f"Client {user[0]} disconnected")
+            active_clients.remove(user)
 
-        send_message_to_client(user[1], message)
 
-# Function to handle client
+# Function to handle a client connection
 def client_handler(client):
-    
-    # Server will listen for client message that will
-    # Contain the username
-    while 1:
 
-        username = client.recv(2048).decode('utf-8')
-        if username != '':
-            active_clients.append((username, client))
-            prompt_message = "SERVER~" + f"{username} added to the chat"
-            send_messages_to_all(prompt_message)
-            break
-        else:
-            print("Client username is empty")
+    # Prompt the client for their username
+    username = 'Arun Kulkarni'
+    # client.sendall("Enter your username: ".encode())
+    # username = client.recv(2048).decode('utf-8')
 
+    # Add the client to the list of active clients
+    active_clients.append((username, client))
+
+    # Notify other clients that a new user has joined the chat
+    prompt_message = "SERVER: " + f"{username} has joined the chat"
+    send_messages_to_all(prompt_message)
+
+    # Start a new thread to listen for incoming messages from the client
     threading.Thread(target=listen_for_messages, args=(client, username, )).start()
 
-# Main function
+# Main function to start the server
 def main():
 
-    # Creating the socket class object
-    # AF_INET: we are going to use IPv4 addresses
-    # SOCK_STREAM: we are using TCP packets for communication
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # Create a socket object for each port
+    sockets = []
+    for port in PORTS:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            # Bind the socket to the host and port
+            sock.bind((HOST, port))
+            sockets.append(sock)
+            print(f"Socket bound to {HOST} on port {port}")
+        except socket.error as e:
+            print(f"Error binding socket to {HOST} on port {port}: {e}")
+            continue
 
-    # Creating a try catch block
-    try:
-        # Provide the server with an address in the form of
-        # host IP and port
-        server.bind((HOST, PORT))
-        print(f"Running the server on {HOST} {PORT}")
-    except:
-        print(f"Unable to bind to host {HOST} and port {PORT}")
+        # Start listening for incoming connections
+        sock.listen(LISTENER_LIMIT)
 
-    # Set server limit
-    server.listen(LISTENER_LIMIT)
-
-    # This while loop will keep listening to client connections
-    while 1:
-
-        client, address = server.accept()
-        print(f"Successfully connected to client {address[0]} {address[1]}")
-
-        threading.Thread(target=client_handler, args=(client, )).start()
-
+    # Accept incoming connections and handle each one in a new thread
+    while True:
+        for sock in sockets:
+            conn, addr = sock.accept()
+            print(f"Connected by {addr} on port {sock.getsockname()[1]}")
+            threading.Thread(target=client_handler, args=(conn, )).start()
 
 if __name__ == '__main__':
     main()

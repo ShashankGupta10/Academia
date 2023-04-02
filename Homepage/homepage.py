@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import os    
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -67,6 +68,7 @@ class MainWindow(QMainWindow):
         self.button7.setStyleSheet("QPushButton{ background: #C47AFF; position: fixed;border-radius:15px;color: black;border-radius:24px;} "
                                    "QPushButton:hover {border-radius:20px;}")
         self.button7.setFont(QFont('Times', 20))
+        self.button7.clicked.connect(self.run_script)
 
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(10)
@@ -190,6 +192,18 @@ class MainWindow(QMainWindow):
         self.current_image = (self.current_image + 1) % 3
         # self.slider.setValue(self.current_image)
         self.updateImage(self.current_image)
+
+
+    def run_script(file_path):
+    
+        process = QProcess()
+        process.start(sys.executable, ["D:\python mpr final\Python-MPR-\instituteAddStudent.py"])
+        process.waitForFinished()
+        process.close()
+        window.close()
+
+        
+
 
 
 if __name__ == "__main__":
