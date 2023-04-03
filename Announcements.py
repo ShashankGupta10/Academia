@@ -1,14 +1,9 @@
 import socket
 import threading
 from PyQt5.QtWidgets import *
-from PyQt5 import QtWidgets,QtCore,QtGui
-from PyQt5.QtWidgets import QTabWidget
-from PyQt5.QtWidgets import QGraphicsOpacityEffect
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *
-from PyQt5.QtCore import QPropertyAnimation
-from pathlib import Path
-from urllib import *
+
 import sys
 import os
 
@@ -27,23 +22,33 @@ class Announcements(QMainWindow):
         self.header.setGeometry(0, 0, 1920, 100)
         self.header.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        logo = QLabel(self)
-        logo.setGeometry(30, 20, 80, 70)
-        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
-        logo.setPixmap(self.pixmap)
-        logo.setScaledContents(True)
-        self.pixmap = self.pixmap.scaled(100, 200)
+        backbtn = QToolButton(self)
+        backbtn.setArrowType(Qt.LeftArrow)        
+        backbtn.setGeometry(100,100,50,50)
+        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.clicked.connect(self.back)
+
+        siz = QSize(80,80)
+        logo = QPushButton(self)
+        logo.setGeometry(30, 20, 80, 80)
+        logocon = QIcon("All icons\logo.png")
+        logo.setStyleSheet("background: transparent")
+        logo.setIcon(logocon)
+        logo.setIconSize(siz)
+        logo.clicked.connect(self.back)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
         navbarbtn1.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn1.setFont(QFont('Times', 20))
+        navbarbtn1.clicked.connect(self.back)
 
 
-        navbarbtn2= QPushButton("Reshala", self)
+        navbarbtn2= QPushButton("Student Add", self)
         navbarbtn2.setGeometry(1400, 31, 150, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
+        navbarbtn2.clicked.connect(self.addstudent)
         
         navbarbtn3= QPushButton("About", self)
         navbarbtn3.setGeometry(1600, 31, 150, 40)
@@ -70,36 +75,31 @@ class Announcements(QMainWindow):
         
         size = QSize(60, 60)
         
-        anicon = QIcon('Python-MPR-\\images\\announcements.png.jpg')
+        anicon = QIcon('All icons\\announcement.png')
         announce = QPushButton(sidebar)
         announce.setGeometry(20,30, 60, 60)
         announce.setStyleSheet("border : 0px solid black")
         announce.setIcon(anicon)
         announce.setIconSize(size)
+        announce.clicked.connect(self.announcement)        
         
-        
-        aticon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\attendance.png')
+        aticon = QIcon('All icons\\attendence.png')
         attend = QPushButton(sidebar)
         attend.setGeometry(20,150, 60, 60)
         attend.setStyleSheet("border : 0px solid black")
         attend.setIcon(aticon)
         attend.setIconSize(size)
+        attend.clicked.connect(self.attendence)
 
-        asicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\assignment.png.jpg')
+        asicon = QIcon('All icons\\assignment.png')
         assign = QPushButton(sidebar)
         assign.setGeometry(25, 270, 60, 60)
         assign.setStyleSheet("border : 0px solid black")
         assign.setIcon(asicon)
         assign.setIconSize(size)
+        assign.clicked.connect(self.assignment)
 
-        reicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\reshala.png')
-        reshaala = QPushButton(sidebar)
-        reshaala.setGeometry(20,390, 60, 60)
-        reshaala.setStyleSheet("border : 0px solid black")
-        reshaala.setIcon(reicon)
-        reshaala.setIconSize(size)
-        
-        proficon = QIcon('D:\python mpr final\Python-MPR-\images\profile.png-removebg-preview.png')
+        proficon = QIcon('All icons\\profile.png')
         profile = QPushButton(sidebar)
         profile.setGeometry(20, 700, 60, 60)
         profile.setStyleSheet("border : 0px solid black")
@@ -166,25 +166,10 @@ class Announcements(QMainWindow):
         size = QSize(50, 50)
         self.teacher_icon.setIconSize(size)
         
-        
-        # self.username_label = QLabel("Username", self)
-        # self.username_label.setGeometry(540, 150, 150, 40)
-        # self.username_label.setFont(QFont('Times', 15))
 
-        # self.username_textbox = QLineEdit(self)
-        # self.username_textbox.setStyleSheet("background-color: white; color: black; border-radius: 5px")
-        # self.username_textbox.setGeometry(700, 150, 300, 40)
-        # self.username_textbox.setFont(QFont('Times', 12))
-
-        # self.username_button = QPushButton("Make an Announcement", self)
-        # self.username_button.setFont(QFont('Times', 12))
-        # self.username_button.setStyleSheet("background-color: #464EB8; color: white; border-radius: 20px")
-        # self.username_button.setGeometry(700, 150, 400, 40)
-        # self.username_button.clicked.connect(self.connect)
-
-        # self.label2 = QLabel(self)
-        # self.label2.setGeometry(520, 750, 1400, 100)
-        # self.label2.setStyleSheet("background-color: lightblue; border-top: 2px solid black")
+        self.label2 = QLabel(self)
+        self.label2.setGeometry(520, 750, 1400, 100)
+        self.label2.setStyleSheet("background-color: lightblue; border-top: 2px solid black")
         
         # Type messages here
         self.message_textbox = QLineEdit(self)
@@ -344,6 +329,22 @@ class Announcements(QMainWindow):
             else:
                 QMessageBox.critical(self, "Error", "Message received from client is empty")
                 break
+            
+    def announcement(self):
+        window.close()
+        os.system("python Announcements.py &")
+    def attendence(self):
+        window.close()
+        os.system("python AttendanceFaculty.py &")
+    def assignment(self):
+        window.close()
+        os.system("python AssignmentFaculty.py &")
+    def addstudent(self):
+        window.close()
+        os.system("python Instituteaddstudent.py &")
+    def back(Self):
+        window.close()
+        os.system("python Institutedashboard.py &") 
 
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
