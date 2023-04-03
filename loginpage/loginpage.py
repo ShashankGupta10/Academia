@@ -36,27 +36,21 @@ class HomePage(QMainWindow):
  
 
         self.panel1 = QLabel(self)
-        self.panel1.setGeometry(433,100,400,550)
-        self.panel1.setStyleSheet("QLabel{background: white;  border-radius: 20px; padding: 20px;}QLabel:hover{border-radius: 40px;padding: 30px;}")
+        self.panel1.setGeometry(660,150,600,700)
+        self.panel1.setStyleSheet("QLabel{ background: white;  border-radius: 40px; padding: 20px;}")
 
-
-        self.textEdit = QTextEdit(self.panel1)
-        self.textEdit.setGeometry(200,130,170,40)
-        self.textEdit.setStyleSheet("QTextEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
-        self.textEdit.setFont(QFont('Times', 10))
-
-        self.textEdit1 = QTextEdit(self.panel1)
-        self.textEdit1.setGeometry(200,200,170,40)
-        self.textEdit1.setStyleSheet("QTextEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        self.textEdit1 = QLineEdit(self.panel1)
+        self.textEdit1.setGeometry(250,280,250,40)
+        self.textEdit1.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         self.textEdit1.setFont(QFont('Times', 10))
 
-        self.textEdit2 = QTextEdit(self.panel1)
-        self.textEdit2.setGeometry(200,270,170,40)
-        self.textEdit2.setStyleSheet("QTextEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        self.textEdit2 = QLineEdit(self.panel1)
+        self.textEdit2.setGeometry(250,380,250,40)
+        self.textEdit2.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         self.textEdit2.setFont(QFont('Times', 10))
 
         self.btn6 = QPushButton("Login" ,self.panel1)
-        self.btn6.setGeometry(150, 400, 100, 50)
+        self.btn6.setGeometry(250, 525, 100, 50)
         self.btn6.setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 20px; padding: 10px;}"
                                 "QPushButton:hover{ background: #A084DC;border-radius: 10px;}")
         self.btn6.setFont(QFont('Times', 12))
@@ -65,33 +59,34 @@ class HomePage(QMainWindow):
 
 
 
+
         self.label2 = QLabel(self.panel1)
         self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
-        self.label2.setGeometry(150, 10, 100, 100)
+        self.label2.setGeometry(250, 10, 100, 100)
         
         size = QSize(200, 200)
         self.label2.setPixmap(self.pixmap)
 
 
+
+        loginAs = QLabel(self.panel1)
+        loginAs.setText("INSTITUTE LOGIN")
+        loginAs.setGeometry(200, 100, 250, 100) 
+        loginAs.setStyleSheet("background-color: transparent; font-weight: bold;")
+        loginAs.setFont(QFont('Times', 12))
+
+
+
         username = QLabel(self.panel1)
         username.setText("Username :")
-        username.setGeometry(40, 170,200,100) 
+        username.setGeometry(100, 250, 150, 100) 
         username.setStyleSheet("background-color: transparent;")
         username.setFont(QFont('Times', 12))
-        
-        
-
-
-        name = QLabel(self.panel1)
-        name.setText("Name :")
-        name.setGeometry(40, 100,100,100)  
-        name.setStyleSheet("background-color: transparent;")
-        name.setFont(QFont('Times', 12))
 
 
         password = QLabel(self.panel1)
         password.setText("Password : ")
-        password.setGeometry(40, 240,200,100) 
+        password.setGeometry(100, 350, 150, 100) 
         password.setStyleSheet("background-color: transparent;")
         password.setFont(QFont('Times', 12))
 
