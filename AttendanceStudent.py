@@ -1,11 +1,10 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QGraphicsOpacityEffect
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *
-from urllib import *
 import sys
+import os
 
-class Attendance(QMainWindow):            
+class AssignmentStudent(QMainWindow):            
     def __init__(self):
         super().__init__()
         
@@ -16,29 +15,36 @@ class Attendance(QMainWindow):
         self.header.setGeometry(0, 0, 1920, 100)
         self.header.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        logo = QLabel(self)
-        logo.setGeometry(30, 20, 80, 70)
-        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
-        logo.setPixmap(self.pixmap)
-        logo.setScaledContents(True)
-        self.pixmap = self.pixmap.scaled(100, 200)
+        backbtn = QToolButton(self)
+        backbtn.setArrowType(Qt.LeftArrow)        
+        backbtn.setGeometry(100,100,50,50)
+        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.clicked.connect(self.back)
+        
+        siz = QSize(80,80)
+        logo = QPushButton(self)
+        logo.setGeometry(30, 20, 80, 80)
+        logocon = QIcon("All icons\logo.png")
+        logo.setStyleSheet("background: transparent")
+        logo.setIcon(logocon)
+        logo.setIconSize(siz)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
         navbarbtn1.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn1.setFont(QFont('Times', 20))
 
-
         navbarbtn2= QPushButton("Reshala", self)
         navbarbtn2.setGeometry(1400, 31, 150, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
+        navbarbtn2.clicked.connect(self.reshaala)
         
         navbarbtn3= QPushButton("About", self)
         navbarbtn3.setGeometry(1600, 31, 150, 40)
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
-
+        
         icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
@@ -46,191 +52,173 @@ class Attendance(QMainWindow):
         self.btn10.setIcon(icon)
         size = QSize(100, 100)
         self.btn10.setIconSize(size)
-
-        
-        self.loginbox = QLabel(self)
-        self.loginbox.setGeometry(0,100,120,800)
-        self.loginbox.setStyleSheet("background-color: #3E54AC;")
         
         sidebar = QLabel(self)
-        sidebar.setGeometry(0,100,80,1920)
+        sidebar.setGeometry(0,100,100,1920)
         sidebar.setStyleSheet("background-color: #3E54AC;")
         
         size = QSize(60, 60)
         
-        anicon = QIcon('Python-MPR-\\images\\announcements.png.jpg')
+        anicon = QIcon('All icons\\announcement.png')
         announce = QPushButton(sidebar)
-        announce.setGeometry(20,30, 60, 60)
+        announce.setGeometry(10,30, 60, 60)
         announce.setStyleSheet("border : 0px solid black")
         announce.setIcon(anicon)
         announce.setIconSize(size)
+        announce.clicked.connect(self.announcement)
         
-        
-        aticon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\attendance.png')
+        aticon = QIcon('All icons\\attendence.png')
         attend = QPushButton(sidebar)
-        attend.setGeometry(20,150, 60, 60)
+        attend.setGeometry(15,150, 60, 60)
         attend.setStyleSheet("border : 0px solid black")
         attend.setIcon(aticon)
         attend.setIconSize(size)
+        attend.clicked.connect(self.attendence)
 
-        asicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\assignment.png.jpg')
+        asicon = QIcon('All icons\\assignment.png')
         assign = QPushButton(sidebar)
-        assign.setGeometry(25, 270, 60, 60)
+        assign.setGeometry(10,270, 60, 60)
         assign.setStyleSheet("border : 0px solid black")
         assign.setIcon(asicon)
         assign.setIconSize(size)
+        assign.clicked.connect(self.assignment)
 
-        reicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\reshala.png')
+        reicon = QIcon('All icons\\reshaala.png')
         reshaala = QPushButton(sidebar)
-        reshaala.setGeometry(20,390, 60, 60)
+        reshaala.setGeometry(5,390, 60, 60)
         reshaala.setStyleSheet("border : 0px solid black")
         reshaala.setIcon(reicon)
         reshaala.setIconSize(size)
+        reshaala.clicked.connect(self.reshaala)
         
-        proficon = QIcon('D:\python mpr final\Python-MPR-\images\profile.png-removebg-preview.png')
+        proficon = QIcon('All icons\\profile.png')
         profile = QPushButton(sidebar)
-        profile.setGeometry(20, 700, 60, 60)
+        profile.setGeometry(10,600, 60, 60)
         profile.setStyleSheet("border : 0px solid black")
         profile.setIcon(proficon)
         profile.setIconSize(size)
-        
-        
-        self.attendance_label = QLabel("Attendance", self)
-        self.attendance_label.setStyleSheet("border-bottom: 2px solid black")
-        self.attendance_label.setGeometry(910, 110, 250, 80)
-        self.attendance_label.setFont(QFont('Times', 20))
-        
-        self.panel1 = QPushButton("Overall Attendance", self)
-        self.panel1.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px;")
-        self.panel1.setGeometry(310, 200, 600, 300)
-        self.panel1.setFont(QFont('Times', 20))
-        self.panel1.clicked.connect(lambda: self.overall_box.setVisible(True))
-        
-        self.panel2 = QPushButton("Subject Wise Attendance", self)
-        self.panel2.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px")
-        self.panel2.setGeometry(1070, 200, 600, 300)
-        self.panel2.setFont(QFont('Times', 20))
-        self.panel2.clicked.connect(lambda: self.subject_box.setVisible(True))
+        profile.clicked.connect(self.sprofile)
             
-        self.panel3 = QPushButton("Defaulter?", self)
-        self.panel3.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px")
-        self.panel3.setGeometry(310, 550, 600, 300)
-        self.panel3.setFont(QFont('Times', 20))
-        self.panel3.clicked.connect(lambda: self.defaulter_box.setVisible(True))
-        
-        self.panel4 = QPushButton("Record", self)
-        self.panel4.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px")
-        self.panel4.setGeometry(1070, 550, 600, 300)
-        self.panel4.setFont(QFont('Times', 20))
-        self.panel4.clicked.connect(lambda: self.records_box.setVisible(True))
-        
-        icon = QIcon('images/close-button.png')
-        
-        self.subject_box = QLabel("", self)
-        self.subject_box.setGeometry(120, 100, 1800, 900)
-        self.subject_box.setStyleSheet("background-color: white; color: black")
-        self.subject_box.setVisible(False)
-        
-        self.subject_box.header2 = QLabel("Subject Wise Attendance", self.subject_box)
-        # self.subject_box.header1.setStyleSheet("border-bottom: 2px solid black")
-        self.subject_box.header2.setGeometry(700, 0, 500, 80)
-        self.subject_box.header2.setFont(QFont('Times', 20))
+        self.panel1 = QLabel(self)
+        self.panel1.setGeometry(200,140,400,450)
+        self.panel1.setStyleSheet("QLabel{background: white;  border-radius: 20px; padding: 10px;}")
+  
 
-        self.subject_box.close_button2 = QPushButton("", self.subject_box)
-        self.subject_box.close_button2.setGeometry(1720, 10, 50, 50)
-        self.subject_box.close_button2.setStyleSheet("border: none;")
-        self.subject_box.close_button2.setIcon(icon)
-        size = QSize(50, 50)
-        self.subject_box.close_button2.setIconSize(size)
-        self.subject_box.close_button2.clicked.connect(lambda: self.subject_box.setVisible(False))
+        self.Name = QLineEdit(self.panel1)
+        self.Name.setGeometry(150,10,220,50)
+        self.Name.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
+        self.Name.setFont(QFont('Times', 12))
+
+        self.rollno = QLineEdit(self.panel1)
+        self.rollno.setGeometry(150,80,220,50)
+        self.rollno.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
+        self.rollno.setFont(QFont('Times', 12))
+
+        self.Subject = QLineEdit(self.panel1)
+        self.Subject.setGeometry(150,150,220,50)
+        self.Subject.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
+        self.Subject.setFont(QFont('Times', 12))
         
-        self.overall_box = QLabel("", self)
-        self.overall_box.setGeometry(550, 300, 900, 400)
-        self.overall_box.setStyleSheet("background-color: white; color: black")
-        self.overall_box.setVisible(False)
-        self.overall_box.close_button1 = QPushButton("", self.overall_box)
+        self.filename = QLineEdit(self.panel1)
+        self.filename.setGeometry(150, 220, 220, 50)
+        self.filename.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
+        self.filename.setReadOnly(True)
+        self.filename.setFont(QFont('Times', 12))
         
-        self.overall_box.header1 = QLabel("Overall Attendance", self.overall_box)
-        self.overall_box.header1.setGeometry(350, 0, 220, 80)
-        self.overall_box.header1.setFont(QFont('Times', 15))
+        self.upload_btn = QPushButton("Browse...", self.panel1)
+        self.upload_btn.setGeometry(150, 280, 100, 40)
+        self.upload_btn.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 5px;")       
+        self.upload_btn.clicked.connect(self.browseFiles)
+        self.upload_btn.setFont(QFont('Times', 12))
+
+        self.submit_btn = QPushButton("Submit" ,self.panel1)
+        self.submit_btn .setGeometry(150, 350, 100, 50)
+        self.submit_btn .setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 20px; padding: 10px;}"
+                                "QPushButton:hover{ background: #A084DC;border-radius: 10px;}")
+        self.submit_btn .setFont(QFont('Times', 12))
         
-        self.overall_box.close_button1.setGeometry(840, 10, 50, 50)
-        self.overall_box.close_button1.setStyleSheet("border: none;")
-        self.overall_box.close_button1.setIcon(icon)
-        size = QSize(50, 50)
-        self.overall_box.close_button1.setIconSize(size)
-        self.overall_box.close_button1.clicked.connect(lambda: self.overall_box.setVisible(False))
-        
-        self.defaulter_box = QLabel("", self)
-        self.defaulter_box.setGeometry(550, 300, 900, 400)
-        self.defaulter_box.setStyleSheet("background-color: white; color: black")
-        self.defaulter_box.setVisible(False)
-        
-        self.defaulter_box.header3 = QLabel("Defaulter", self.defaulter_box)
-        # self.defaulter_box.header3.setStyleSheet("border-bottom: 2px solid black")
-        self.defaulter_box.header3.setGeometry(400, 0, 220, 80)
-        self.defaulter_box.header3.setFont(QFont('Times', 15))
-        
-        self.defaulter_box.close_button3 = QPushButton("", self.defaulter_box)
-        self.defaulter_box.close_button3.setGeometry(840, 10, 50, 50)
-        self.defaulter_box.close_button3.setStyleSheet("border: none;")
-        self.defaulter_box.close_button3.setIcon(icon)
-        size = QSize(50, 50)
-        self.defaulter_box.close_button3.setIconSize(size)
-        self.defaulter_box.close_button3.clicked.connect(lambda: self.defaulter_box.setVisible(False))
-        
-        self.records_box = QLabel("", self)
-        self.records_box.setGeometry(120, 100, 1800, 900)
-        self.records_box.setStyleSheet("background-color: white; color: black")
-        self.records_box.setVisible(False)
-        
-        self.records_box.header4 = QLabel("Record", self.records_box)
-        # self.records_box.header4.setStyleSheet("border-bottom: 2px solid black")
-        self.records_box.header4.setGeometry(800, 0, 275, 80)
-        self.records_box.header4.setFont(QFont('Times', 20))
-        
-        self.records_box.close_button4 = QPushButton("", self.records_box)
-        self.records_box.close_button4.setGeometry(1720, 10, 50, 50)
-        self.records_box.close_button4.setStyleSheet("border: none;")
-        self.records_box.close_button4.setIcon(icon)
-        size = QSize(50, 50)
-        self.records_box.close_button4.setIconSize(size)
-        self.records_box.close_button4.clicked.connect(lambda: self.records_box.setVisible(False))
-        
+  
+        Nametxt= QLabel(self.panel1)
+        Nametxt.setText("Name :")
+        Nametxt.setGeometry(10, 12,200,50) 
+        Nametxt.setStyleSheet("background-color: transparent;")
+        Nametxt.setFont(QFont('Times', 12))
+
+
+        rolltxt = QLabel(self.panel1)
+        rolltxt.setText("Roll No :")
+        rolltxt.setGeometry(10, 80,200,50)  
+        rolltxt.setStyleSheet("background-color: transparent;")
+        rolltxt.setFont(QFont('Times', 12))
+
+        Subjecttxt = QLabel(self.panel1)
+        Subjecttxt.setText("Subject : ")
+        Subjecttxt.setGeometry(10, 148,200,50) 
+        Subjecttxt.setStyleSheet("background-color: transparent;")
+        Subjecttxt.setFont(QFont('Times', 12))
+
+        UploadAssignmenttxt = QLabel(self.panel1)
+        UploadAssignmenttxt.setText("Upload file : ")
+        UploadAssignmenttxt.setGeometry(10, 218,200,50) 
+        UploadAssignmenttxt.setStyleSheet("background-color: transparent;")
+        UploadAssignmenttxt.setFont(QFont('Times', 12))
+
 
         self.footer = QLabel(self)
-        self.footer.setGeometry(0, 900, 1920, 1080)
+        self.footer.setGeometry(0, 900, 1920, 100)
         self.footer.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        self.label1 = QPushButton(self.footer)
-        self.label1.setGeometry(100,0,150,100)
-        self.label1.setStyleSheet("color: white; background: black;")
-        self.label1.setText("@Academia 2023")
-        self.label1.setFont(QFont('Times', 10))
+        footerlbl1 = QPushButton(self.footer)
+        footerlbl1.setGeometry(100,0,150,100)
+        footerlbl1.setStyleSheet("color: white; background: black;")
+        footerlbl1.setText("@Academia 2023")
+        footerlbl1.setFont(QFont('Times', 10))
 
-        self.label2 = QPushButton(self.footer)
-        self.label2.setGeometry(300,0,150,100)
-        self.label2.setStyleSheet("color: white; background: black;")
-        self.label2.setText("Terms of Use")
-        self.label2.setFont(QFont('Times', 10))
+        footerlbl2 = QPushButton(self.footer)
+        footerlbl2.setGeometry(300,0,150,100)
+        footerlbl2.setStyleSheet("color: white; background: black;")
+        footerlbl2.setText("Terms of Use")
+        footerlbl2.setFont(QFont('Times', 10))
 
-        self.label3 = QPushButton(self.footer)
-        self.label3.setGeometry(500,0,200,100)
-        self.label3.setStyleSheet("color: white; background: black;")
-        self.label3.setText("Privacy Policy")
-        self.label3.setFont(QFont('Times', 10))
+        footerlbl3 = QPushButton(self.footer)
+        footerlbl3.setGeometry(500,0,200,100)
+        footerlbl3.setStyleSheet("color: white; background: black;")
+        footerlbl3.setText("Privacy Policy")
+        footerlbl3.setFont(QFont('Times', 10))
                                 
-        self.label4 = QPushButton(self.footer)
-        self.label4.setGeometry(1400,0,500,100)
-        self.label4.setStyleSheet("color: white; background: black;")
-        self.label4.setText("Copyright © 2023 Academia Inc. All rights reserved.")
-        self.label4.setFont(QFont('Times', 10))
+        footerlbl4 = QPushButton(self.footer)
+        footerlbl4.setGeometry(1400,0,500,100)
+        footerlbl4.setStyleSheet("color: white; background: black;")
+        footerlbl4.setText("Copyright © 2023 Academia Inc. All rights reserved.")
+        footerlbl4.setFont(QFont('Times', 10))
         
         self.showMaximized()
         self.show()
         
+    def browseFiles(self):
+        fname = QFileDialog.getOpenFileName(self.panel1, 'Open File', '.')
+        self.filename.setText(fname[0].rsplit('/', 1)[-1])
+        return
+    def announcement(self):
+        window.close()
+        os.system("python StudentAnnouncement.py &")   
+    def attendence(self):
+        window.close()
+        os.system("python Attendencestudent.py &")
+    def assignment(self):
+        window.close()
+        os.system("python AssignmentStudent.py &") 
+    def reshaala(self):
+        window.close()
+        os.system("python Reshala\\reshalabuy.py &") 
+    def sprofile(self):
+        window.close()
+        os.system("python profilestudent.py &")
+    def back(Self):
+        window.close()
+        os.system("python Studentdashboard.py &")
         
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
-window = Attendance()
+window = AssignmentStudent()
 sys.exit(App.exec())
