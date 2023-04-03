@@ -14,6 +14,8 @@ class Announcements(QMainWindow):
     def __init__(self):
         super().__init__()
         
+        os.system("python chat_server.py &")
+        
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.setWindowTitle("Academia")
         self.setGeometry(0,0,1920,1080)
