@@ -1,20 +1,8 @@
-
-
 from PyQt5.QtWidgets import *
-from PyQt5 import QtWidgets,QtCore,QtGui
-
-from PyQt5.QtWidgets import QTabWidget
-from PyQt5.QtWidgets import QGraphicsOpacityEffect
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *
-from PyQt5.QtCore import QPropertyAnimation
-from pathlib import Path
-from tkinter import *
 from pymongo import MongoClient
-from urllib import *
-import sys
-
-
+import sys,os
 
 client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
 db = client['IOP']
@@ -32,12 +20,19 @@ class HomePage(QMainWindow):
         self.header.setGeometry(0, 0, 1920, 100)
         self.header.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        logo = QLabel(self)
-        logo.setGeometry(30, 20, 80, 70)
-        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
-        logo.setPixmap(self.pixmap)
-        logo.setScaledContents(True)
-        self.pixmap = self.pixmap.scaled(100, 200)
+        backbtn = QToolButton(self)
+        backbtn.setArrowType(Qt.LeftArrow)        
+        backbtn.setGeometry(100,100,50,50)
+        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.clicked.connect(self.back)
+
+        siz = QSize(80,80)
+        logo = QPushButton(self)
+        logo.setGeometry(30, 20, 80, 80)
+        logocon = QIcon("All icons\logo.png")
+        logo.setStyleSheet("background: transparent")
+        logo.setIcon(logocon)
+        logo.setIconSize(siz)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -70,41 +65,45 @@ class HomePage(QMainWindow):
         
         size = QSize(60, 60)
         
-        anicon = QIcon('Python-MPR-\\images\\announcements.png.jpg')
+        anicon = QIcon('All icons\\announcement.png')
         announce = QPushButton(sidebar)
         announce.setGeometry(20,30, 60, 60)
         announce.setStyleSheet("border : 0px solid black")
         announce.setIcon(anicon)
         announce.setIconSize(size)
+        announce.clicked.connect(self.announcement)
         
-        
-        aticon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\attendance.png')
+        aticon = QIcon('All icons\\attendence.png')
         attend = QPushButton(sidebar)
         attend.setGeometry(20,150, 60, 60)
         attend.setStyleSheet("border : 0px solid black")
         attend.setIcon(aticon)
         attend.setIconSize(size)
+        attend.clicked.connect(self.attendence)
 
-        asicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\assignment.png.jpg')
+        asicon = QIcon('All icons\\assignment.png')
         assign = QPushButton(sidebar)
         assign.setGeometry(25, 270, 60, 60)
         assign.setStyleSheet("border : 0px solid black")
         assign.setIcon(asicon)
         assign.setIconSize(size)
+        assign.clicked.connect(self.assignment)
 
-        reicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\reshala.png')
+        reicon = QIcon('All icons\\reshaala.png')
         reshaala = QPushButton(sidebar)
         reshaala.setGeometry(20,390, 60, 60)
         reshaala.setStyleSheet("border : 0px solid black")
         reshaala.setIcon(reicon)
         reshaala.setIconSize(size)
+        reshaala.clicked.connect(self.reshaala)
         
-        proficon = QIcon('D:\python mpr final\Python-MPR-\images\profile.png-removebg-preview.png')
+        proficon = QIcon('All icons\\profile.png')
         profile = QPushButton(sidebar)
         profile.setGeometry(20, 700, 60, 60)
         profile.setStyleSheet("border : 0px solid black")
         profile.setIcon(proficon)
         profile.setIconSize(size)
+        profile.clicked.connect(self.sprofile)
 
 
 
@@ -122,7 +121,7 @@ class HomePage(QMainWindow):
 
         self.panel1 = QLabel(self)
         self.panel1.setGeometry(610,200,800,600)
-        self.panel1.setStyleSheet("QLabel{background: white;  border-radius: 20px; padding: 10px;}")
+        self.panel1.setStyleSheet("QLabel{ background: white;  border-radius: 20px; padding: 10px;}")
   
         self.title = QLineEdit(self.panel1)
         self.title.setGeometry(200,50,220,50)
@@ -201,7 +200,6 @@ class HomePage(QMainWindow):
 
         self.btn1 = QPushButton("Upload Image",self.panel1)
         self.btn1.clicked.connect(self.select_image)
-        # self.btn1.setFixedSize(100, 100)
         self.btn1.setGeometry(550,350,100,40)
         self.btn1.setStyleSheet("QPushButton{ background: #C47AFF; position: fixed;border-radius:15px;color: black;border-radius:20px;} QPushButton:hover borderradius:20px;")
         vbox.addWidget(self.btn1)
@@ -209,11 +207,8 @@ class HomePage(QMainWindow):
         self.label = QLabel("Upload product image",self.panel1)
         self.label.setGeometry(500,100,200,200)
         self.label.setStyleSheet("border:2px solid black;")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setAlignment(Qt.AlignCenter)
 
-
-        layout = QVBoxLayout()
-        self.setLayout(layout)
         vbox.addWidget(self.label)
         self.setLayout(vbox)
 
@@ -250,6 +245,27 @@ class HomePage(QMainWindow):
         self.showMaximized()
         self.show()
 
+    def announcement(self):
+        window.close()
+        os.system("python StudentAnnouncement.py &")   
+    def attendence(self):
+        window.close()
+        os.system("python Attendencestudent.py &")
+    def assignment(self):
+        window.close()
+        os.system("python AssignmentStudent.py &") 
+    def reshaala(self):
+        window.close()
+        os.system("python Reshala\\reshalabuy.py &") 
+    def sprofile(self):
+        window.close()
+        os.system("python profilestudent.py &")
+    def back(Self):
+        window.close()
+        os.system("python Studentdashboard.py &")
+    def back(Self):
+        window.close()
+        os.system("python Studentdashboard.py &")
 
     def select_image(self):
             options = QFileDialog.Options()
@@ -281,35 +297,6 @@ class HomePage(QMainWindow):
                             "phone_number": phone_number,
                             "image": image_data
                             })
-        
-    # def select_image(self):
-    # # Open a file dialog to select an image
-    #     global file_name
-    #     file_name, _ = QFileDialog.getOpenFileName(self, "Open Image", "", "Image Files (*.png *.jpg *.bmp)")
-
-    #     if file_name:
-    #         print(f"Selected file: {file_name}")
-    #         if not os.path.exists(file_name):
-    #             print("Error: file does not exist.")
-    #         else:
-    #             pixmap = QPixmap(file_name)
-    #             if pixmap.isNull():
-    #                 print("Error: invalid image file.")
-    #             else:
-    #                 self.labeln.setPixmap(pixmap)
-    #                 self.labeln.setScaledContents(True)
-    #                 print(f"Label size: {self.labeln.size()}")
-    #                 print(f"Label visible: {self.labeln.isVisible()}")
-
-
-
-            # Store the image in the database
-        # with open(fileName, "rb") as image_file:
-        #         encoded_image = image_file.read()
-        #         global image_data
-        #         image_data = {"image": pymongo.Binary(encoded_image)}
-                
-
 
 
 App = QApplication(sys.argv)
@@ -318,5 +305,4 @@ App.setStyleSheet("QMainWindow{background-color: #BFACE2}")
 window = HomePage()
 
 sys.exit(App.exec())
-
 
