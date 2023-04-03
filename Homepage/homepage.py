@@ -10,8 +10,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setGeometry(0, 0, 1366, 768)
         self.setWindowTitle("Academia")
-        global process
-        process = QProcess()
+
         
     #-----------------------------HEADER--------------------------------------#
     
@@ -188,19 +187,12 @@ class MainWindow(QMainWindow):
     def institute(self):
         # subprocess.Popen(["python", "loginpage\institutelogin.py"])
         window.close()
-        process.start("python", ["loginpage\institutelogin.py"])
-        process.waitForFinished()
-        process.close()
-        
-        # os.system("python loginpage\institutelogin.py &")
-        # os.close(1)
+        os.system("python loginpage\institutelogin.py &")
 
 
     def student(self):
         window.close()
-        process.start("python",["loginpage\studentlogin.py"])
-        process.waitForFinished()
-        process.close()
+        os.system("python loginpage\studentlogin.py &")
         
 
         
