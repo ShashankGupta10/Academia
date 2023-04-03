@@ -4,7 +4,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import subprocess,os
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
