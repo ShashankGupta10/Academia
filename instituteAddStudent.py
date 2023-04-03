@@ -3,22 +3,11 @@ from PyQt5.QtWidgets import QGraphicsOpacityEffect
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *
 from urllib import *
-import sys
+import sys,os
 from pymongo import MongoClient
 
 client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
 db = client['IOP']
-
-
-# resultProductName = db.Re_Shala.find_one({"price": "200"}, {"productName": 1})
-# resultPrice = db.Re_Shala.find_one({"price": "200"}, {"price": 1})
-# resultDescription = db.Re_Shala.find_one({"price": "200"}, {"description": 1})
-# resultPhone = db.Re_Shala.find_one({"price": "200"}, {"phone_number": 1})
-# resultEmail = db.Re_Shala.find_one({"price": "200"}, {"email": 1})
-# resultImage = db.Re_Shala.find_one({"price": "200"}, {"image": 1})
-# imageData = resultImage['image']
-
-
 
 class InstituteAddStudent(QMainWindow):            
     def __init__(self):
@@ -27,28 +16,36 @@ class InstituteAddStudent(QMainWindow):
         self.setWindowTitle("Academia")
         self.setGeometry(0,0,1920,1080)
 
-
         self.header = QLabel(self)
         self.header.setGeometry(0, 0, 1920, 100)
         self.header.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        logo = QLabel(self)
-        logo.setGeometry(30, 20, 80, 70)
-        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
-        logo.setPixmap(self.pixmap)
-        logo.setScaledContents(True)
-        self.pixmap = self.pixmap.scaled(100, 200)
+        backbtn = QToolButton(self)
+        backbtn.setArrowType(Qt.LeftArrow)        
+        backbtn.setGeometry(100,100,50,50)
+        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.clicked.connect(self.back)
+
+        siz = QSize(80,80)
+        logo = QPushButton(self)
+        logo.setGeometry(30, 20, 80, 80)
+        logocon = QIcon("All icons\logo.png")
+        logo.setStyleSheet("background: transparent")
+        logo.setIcon(logocon)
+        logo.setIconSize(siz)
+        logo.clicked.connect(self.back)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
         navbarbtn1.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn1.setFont(QFont('Times', 20))
+        navbarbtn1.clicked.connect(self.back)
 
-
-        navbarbtn2= QPushButton("Reshala", self)
+        navbarbtn2= QPushButton("Student Add", self)
         navbarbtn2.setGeometry(1400, 31, 150, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
+        navbarbtn2.clicked.connect(self.addstudent)
         
         navbarbtn3= QPushButton("About", self)
         navbarbtn3.setGeometry(1600, 31, 150, 40)
@@ -71,36 +68,31 @@ class InstituteAddStudent(QMainWindow):
         
         size = QSize(60, 60)
         
-        anicon = QIcon('Python-MPR-\\images\\announcements.png.jpg')
+        anicon = QIcon('All icons\\announcement.png')
         announce = QPushButton(sidebar)
         announce.setGeometry(20,30, 60, 60)
         announce.setStyleSheet("border : 0px solid black")
         announce.setIcon(anicon)
         announce.setIconSize(size)
+        announce.clicked.connect(self.announcement)
         
-        
-        aticon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\attendance.png')
+        aticon = QIcon('All icons\\attendence.png')
         attend = QPushButton(sidebar)
         attend.setGeometry(20,150, 60, 60)
         attend.setStyleSheet("border : 0px solid black")
         attend.setIcon(aticon)
         attend.setIconSize(size)
+        attend.clicked.connect(self.attendence)
 
-        asicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\assignment.png.jpg')
+        asicon = QIcon('All icons\\assignment.png')
         assign = QPushButton(sidebar)
         assign.setGeometry(25, 270, 60, 60)
         assign.setStyleSheet("border : 0px solid black")
         assign.setIcon(asicon)
         assign.setIconSize(size)
-
-        reicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\reshala.png')
-        reshaala = QPushButton(sidebar)
-        reshaala.setGeometry(20,390, 60, 60)
-        reshaala.setStyleSheet("border : 0px solid black")
-        reshaala.setIcon(reicon)
-        reshaala.setIconSize(size)
+        assign.clicked.connect(self.assignment)
         
-        proficon = QIcon('D:\python mpr final\Python-MPR-\images\profile.png-removebg-preview.png')
+        proficon = QIcon('All icons\\profile.png')
         profile = QPushButton(sidebar)
         profile.setGeometry(20, 700, 60, 60)
         profile.setStyleSheet("border : 0px solid black")
@@ -190,7 +182,21 @@ class InstituteAddStudent(QMainWindow):
         
         self.showMaximized()
         self.show()
-    
+    def announcement(self):
+        window.close()
+        os.system("python Announcements.py &")
+    def attendence(self):
+        window.close()
+        os.system("python AttendanceFaculty.py &")
+    def assignment(self):
+        window.close()
+        os.system("python AssignmentFaculty.py &")        
+    def addstudent(self):
+        window.close()
+        os.system("python Instituteaddstudent.py &")
+    def back(Self):
+        window.close()
+        os.system("python Institutedashboard.py &") 
 
     def on_click_addStudentButton(self):
         newStudentUsername = self.studentUsernameText.text()
@@ -202,6 +208,8 @@ class InstituteAddStudent(QMainWindow):
             "password": newStudentPassword,
             "email": newStudentEmail
         })
+        window.close()
+        os.system("python Institutedashboard &")  
    
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
