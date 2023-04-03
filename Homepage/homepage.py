@@ -14,39 +14,29 @@ class MainWindow(QMainWindow):
         self.header.setGeometry(0, 0, 1920, 100)
         self.header.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        self.label4 = QLabel(self)
-        self.label4.setGeometry(20, 20, 80, 70)
-        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\Homepage\Ellipse 1.png")
-        self.label4.setPixmap(self.pixmap)
+        logo = QLabel(self)
+        logo.setGeometry(30, 20, 80, 70)
+        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
+        logo.setPixmap(self.pixmap)
+        logo.setScaledContents(True)
         self.pixmap = self.pixmap.scaled(100, 200)
 
+        navbarbtn1 = QPushButton("Home", self)
+        navbarbtn1.setGeometry(1200, 31, 100, 40)
+        navbarbtn1.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
+        navbarbtn1.setFont(QFont('Times', 20))
+
+
+        navbarbtn2= QPushButton("Reshala", self)
+        navbarbtn2.setGeometry(1400, 31, 150, 40)
+        navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
+        navbarbtn2.setFont(QFont('Times', 20))
         
+        navbarbtn3= QPushButton("About", self)
+        navbarbtn3.setGeometry(1600, 31, 150, 40)
+        navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
+        navbarbtn3.setFont(QFont('Times', 20))
 
-        #header buttons
-        self.button3 = QPushButton("Home", self)
-        self.button3.setGeometry(1000, 31, 150, 40)
-        # self.button3.clicked.connect(self.nextImage)
-        self.button3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
-        self.button3.setFont(QFont('Times', 20))
-
-
-        self.button4= QPushButton("About", self)
-        self.button4.setGeometry(1200, 31, 150, 40)
-        # self.button4.clicked.connect(self.nextImage)
-        self.button4.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
-        self.button4.setFont(QFont('Times', 20))
-        
-        self.button6= QPushButton("Reshaala", self)
-        self.button6.setGeometry(1400, 31, 150, 40)
-        # self.button4.clicked.connect(self.nextImage)
-        self.button6.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
-        self.button6.setFont(QFont('Times', 20))
-
-        self.button5= QPushButton("whatever", self)
-        self.button5.setGeometry(1600, 31, 150, 40)
-        # self.button4.clicked.connect(self.nextImage)
-        self.button5.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
-        self.button5.setFont(QFont('Times', 20))
 
         icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
@@ -56,6 +46,12 @@ class MainWindow(QMainWindow):
         size = QSize(100, 100)
         self.btn10.setIconSize(size)
         
+
+        self.tagline2 = QLabel(self)
+        self.tagline2.setGeometry(70,350,700,300)
+        self.tagline2.setStyleSheet("color: black;")
+        self.tagline2.setText("The platform to fulfill all your eductaional needs.")
+        self.tagline2.setFont(QFont('Helvetica', 20))
     
         self.button6 = QPushButton("Student", self)
         self.button6.setGeometry(710, 700, 200, 50)
@@ -110,7 +106,7 @@ class MainWindow(QMainWindow):
         
 
         self.tagline = QLabel(self)
-        self.tagline.setGeometry(75,250,700,300)
+        self.tagline.setGeometry(75,300,700,300)
         self.tagline.setStyleSheet("color: black")
         self.tagline.setText("A Better Learning Future Starts Here.")
         self.tagline.setFont(QFont('Helvetica', 20))
@@ -180,16 +176,18 @@ class MainWindow(QMainWindow):
             self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homepagebanner1.png"))
             self.current_image = 0
         elif value == 1:
-            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homapage banners2.jpg.png"))
+            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\images\homepageimage2bgrm.png"))
             self.current_image = 1
         elif value == 2:
             self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homepageimage4bgrm.png"))
             self.current_image = 2
-
+        elif value == 3:
+            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\images\homepageimage5bgrm.png"))
+            self.current_image = 3
     
     def nextImage(self):
         # Increment the current image index and update the image label
-        self.current_image = (self.current_image + 1) % 3
+        self.current_image = (self.current_image + 1) % 4
         # self.slider.setValue(self.current_image)
         self.updateImage(self.current_image)
 
