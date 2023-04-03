@@ -6,8 +6,7 @@ import sys,os
 
 class DashboardStudent(QMainWindow):      
     def __init__(self):
-        global p 
-        p = QProcess
+ 
         super().__init__()
         
         self.setWindowTitle("Home Page")
