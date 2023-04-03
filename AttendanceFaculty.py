@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets,QtCore,QtGui
-from PyQt5.QtWidgets import QTabWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QTabWidget
 from PyQt5.QtWidgets import QGraphicsOpacityEffect
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *
@@ -8,11 +8,7 @@ from PyQt5.QtCore import QPropertyAnimation
 from pathlib import Path
 from urllib import *
 import sys
-import time
-from pymongo import MongoClient
-
-client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
-db = client['IOP']
+import os
 
 class Attendance(QMainWindow):            
     def __init__(self):
@@ -47,8 +43,7 @@ class Attendance(QMainWindow):
         navbarbtn3.setGeometry(1600, 31, 150, 40)
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
-
-
+        
         icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
@@ -58,12 +53,8 @@ class Attendance(QMainWindow):
         self.btn10.setIconSize(size)
         
         
-        self.loginbox = QLabel(self)
-        self.loginbox.setGeometry(0,100,120,800)
-        self.loginbox.setStyleSheet("background-color: #3E54AC;")
-        
         sidebar = QLabel(self)
-        sidebar.setGeometry(0,100,80,1920)
+        sidebar.setGeometry(0,100,120,1920)
         sidebar.setStyleSheet("background-color: #3E54AC;")
         
         size = QSize(60, 60)
@@ -103,7 +94,6 @@ class Attendance(QMainWindow):
         profile.setStyleSheet("border : 0px solid black")
         profile.setIcon(proficon)
         profile.setIconSize(size)
-
         
         
         self.attendance_label = QLabel("Attendance", self)
@@ -115,495 +105,840 @@ class Attendance(QMainWindow):
         self.panel1.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px;")
         self.panel1.setGeometry(310, 200, 600, 300)
         self.panel1.setFont(QFont('Times', 20))
-        self.panel1.clicked.connect(lambda: self.se_s1.setVisible(True))
+        self.panel1.clicked.connect(lambda: se_s1.setVisible(True))
         
         self.panel2 = QPushButton("SE S2", self)
         self.panel2.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px")
         self.panel2.setGeometry(1070, 200, 600, 300)
         self.panel2.setFont(QFont('Times', 20))
-        self.panel2.clicked.connect(lambda: self.se_s2.setVisible(True))
+        self.panel2.clicked.connect(lambda: se_s2.setVisible(True))
             
         self.panel3 = QPushButton("TE T1", self)
         self.panel3.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px")
         self.panel3.setGeometry(310, 550, 600, 300)
         self.panel3.setFont(QFont('Times', 20))
-        self.panel3.clicked.connect(lambda: self.te_t1.setVisible(True))
+        self.panel3.clicked.connect(lambda: te_t1.setVisible(True))
         
         self.panel4 = QPushButton("TE T2", self)
         self.panel4.setStyleSheet("background-color: #3E54AC; color: white; border: none; border-radius: 20px")
         self.panel4.setGeometry(1070, 550, 600, 300)
         self.panel4.setFont(QFont('Times', 20))
-        self.panel4.clicked.connect(lambda: self.te_t2.setVisible(True))
+        self.panel4.clicked.connect(lambda: te_t2.setVisible(True))
         
         icon = QIcon('images/close-button.png')
         size = QSize(50, 50)
         
-        self.se_s1 = QLabel("", self)
-        self.se_s1.setGeometry(120, 100, 1800, 900)
-        self.se_s1.setStyleSheet("background-color: white; color: black")
-        self.se_s1.setVisible(False)
+        se_s1 = QLabel("", self)
+        se_s1.setGeometry(100, 100, 1820, 900)
+        se_s1.setStyleSheet("background-color: white; color: black")
+        se_s1.setVisible(False)
         
-        self.se_s1.header1 = QLabel("SE S1 Attendance", self.se_s1)
-        self.se_s1.header1.setGeometry(700, 0, 500, 80)
-        self.se_s1.header1.setFont(QFont('Times', 20))
+        header1 = QLabel("SE S1 Attendance", se_s1)
+        header1.setGeometry(700, 0, 500, 80)
+        header1.setFont(QFont('Times', 20))
         
-        self.se_s1.close_button1 = QPushButton("", self.se_s1)
-        self.se_s1.close_button1.setGeometry(1720, 10, 50, 50)
-        self.se_s1.close_button1.setStyleSheet("border: none;")
-        self.se_s1.close_button1.setIcon(icon)
-        self.se_s1.close_button1.setIconSize(size)
-        self.se_s1.close_button1.clicked.connect(lambda: self.se_s1.setVisible(False))
+        close_button1 = QPushButton("", se_s1)
+        close_button1.setGeometry(1720, 10, 50, 50)
+        close_button1.setStyleSheet("border: none;")
+        close_button1.setIcon(icon)
+        close_button1.setIconSize(size)
+        close_button1.clicked.connect(lambda: se_s1.setVisible(False))
         
-        self.se_s1.table1 = QTableWidget(self.se_s1)
-        self.se_s1.table1.setRowCount(16)
-        self.se_s1.table1.setColumnCount(3)
-        self.se_s1.table1.setGeometry(100, 100, 700, 650)
-        self.se_s1.table1.setFont(QFont('Times', 15))
-        self.se_s1.table1.horizontalHeader()
-        self.se_s1.table1.setHorizontalHeaderLabels(['Roll No.', 'Name', 'Attendance %'])
-        self.se_s1.table1.horizontalHeader().setStretchLastSection(True)  
-        self.se_s1.table1.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        name_label = QLabel("Name:", se_s1)
+        name_label.setGeometry(650, 80, 80, 50)
+        name_label.setFont(QFont('Times', 15))
+        
+        student_name1 = QLineEdit(se_s1)
+        student_name1.setGeometry(750, 80, 250, 50)
+        student_name1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        student_name1.setFont(QFont('Times', 12))
+        
+        attend_label = QLabel("Attended", se_s1)
+        attend_label.setGeometry(430, 150, 100, 50)
+        attend_label.setFont(QFont('Times', 12))
+        
+        conduct_label = QLabel("Conducted", se_s1)
+        conduct_label.setGeometry(625, 150, 100, 50)
+        conduct_label.setFont(QFont('Times', 12))
+        
+        attend_label = QLabel("Attended", se_s1)
+        attend_label.setGeometry(1230, 150, 100, 50)
+        attend_label.setFont(QFont('Times', 12))
+        
+        conduct_label = QLabel("Conducted", se_s1)
+        conduct_label.setGeometry(1425, 150, 100, 50)
+        conduct_label.setFont(QFont('Times', 12))
+        
+        coa_label = QLabel("COA:", se_s1)
+        coa_label.setGeometry(100, 220, 250, 50)
+        coa_label.setFont(QFont('Times', 15))
+        
+        coa_attend1 = QLineEdit(se_s1)
+        coa_attend1.setGeometry(400, 220, 150, 50)
+        coa_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_attend1.setFont(QFont('Times', 12))
+        
+        coa_conduct1 = QLineEdit(se_s1)
+        coa_conduct1.setGeometry(600, 220, 150, 50)
+        coa_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_conduct1.setFont(QFont('Times', 12))
+
+        cn_label = QLabel("Computer Networks:", se_s1)
+        cn_label.setGeometry(100, 340, 250, 50)
+        cn_label.setFont(QFont('Times', 15))
+        
+        cn_attend1 = QLineEdit(se_s1)
+        cn_attend1.setGeometry(400, 340, 150, 50)
+        cn_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_attend1.setFont(QFont('Times', 12))
+        
+        cn_conduct1 = QLineEdit(se_s1)
+        cn_conduct1.setGeometry(600, 340, 150, 50)
+        cn_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_conduct1.setFont(QFont('Times', 12))
+        
+        at_label = QLabel("Automata Theory:", se_s1)
+        at_label.setGeometry(100, 460, 250, 50)
+        at_label.setFont(QFont('Times', 15))
+        
+        at_attend1 = QLineEdit(se_s1)
+        at_attend1.setGeometry(400, 460, 150, 50)
+        at_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_attend1.setFont(QFont('Times', 12))
+        
+        at_conduct1 = QLineEdit(se_s1)
+        at_conduct1.setGeometry(600, 460, 150, 50)
+        at_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_conduct1.setFont(QFont('Times', 12))
+        
+        maths_label = QLabel("Engg. Maths-IV:", se_s1)
+        maths_label.setGeometry(100, 580, 250, 50)
+        maths_label.setFont(QFont('Times', 15))
+        
+        maths_attend1 = QLineEdit(se_s1)
+        maths_attend1.setGeometry(400, 580, 150, 50)
+        maths_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_attend1.setFont(QFont('Times', 12))
+        
+        maths_conduct1 = QLineEdit(se_s1)
+        maths_conduct1.setGeometry(600, 580, 150, 50)
+        maths_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_conduct1.setFont(QFont('Times', 12))
+        
+        mpl_label = QLabel("Microprocessor Lab:", se_s1)
+        mpl_label.setGeometry(900, 220, 250, 50)
+        mpl_label.setFont(QFont('Times', 15))
+        
+        mpl_attend1 = QLineEdit(se_s1)
+        mpl_attend1.setGeometry(1200, 220, 150, 50)
+        mpl_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_attend1.setFont(QFont('Times', 12))
+        
+        mpl_conduct1 = QLineEdit(se_s1)
+        mpl_conduct1.setGeometry(1400, 220, 150, 50)
+        mpl_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_conduct1.setFont(QFont('Times', 12))
+
+        nt_label = QLabel("Networking Lab:", se_s1)
+        nt_label.setGeometry(900, 340, 250, 50)
+        nt_label.setFont(QFont('Times', 15))
+        
+        nt_attend1 = QLineEdit(se_s1)
+        nt_attend1.setGeometry(1200, 340, 150, 50)
+        nt_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_attend1.setFont(QFont('Times', 12))
+        
+        nt_conduct1 = QLineEdit(se_s1)
+        nt_conduct1.setGeometry(1400, 340, 150, 50)
+        nt_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_conduct1.setFont(QFont('Times', 12))
+        
+        unix_label = QLabel("Unix Lab:", se_s1)
+        unix_label.setGeometry(900, 460, 250, 50)
+        unix_label.setFont(QFont('Times', 15))
+        
+        unix_attend1 = QLineEdit(se_s1)
+        unix_attend1.setGeometry(1200, 460, 150, 50)
+        unix_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_attend1.setFont(QFont('Times', 12))
+        
+        unix_conduct1 = QLineEdit(se_s1)
+        unix_conduct1.setGeometry(1400, 460, 150, 50)
+        unix_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_conduct1.setFont(QFont('Times', 12))
+        
+        python_label = QLabel("Python Lab:", se_s1)
+        python_label.setGeometry(900, 580, 250, 50)
+        python_label.setFont(QFont('Times', 15))
+        
+        python_attend1 = QLineEdit(se_s1)
+        python_attend1.setGeometry(1200, 580, 150, 50)
+        python_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_attend1.setFont(QFont('Times', 12))
+        
+        python_conduct1 = QLineEdit(se_s1)
+        python_conduct1.setGeometry(1400, 580, 150, 50)
+        python_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_conduct1.setFont(QFont('Times', 12))
+        
+        submit_attend1 = QPushButton("Submit", se_s1)
+        submit_attend1.setGeometry(650, 700, 200, 50)
+        submit_attend1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        submit_attend1.setFont(QFont('Times', 15))
+        
+        show_table1 = QPushButton("Show Table", se_s1)
+        show_table1.setGeometry(950, 700, 200, 50)
+        show_table1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        show_table1.setFont(QFont('Times', 15))
+        show_table1.clicked.connect(lambda: table_view1.setVisible(True))
+        
+        # show_table1 = QPushButton("Show Table", self)
+        # show_table1.setGeometry(950, 700, 200, 50)
+        # show_table1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        # show_table1.setFont(QFont('Times', 15))
+        # show_table1.clicked.connect(lambda: table_view1.setVisible(True))
+        
+        table_view1 = QLabel(se_s1)
+        table_view1.setGeometry(0, 0, 1820, 900)
+        table_view1.setStyleSheet("background-color: white; color: black")
+        table_view1.setVisible(False)
+        
+        table_header1 = QLabel("Attendance Report", table_view1)
+        table_header1.setGeometry(700, 0, 500, 80)
+        table_header1.setFont(QFont('Times', 20))
+        
+        table1 = QTableWidget(table_view1)
+        table1.setGeometry(200, 150, 1400, 500)
+        table1.setRowCount(1)
+        table1.setColumnCount(10)
+        table1.setHorizontalHeaderLabels(['Roll No.', 'Name', 'COA', 'CN', 'AT', 'EM-4', 'MPL', 'NT', 'UL', 'Python'])
+        table1.horizontalHeader().setStretchLastSection(True)
+        table1.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch)
+        
+        close_table1 = QPushButton("", table_view1)
+        close_table1.setGeometry(1720, 10, 50, 50)
+        close_table1.setStyleSheet("border: none;")
+        close_table1.setIcon(icon)
+        close_table1.setIconSize(size)
+        close_table1.clicked.connect(lambda: table_view1.setVisible(False))
+        
+        
+        se_s2 = QLabel("", self)
+        se_s2.setGeometry(100, 100, 1820, 900)
+        se_s2.setStyleSheet("background-color: white; color: black")
+        se_s2.setVisible(False)
+        
+        header2 = QLabel("SE S2 Attendance", se_s2)
+        header2.setGeometry(700, 0, 500, 80)
+        header2.setFont(QFont('Times', 20))
+        
+        close_button2 = QPushButton("", se_s2)
+        close_button2.setGeometry(1720, 10, 50, 50)
+        close_button2.setStyleSheet("border: none;")
+        close_button2.setIcon(icon)
+        close_button2.setIconSize(size)
+        close_button2.clicked.connect(lambda: se_s2.setVisible(False))
+        
+        name_label = QLabel("Name:", se_s2)
+        name_label.setGeometry(650, 80, 80, 50)
+        name_label.setFont(QFont('Times', 15))
+        
+        student_name2 = QLineEdit(se_s2)
+        student_name2.setGeometry(750, 80, 250, 50)
+        student_name2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        student_name2.setFont(QFont('Times', 12))
+        
+        attend_label = QLabel("Attended", se_s2)
+        attend_label.setGeometry(430, 150, 100, 50)
+        attend_label.setFont(QFont('Times', 12))
+        
+        conduct_label = QLabel("Conducted", se_s2)
+        conduct_label.setGeometry(625, 150, 100, 50)
+        conduct_label.setFont(QFont('Times', 12))
+        
+        attend_label = QLabel("Attended", se_s2)
+        attend_label.setGeometry(1230, 150, 100, 50)
+        attend_label.setFont(QFont('Times', 12))
+        
+        conduct_label = QLabel("Conducted", se_s2)
+        conduct_label.setGeometry(1425, 150, 100, 50)
+        conduct_label.setFont(QFont('Times', 12))
+        
+        coa_label = QLabel("COA:", se_s2)
+        coa_label.setGeometry(100, 220, 250, 50)
+        coa_label.setFont(QFont('Times', 15))
+        
+        coa_attend2 = QLineEdit(se_s2)
+        coa_attend2.setGeometry(400, 220, 150, 50)
+        coa_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_attend2.setFont(QFont('Times', 12))
+        
+        coa_conduct2 = QLineEdit(se_s2)
+        coa_conduct2.setGeometry(600, 220, 150, 50)
+        coa_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_conduct2.setFont(QFont('Times', 12))
+
+        cn_label = QLabel("Computer Networks:", se_s2)
+        cn_label.setGeometry(100, 340, 250, 50)
+        cn_label.setFont(QFont('Times', 15))
+        
+        cn_attend2 = QLineEdit(se_s2)
+        cn_attend2.setGeometry(400, 340, 150, 50)
+        cn_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_attend2.setFont(QFont('Times', 12))
+        
+        cn_conduct2 = QLineEdit(se_s2)
+        cn_conduct2.setGeometry(600, 340, 150, 50)
+        cn_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_conduct2.setFont(QFont('Times', 12))
+        
+        at_label = QLabel("Automata Theory:", se_s2)
+        at_label.setGeometry(100, 460, 250, 50)
+        at_label.setFont(QFont('Times', 15))
+        
+        at_attend2 = QLineEdit(se_s2)
+        at_attend2.setGeometry(400, 460, 150, 50)
+        at_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_attend2.setFont(QFont('Times', 12))
+        
+        at_conduct2 = QLineEdit(se_s2)
+        at_conduct2.setGeometry(600, 460, 150, 50)
+        at_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_conduct2.setFont(QFont('Times', 12))
+        
+        maths_label = QLabel("Engg. Maths-IV:", se_s2)
+        maths_label.setGeometry(100, 580, 250, 50)
+        maths_label.setFont(QFont('Times', 15))
+        
+        maths_attend2 = QLineEdit(se_s2)
+        maths_attend2.setGeometry(400, 580, 150, 50)
+        maths_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_attend2.setFont(QFont('Times', 12))
+        
+        maths_conduct2 = QLineEdit(se_s2)
+        maths_conduct2.setGeometry(600, 580, 150, 50)
+        maths_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_conduct2.setFont(QFont('Times', 12))
+        
+        mpl_label = QLabel("Microprocessor Lab:", se_s2)
+        mpl_label.setGeometry(900, 220, 250, 50)
+        mpl_label.setFont(QFont('Times', 15))
+        
+        mpl_attend2 = QLineEdit(se_s2)
+        mpl_attend2.setGeometry(1200, 220, 150, 50)
+        mpl_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_attend2.setFont(QFont('Times', 12))
+        
+        mpl_conduct2 = QLineEdit(se_s2)
+        mpl_conduct2.setGeometry(1400, 220, 150, 50)
+        mpl_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_conduct2.setFont(QFont('Times', 12))
+
+        nt_label = QLabel("Networking Lab:", se_s2)
+        nt_label.setGeometry(900, 340, 250, 50)
+        nt_label.setFont(QFont('Times', 15))
+        
+        nt_attend2 = QLineEdit(se_s2)
+        nt_attend2.setGeometry(1200, 340, 150, 50)
+        nt_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_attend2.setFont(QFont('Times', 12))
+        
+        nt_conduct2 = QLineEdit(se_s2)
+        nt_conduct2.setGeometry(1400, 340, 150, 50)
+        nt_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_conduct2.setFont(QFont('Times', 12))
+        
+        unix_label = QLabel("Unix Lab:", se_s2)
+        unix_label.setGeometry(900, 460, 250, 50)
+        unix_label.setFont(QFont('Times', 15))
+        
+        unix_attend2 = QLineEdit(se_s2)
+        unix_attend2.setGeometry(1200, 460, 150, 50)
+        unix_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_attend2.setFont(QFont('Times', 12))
+        
+        unix_conduct2 = QLineEdit(se_s2)
+        unix_conduct2.setGeometry(1400, 460, 150, 50)
+        unix_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_conduct2.setFont(QFont('Times', 12))
+        
+        python_label = QLabel("Python Lab:", se_s2)
+        python_label.setGeometry(900, 580, 250, 50)
+        python_label.setFont(QFont('Times', 15))
+        
+        python_attend2 = QLineEdit(se_s2)
+        python_attend2.setGeometry(1200, 580, 150, 50)
+        python_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_attend2.setFont(QFont('Times', 12))
+        
+        python_conduct2 = QLineEdit(se_s2)
+        python_conduct2.setGeometry(1400, 580, 150, 50)
+        python_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_conduct2.setFont(QFont('Times', 12))
+        
+        submit_attend2 = QPushButton("Submit", se_s2)
+        submit_attend2.setGeometry(650, 700, 200, 50)
+        submit_attend2.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        submit_attend2.setFont(QFont('Times', 15))
+        
+        show_table2 = QPushButton("Show Table", se_s2)
+        show_table2.setGeometry(950, 700, 200, 50)
+        show_table2.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        show_table2.setFont(QFont('Times', 15))
+        show_table2.clicked.connect(lambda: table_view2.setVisible(True))
+        
+        # show_table1 = QPushButton("Show Table", self)
+        # show_table1.setGeometry(950, 700, 200, 50)
+        # show_table1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        # show_table1.setFont(QFont('Times', 15))
+        # show_table1.clicked.connect(lambda: table_view1.setVisible(True))
+        
+        table_view2 = QLabel(se_s2)
+        table_view2.setGeometry(0, 0, 1820, 900)
+        table_view2.setStyleSheet("background-color: white; color: black")
+        table_view2.setVisible(False)
+        
+        table_header1 = QLabel("Attendance Report", table_view2)
+        table_header1.setGeometry(700, 0, 500, 80)
+        table_header1.setFont(QFont('Times', 20))
+        
+        table2 = QTableWidget(table_view2)
+        table2.setGeometry(200, 150, 1400, 500)
+        table2.setRowCount(1)
+        table2.setColumnCount(10)
+        table2.setHorizontalHeaderLabels(['Roll No.', 'Name', 'COA', 'CN', 'AT', 'EM-4', 'MPL', 'NT', 'UL', 'Python'])
+        table2.horizontalHeader().setStretchLastSection(True)
+        table2.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch)
+        
+        close_table2 = QPushButton("", table_view2)
+        close_table2.setGeometry(1720, 10, 50, 50)
+        close_table2.setStyleSheet("border: none;")
+        close_table2.setIcon(icon)
+        close_table2.setIconSize(size)
+        close_table2.clicked.connect(lambda: table_view2.setVisible(False))
+        
+        te_t1 = QLabel("", self)
+        te_t1.setGeometry(100, 100, 1820, 900)
+        te_t1.setStyleSheet("background-color: white; color: black")
+        te_t1.setVisible(False)
+        
+        header3 = QLabel("TE T1 Attendance", te_t1)
+        header3.setGeometry(700, 0, 500, 80)
+        header3.setFont(QFont('Times', 20))
 
 
-        self.se_s1.studentName_label = QLabel("Student Name:", self.se_s1)
-        self.se_s1.studentName_label.setGeometry(900, 80, 250, 80)
-        self.se_s1.studentName_label.setFont(QFont('Times', 15))
+        name_label3 = QLabel("Name:", te_t1)
+        name_label3.setGeometry(650, 80, 80, 50)
+        name_label3.setFont(QFont('Times', 15))
         
-        self.se_s1.studentName_textbox = QLineEdit(self.se_s1)
-        self.se_s1.studentName_textbox.setFont(QFont('Times', 12))
-        self.se_s1.studentName_textbox.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.se_s1.studentName_textbox.setGeometry(900, 150, 500, 50)
+        student_name3 = QLineEdit(te_t1)
+        student_name3.setGeometry(750, 80, 250, 50)
+        student_name3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        student_name3.setFont(QFont('Times', 12))
+        
+        attend_label3 = QLabel("Attended", te_t1)
+        attend_label3.setGeometry(430, 150, 100, 50)
+        attend_label3.setFont(QFont('Times', 12))
+        
+        conduct_label3 = QLabel("Conducted", te_t1)
+        conduct_label3.setGeometry(625, 150, 100, 50)
+        conduct_label3.setFont(QFont('Times', 12))
+        
+        attend_label3 = QLabel("Attended", te_t1)
+        attend_label3.setGeometry(1230, 150, 100, 50)
+        attend_label3.setFont(QFont('Times', 12))
+        
+        conduct_label3 = QLabel("Conducted", te_t1)
+        conduct_label3.setGeometry(1425, 150, 100, 50)
+        conduct_label3.setFont(QFont('Times', 12))
+        
+        coa_label3 = QLabel("COA:", te_t1)
+        coa_label3.setGeometry(100, 220, 250, 50)
+        coa_label3.setFont(QFont('Times', 15))
+        
+        coa_attend3 = QLineEdit(te_t1)
+        coa_attend3.setGeometry(400, 220, 150, 50)
+        coa_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_attend3.setFont(QFont('Times', 12))
+        
+        coa_conduct3 = QLineEdit(te_t1)
+        coa_conduct3.setGeometry(600, 220, 150, 50)
+        coa_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_conduct3.setFont(QFont('Times', 12))
 
+        cn_label3 = QLabel("Computer Networks:", te_t1)
+        cn_label3.setGeometry(100, 340, 250, 50)
+        cn_label3.setFont(QFont('Times', 15))
+        
+        cn_attend3 = QLineEdit(te_t1)
+        cn_attend3.setGeometry(400, 340, 150, 50)
+        cn_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_attend3.setFont(QFont('Times', 12))
+        
+        cn_conduct3 = QLineEdit(te_t1)
+        cn_conduct3.setGeometry(600, 340, 150, 50)
+        cn_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_conduct3.setFont(QFont('Times', 12))
+        
+        at_label3 = QLabel("Automata Theory:", te_t1)
+        at_label3.setGeometry(100, 460, 250, 50)
+        at_label3.setFont(QFont('Times', 15))
+        
+        at_attend3 = QLineEdit(te_t1)
+        at_attend3.setGeometry(400, 460, 150, 50)
+        at_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_attend3.setFont(QFont('Times', 12))
+        
+        at_conduct3 = QLineEdit(te_t1)
+        at_conduct3.setGeometry(600, 460, 150, 50)
+        at_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_conduct3.setFont(QFont('Times', 12))
+        
+        maths_label3 = QLabel("Engg. Maths-IV:", te_t1)
+        maths_label3.setGeometry(100, 580, 250, 50)
+        maths_label3.setFont(QFont('Times', 15))
+        
+        maths_attend3 = QLineEdit(te_t1)
+        maths_attend3.setGeometry(400, 580, 150, 50)
+        maths_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_attend3.setFont(QFont('Times', 12))
+        
+        maths_conduct3 = QLineEdit(te_t1)
+        maths_conduct3.setGeometry(600, 580, 150, 50)
+        maths_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_conduct3.setFont(QFont('Times', 12))
+        
+        mpl_label3 = QLabel("Microprocessor Lab:", te_t1)
+        mpl_label3.setGeometry(900, 220, 250, 50)
+        mpl_label3.setFont(QFont('Times', 15))
+        
+        mpl_attend3 = QLineEdit(te_t1)
+        mpl_attend3.setGeometry(1200, 220, 150, 50)
+        mpl_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_attend3.setFont(QFont('Times', 12))
+        
+        mpl_conduct3 = QLineEdit(te_t1)
+        mpl_conduct3.setGeometry(1400, 220, 150, 50)
+        mpl_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_conduct3.setFont(QFont('Times', 12))
 
-        self.se_s1.conducted_label1 = QLabel("Lectures Conducted:", self.se_s1)
-        self.se_s1.conducted_label1.setGeometry(900, 230, 250, 80)
-        self.se_s1.conducted_label1.setFont(QFont('Times', 15))
+        nt_label3 = QLabel("Networking Lab:", te_t1)
+        nt_label3.setGeometry(900, 340, 250, 50)
+        nt_label3.setFont(QFont('Times', 15))
         
-        self.se_s1.conducted_textbox1 = QLineEdit(self.se_s1)
-        self.se_s1.conducted_textbox1.setFont(QFont('Times', 12))
-        self.se_s1.conducted_textbox1.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.se_s1.conducted_textbox1.setGeometry(900, 300, 500, 50)
+        nt_attend3 = QLineEdit(te_t1)
+        nt_attend3.setGeometry(1200, 340, 150, 50)
+        nt_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_attend3.setFont(QFont('Times', 12))
         
-        self.se_s1.attended_label1 = QLabel("Lectures Attended:", self.se_s1)
-        self.se_s1.attended_label1.setGeometry(900, 380, 250, 80)
-        self.se_s1.attended_label1.setFont(QFont('Times', 15))
+        nt_conduct3 = QLineEdit(te_t1)
+        nt_conduct3.setGeometry(1400, 340, 150, 50)
+        nt_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_conduct3.setFont(QFont('Times', 12))
         
-        self.se_s1.attended_textbox1 = QLineEdit(self.se_s1)
-        self.se_s1.attended_textbox1.setFont(QFont('Times', 12))
-        self.se_s1.attended_textbox1.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.se_s1.attended_textbox1.setGeometry(900, 450, 500, 50)
+        unix_label3 = QLabel("Unix Lab:", te_t1)
+        unix_label3.setGeometry(900, 460, 250, 50)
+        unix_label3.setFont(QFont('Times', 15))
         
+        unix_attend3 = QLineEdit(te_t1)
+        unix_attend3.setGeometry(1200, 460, 150, 50)
+        unix_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_attend3.setFont(QFont('Times', 12))
+        
+        unix_conduct3 = QLineEdit(te_t1)
+        unix_conduct3.setGeometry(1400, 460, 150, 50)
+        unix_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_conduct3.setFont(QFont('Times', 12))
+        
+        python_label3 = QLabel("Python Lab:", te_t1)
+        python_label3.setGeometry(900, 580, 250, 50)
+        python_label3.setFont(QFont('Times', 15))
+        
+        python_attend3 = QLineEdit(te_t1)
+        python_attend3.setGeometry(1200, 580, 150, 50)
+        python_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_attend3.setFont(QFont('Times', 12))
+        
+        python_conduct3 = QLineEdit(te_t1)
+        python_conduct3.setGeometry(1400, 580, 150, 50)
+        python_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_conduct3.setFont(QFont('Times', 12))
+        
+        submit_attend3 = QPushButton("Submit", te_t1)
+        submit_attend3.setGeometry(650, 700, 200, 50)
+        submit_attend3.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        submit_attend3.setFont(QFont('Times', 15))
+        
+        show_table3 = QPushButton("Show Table", te_t1)
+        show_table3.setGeometry(950, 700, 200, 50)
+        show_table3.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        show_table3.setFont(QFont('Times', 15))
+        show_table3.clicked.connect(lambda: table_view3.setVisible(True))
+        
+        # show_table1 = QPushButton("Show Table", self)
+        # show_table1.setGeometry(950, 700, 200, 50)
+        # show_table1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        # show_table1.setFont(QFont('Times', 15))
+        # show_table1.clicked.connect(lambda: table_view1.setVisible(True))
+        
+        table_view3 = QLabel(te_t1)
+        table_view3.setGeometry(0, 0, 1820, 900)
+        table_view3.setStyleSheet("background-color: white; color: black")
+        table_view3.setVisible(False)
+        
+        table_header3 = QLabel("Attendance Report", table_view3)
+        table_header3.setGeometry(700, 0, 500, 80)
+        table_header3.setFont(QFont('Times', 20))
+        
+        table3 = QTableWidget(table_view3)
+        table3.setGeometry(200, 150, 1400, 500)
+        table3.setRowCount(1)
+        table3.setColumnCount(10)
+        table3.setHorizontalHeaderLabels(['Roll No.', 'Name', 'COA', 'CN', 'AT', 'EM-4', 'MPL', 'NT', 'UL', 'Python'])
+        table3.horizontalHeader().setStretchLastSection(True)
+        table3.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        
+        close_table3 = QPushButton("", table_view3)
+        close_table3.setGeometry(1720, 10, 50, 50)
+        close_table3.setStyleSheet("border: none;")
+        close_table3.setIcon(icon)
+        close_table3.setIconSize(size)
+        close_table3.clicked.connect(lambda: table_view3.setVisible(False))
+        
+        close_button3 = QPushButton("", te_t1)
+        close_button3.setGeometry(1720, 10, 50, 50)
+        close_button3.setStyleSheet("border: none;")
+        close_button3.setIcon(icon)
+        close_button3.setIconSize(size)
+        close_button3.clicked.connect(lambda: te_t1.setVisible(False))
+        
+        te_t2 = QLabel("", self)
+        te_t2.setGeometry(100, 100, 1820, 900)
+        te_t2.setStyleSheet("background-color: white; color: black")
+        te_t2.setVisible(False)
 
-        
-        self.se_s1.date_label1 = QLabel("Date:", self.se_s1)
-        self.se_s1.date_label1.setGeometry(900, 530, 250, 80)
-        self.se_s1.date_label1.setFont(QFont('Times', 15))   
-        
-        self.se_s1.date_picker1 = QDateEdit(self.se_s1)
-        self.se_s1.date_picker1.setGeometry(900, 600, 250, 50)
-        self.se_s1.date_picker1.setStyleSheet("background-color: lightblue; color: black;")
-        self.se_s1.date_picker1.setFont(QFont('Times', 15))
-        self.se_s1.date_picker1.setDate(QDate.currentDate())
+        header4 = QLabel("TE T2 Attendance", te_t2)
+        header4.setGeometry(700, 0, 500, 80)
+        header4.setFont(QFont('Times', 20))
 
-        self.se_s1.submit_attendance1 = QPushButton("Submit", self.se_s1)
-        self.se_s1.submit_attendance1.setGeometry(900, 700, 200, 50)
-        self.se_s1.submit_attendance1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.se_s1.submit_attendance1.setFont(QFont('Times', 15))
-        self.se_s1.submit_attendance1.clicked.connect(self.on_click_submit)
+        name_label4 = QLabel("Name:", te_t2)
+        name_label4.setGeometry(650, 80, 80, 50)
+        name_label4.setFont(QFont('Times', 15))
+        
+        student_name4 = QLineEdit(te_t2)
+        student_name4.setGeometry(750, 80, 250, 50)
+        student_name4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        student_name4.setFont(QFont('Times', 12))
+        
+        attend_label4 = QLabel("Attended", te_t2)
+        attend_label4.setGeometry(430, 150, 100, 50)
+        attend_label4.setFont(QFont('Times', 12))
+        
+        conduct_label4 = QLabel("Conducted", te_t2)
+        conduct_label4.setGeometry(625, 150, 100, 50)
+        conduct_label4.setFont(QFont('Times', 12))
+        
+        attend_label4 = QLabel("Attended", te_t2)
+        attend_label4.setGeometry(1230, 150, 100, 50)
+        attend_label4.setFont(QFont('Times', 12))
+        
+        conduct_label4 = QLabel("Conducted", te_t2)
+        conduct_label4.setGeometry(1425, 150, 100, 50)
+        conduct_label4.setFont(QFont('Times', 12))
+        
+        coa_label4 = QLabel("COA:", te_t2)
+        coa_label4.setGeometry(100, 220, 250, 50)
+        coa_label4.setFont(QFont('Times', 15))
+        
+        coa_attend4 = QLineEdit(te_t2)
+        coa_attend4.setGeometry(400, 220, 150, 50)
+        coa_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_attend4.setFont(QFont('Times', 12))
+        
+        coa_conduct4 = QLineEdit(te_t2)
+        coa_conduct4.setGeometry(600, 220, 150, 50)
+        coa_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        coa_conduct4.setFont(QFont('Times', 12))
 
+        cn_label4 = QLabel("Computer Networks:", te_t2)
+        cn_label4.setGeometry(100, 340, 250, 50)
+        cn_label4.setFont(QFont('Times', 15))
+        
+        cn_attend4 = QLineEdit(te_t2)
+        cn_attend4.setGeometry(400, 340, 150, 50)
+        cn_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_attend4.setFont(QFont('Times', 12))
+        
+        cn_conduct4 = QLineEdit(te_t2)
+        cn_conduct4.setGeometry(600, 340, 150, 50)
+        cn_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        cn_conduct4.setFont(QFont('Times', 12))
+        
+        at_label4 = QLabel("Automata Theory:", te_t2)
+        at_label4.setGeometry(100, 460, 250, 50)
+        at_label4.setFont(QFont('Times', 15))
+        
+        at_attend4 = QLineEdit(te_t2)
+        at_attend4.setGeometry(400, 460, 150, 50)
+        at_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_attend4.setFont(QFont('Times', 12))
+        
+        at_conduct4 = QLineEdit(te_t2)
+        at_conduct4.setGeometry(600, 460, 150, 50)
+        at_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        at_conduct4.setFont(QFont('Times', 12))
+        
+        maths_label4 = QLabel("Engg. Maths-IV:", te_t2)
+        maths_label4.setGeometry(100, 580, 250, 50)
+        maths_label4.setFont(QFont('Times', 15))
+        
+        maths_attend4 = QLineEdit(te_t2)
+        maths_attend4.setGeometry(400, 580, 150, 50)
+        maths_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_attend4.setFont(QFont('Times', 12))
+        
+        maths_conduct4 = QLineEdit(te_t2)
+        maths_conduct4.setGeometry(600, 580, 150, 50)
+        maths_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        maths_conduct4.setFont(QFont('Times', 12))
+        
+        mpl_label4 = QLabel("Microprocessor Lab:", te_t2)
+        mpl_label4.setGeometry(900, 220, 250, 50)
+        mpl_label4.setFont(QFont('Times', 15))
+        
+        mpl_attend4 = QLineEdit(te_t2)
+        mpl_attend4.setGeometry(1200, 220, 150, 50)
+        mpl_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_attend4.setFont(QFont('Times', 12))
+        
+        mpl_conduct4 = QLineEdit(te_t2)
+        mpl_conduct4.setGeometry(1400, 220, 150, 50)
+        mpl_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        mpl_conduct4.setFont(QFont('Times', 12))
 
-        self.se_s1.showTable = QPushButton("Show Table", self.se_s1)
-        self.se_s1.showTable.setGeometry(1200, 700, 200, 50)
-        self.se_s1.showTable.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.se_s1.showTable.setFont(QFont('Times', 15))
-        self.se_s1.showTable.clicked.connect(self.on_click_show)
+        nt_label4 = QLabel("Networking Lab:", te_t2)
+        nt_label4.setGeometry(900, 340, 250, 50)
+        nt_label4.setFont(QFont('Times', 15))
         
-        self.se_s2 = QLabel("", self)
-        self.se_s2.setGeometry(120, 100, 1800, 900)
-        self.se_s2.setStyleSheet("background-color: white; color: black")
-        self.se_s2.setVisible(False)
+        nt_attend4 = QLineEdit(te_t2)
+        nt_attend4.setGeometry(1200, 340, 150, 50)
+        nt_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_attend4.setFont(QFont('Times', 12))
         
-        self.se_s2.header2 = QLabel("SE S2 Attendance", self.se_s2)
-        self.se_s2.header2.setGeometry(700, 0, 500, 80)
-        self.se_s2.header2.setFont(QFont('Times', 20))
+        nt_conduct4 = QLineEdit(te_t2)
+        nt_conduct4.setGeometry(1400, 340, 150, 50)
+        nt_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        nt_conduct4.setFont(QFont('Times', 12))
         
-        self.se_s2.close_button2 = QPushButton("", self.se_s2)
-        self.se_s2.close_button2.setGeometry(1720, 10, 50, 50)
-        self.se_s2.close_button2.setStyleSheet("border: none;")
-        self.se_s2.close_button2.setIcon(icon)
-        self.se_s2.close_button2.setIconSize(size)
-        self.se_s2.close_button2.clicked.connect(lambda: self.se_s2.setVisible(False))
+        unix_label4 = QLabel("Unix Lab:", te_t2)
+        unix_label4.setGeometry(900, 460, 250, 50)
+        unix_label4.setFont(QFont('Times', 15))
         
-        self.se_s2.table2 = QTableWidget(self.se_s2)
-        self.se_s2.table2.setRowCount(16)
-        self.se_s2.table2.setColumnCount(3)
-        self.se_s2.table2.setGeometry(100, 100, 700, 650)
-        self.se_s2.table2.setFont(QFont('Times', 15))
-        self.se_s2.table2.horizontalHeader()
-        self.se_s2.table2.setHorizontalHeaderLabels(['Roll No.', 'Name', 'Attendance %'])
-        self.se_s2.table2.horizontalHeader().setStretchLastSection(True)  
-        self.se_s2.table2.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        unix_attend4 = QLineEdit(te_t2)
+        unix_attend4.setGeometry(1200, 460, 150, 50)
+        unix_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_attend4.setFont(QFont('Times', 12))
+        
+        unix_conduct4 = QLineEdit(te_t2)
+        unix_conduct4.setGeometry(1400, 460, 150, 50)
+        unix_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        unix_conduct4.setFont(QFont('Times', 12))
+        
+        python_label4 = QLabel("Python Lab:", te_t2)
+        python_label4.setGeometry(900, 580, 250, 50)
+        python_label4.setFont(QFont('Times', 15))
+        
+        python_attend4 = QLineEdit(te_t2)
+        python_attend4.setGeometry(1200, 580, 150, 50)
+        python_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_attend4.setFont(QFont('Times', 12))
+        
+        python_conduct4 = QLineEdit(te_t2)
+        python_conduct4.setGeometry(1400, 580, 150, 50)
+        python_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
+        python_conduct4.setFont(QFont('Times', 12))
+        
+        submit_attend4 = QPushButton("Submit", te_t2)
+        submit_attend4.setGeometry(650, 700, 200, 50)
+        submit_attend4.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        submit_attend4.setFont(QFont('Times', 15))
+        
+        show_table4 = QPushButton("Show Table", te_t2)
+        show_table4.setGeometry(950, 700, 200, 50)
+        show_table4.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        show_table4.setFont(QFont('Times', 15))
+        show_table4.clicked.connect(lambda: table_view4.setVisible(True))
+        
+        # show_table1 = QPushButton("Show Table", self)
+        # show_table1.setGeometry(950, 700, 200, 50)
+        # show_table1.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 25px; padding: 10px;")
+        # show_table1.setFont(QFont('Times', 15))
+        # show_table1.clicked.connect(lambda: table_view1.setVisible(True))
+        
+        table_view4 = QLabel(te_t2)
+        table_view4.setGeometry(0, 0, 1820, 900)
+        table_view4.setStyleSheet("background-color: white; color: black")
+        table_view4.setVisible(False)
+        
+        table_header4 = QLabel("Attendance Report", table_view4)
+        table_header4.setGeometry(700, 0, 500, 80)
+        table_header4.setFont(QFont('Times', 20))
+        
+        table4 = QTableWidget(table_view4)
+        table4.setGeometry(200, 150, 1400, 500)
+        table4.setRowCount(1)
+        table4.setColumnCount(10)
+        table4.setHorizontalHeaderLabels(['Roll No.', 'Name', 'COA', 'CN', 'AT', 'EM-4', 'MPL', 'NT', 'UL', 'Python'])
+        table4.horizontalHeader().setStretchLastSection(True)
+        table4.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        
+        close_table4 = QPushButton("", table_view4)
+        close_table4.setGeometry(1720, 10, 50, 50)
+        close_table4.setStyleSheet("border: none;")
+        close_table4.setIcon(icon)
+        close_table4.setIconSize(size)
+        close_table4.clicked.connect(lambda: table_view4.setVisible(False))
 
-
-        self.se_s2.studentName_label2 = QLabel("Student Name:", self.se_s2)
-        self.se_s2.studentName_label2.setGeometry(900, 80, 250, 80)
-        self.se_s2.studentName_label2.setFont(QFont('Times', 15))
+        close_button4 = QPushButton("", te_t2)
+        close_button4.setGeometry(1720, 10, 50, 50)
+        close_button4.setStyleSheet("border: none;")
+        close_button4.setIcon(icon)
+        close_button4.setIconSize(size)
+        close_button4.clicked.connect(lambda: te_t2.setVisible(False))
         
-        self.se_s2.studentName_textbox2 = QLineEdit(self.se_s2)
-        self.se_s2.studentName_textbox2.setFont(QFont('Times', 12))
-        self.se_s2.studentName_textbox2.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.se_s2.studentName_textbox2.setGeometry(900, 150, 500, 50)
-
-
-        self.se_s2.conducted_label2 = QLabel("Lectures Conducted:", self.se_s2)
-        self.se_s2.conducted_label2.setGeometry(900, 230, 250, 80)
-        self.se_s2.conducted_label2.setFont(QFont('Times', 15))
-        
-        self.se_s2.conducted_textbox2 = QLineEdit(self.se_s2)
-        self.se_s2.conducted_textbox2.setFont(QFont('Times', 12))
-        self.se_s2.conducted_textbox2.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.se_s2.conducted_textbox2.setGeometry(900, 300, 500, 50)
-
-        
-        self.se_s2.attended_label2 = QLabel("Lectures Attended:", self.se_s2)
-        self.se_s2.attended_label2.setGeometry(900, 380, 250, 80)
-        self.se_s2.attended_label2.setFont(QFont('Times', 15))
-        
-        self.se_s2.attended_textbox2 = QLineEdit(self.se_s2)
-        self.se_s2.attended_textbox2.setFont(QFont('Times', 12))
-        self.se_s2.attended_textbox2.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.se_s2.attended_textbox2.setGeometry(900, 450, 500, 50)
-        
-
-        
-        self.se_s2.date_label2 = QLabel("Date:", self.se_s2)
-        self.se_s2.date_label2.setGeometry(900, 530, 250, 80)
-        self.se_s2.date_label2.setFont(QFont('Times', 15))   
-        
-        self.se_s2.date_picker2 = QDateEdit(self.se_s2)
-        self.se_s2.date_picker2.setGeometry(900, 600, 250, 50)
-        self.se_s2.date_picker2.setStyleSheet("background-color: lightblue; color: black;")
-        self.se_s2.date_picker2.setFont(QFont('Times', 15))
-        self.se_s2.date_picker2.setDate(QDate.currentDate())
-        
-        self.se_s2.submit_attendance2 = QPushButton("Submit", self.se_s2)
-        self.se_s2.submit_attendance2.setGeometry(900, 700, 200, 50)
-        self.se_s2.submit_attendance2.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.se_s2.submit_attendance2.setFont(QFont('Times', 15))
-        self.se_s2.submit_attendance2.clicked.connect(self.on_click_submit2)
-
-        self.se_s2.showTable2 = QPushButton("Show Table", self.se_s2)
-        self.se_s2.showTable2.setGeometry(1200, 700, 200, 50)
-        self.se_s2.showTable2.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.se_s2.showTable2.setFont(QFont('Times', 15))
-        self.se_s2.showTable2.clicked.connect(self.on_click_show2)
-        
-        
-        
-        self.te_t1 = QLabel("", self)
-        self.te_t1.setGeometry(120, 100, 1800, 900)
-        self.te_t1.setStyleSheet("background-color: white; color: black")
-        self.te_t1.setVisible(False)
-        
-        self.te_t1.header3 = QLabel("TE T1 Attendance", self.te_t1)
-        self.te_t1.header3.setGeometry(700, 0, 500, 80)
-        self.te_t1.header3.setFont(QFont('Times', 20))
-        
-        self.te_t1.close_button3 = QPushButton("", self.te_t1)
-        self.te_t1.close_button3.setGeometry(1720, 10, 50, 50)
-        self.te_t1.close_button3.setStyleSheet("border: none;")
-        self.te_t1.close_button3.setIcon(icon)
-        self.te_t1.close_button3.setIconSize(size)
-        self.te_t1.close_button3.clicked.connect(lambda: self.te_t1.setVisible(False))
-        
-        self.te_t1.table3 = QTableWidget(self.te_t1)
-        self.te_t1.table3.setRowCount(16)
-        self.te_t1.table3.setColumnCount(3)
-        self.te_t1.table3.setGeometry(100, 100, 700, 650)
-        self.te_t1.table3.setFont(QFont('Times', 15))
-        self.te_t1.table3.horizontalHeader()
-        self.te_t1.table3.setHorizontalHeaderLabels(['Roll No.', 'Name', 'Attendance %'])
-        self.te_t1.table3.horizontalHeader().setStretchLastSection(True)  
-        self.te_t1.table3.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-
-        self.te_t1.studentName_label3 = QLabel("Student Name:", self.te_t1)
-        self.te_t1.studentName_label3.setGeometry(900, 80, 250, 80)
-        self.te_t1.studentName_label3.setFont(QFont('Times', 15))
-        
-        self.te_t1.studentName_textbox3 = QLineEdit(self.te_t1)
-        self.te_t1.studentName_textbox3.setFont(QFont('Times', 12))
-        self.te_t1.studentName_textbox3.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.te_t1.studentName_textbox3.setGeometry(900, 150, 500, 50)
-
-
-        self.te_t1.conducted_label3 = QLabel("Lectures Conducted:", self.te_t1)
-        self.te_t1.conducted_label3.setGeometry(900, 230, 250, 80)
-        self.te_t1.conducted_label3.setFont(QFont('Times', 15))
-    
-        self.te_t1.conducted_textbox3 = QLineEdit(self.te_t1)
-        self.te_t1.conducted_textbox3.setFont(QFont('Times', 12))
-        self.te_t1.conducted_textbox3.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.te_t1.conducted_textbox3.setGeometry(900, 300, 500, 50)
-        
-        self.te_t1.attended_label3 = QLabel("Lectures Attended:", self.te_t1)
-        self.te_t1.attended_label3.setGeometry(900, 380, 250, 80)
-        self.te_t1.attended_label3.setFont(QFont('Times', 15))
-        
-        self.te_t1.attended_textbox3 = QLineEdit(self.te_t1)
-        self.te_t1.attended_textbox3.setFont(QFont('Times', 12))
-        self.te_t1.attended_textbox3.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.te_t1.attended_textbox3.setGeometry(900, 450, 500, 50)
-        
-        
-        self.te_t1.date_label3 = QLabel("Date:", self.te_t1)
-        self.te_t1.date_label3.setGeometry(900, 530, 250, 80)
-        self.te_t1.date_label3.setFont(QFont('Times', 15))   
-        
-        self.te_t1.date_picker3 = QDateEdit(self.te_t1)
-        self.te_t1.date_picker3.setGeometry(900, 600, 250, 50)
-        self.te_t1.date_picker3.setStyleSheet("background-color: lightblue; color: black;")
-        self.te_t1.date_picker3.setFont(QFont('Times', 15))
-        self.te_t1.date_picker3.setDate(QDate.currentDate())
-        
-        self.te_t1.submit_attendance3 = QPushButton("Submit", self.te_t1)
-        self.te_t1.submit_attendance3.setGeometry(900, 700, 200, 50)
-        self.te_t1.submit_attendance3.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.te_t1.submit_attendance3.setFont(QFont('Times', 15))
-        self.te_t1.submit_attendance3.clicked.connect(self.on_click_submit3)
-
-
-        self.te_t1.showTable3 = QPushButton("Show Table", self.te_t1)
-        self.te_t1.showTable3.setGeometry(1200, 700, 200, 50)
-        self.te_t1.showTable3.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.te_t1.showTable3.setFont(QFont('Times', 15))
-        self.te_t1.showTable3.clicked.connect(self.on_click_show3)
-
-
-        self.te_t2 = QLabel("", self)
-        self.te_t2.setGeometry(120, 100, 1800, 900)
-        self.te_t2.setStyleSheet("background-color: white; color: black")
-        self.te_t2.setVisible(False)
-
-        self.te_t2.header4 = QLabel("TE T2 Attendance", self.te_t2)
-        self.te_t2.header4.setGeometry(700, 0, 500, 80)
-        self.te_t2.header4.setFont(QFont('Times', 20))
-
-        self.te_t2.close_button4 = QPushButton("", self.te_t2)
-        self.te_t2.close_button4.setGeometry(1720, 10, 50, 50)
-        self.te_t2.close_button4.setStyleSheet("border: none;")
-        self.te_t2.close_button4.setIcon(icon)
-        self.te_t2.close_button4.setIconSize(size)
-        self.te_t2.close_button4.clicked.connect(lambda: self.te_t2.setVisible(False))
-        
-        self.te_t2.table4 = QTableWidget(self.te_t2)
-        self.te_t2.table4.setRowCount(16)
-        self.te_t2.table4.setColumnCount(3)
-        self.te_t2.table4.setGeometry(100, 100, 700, 650)
-        self.te_t2.table4.setFont(QFont('Times', 15))
-        self.te_t2.table4.horizontalHeader()
-        self.te_t2.table4.setHorizontalHeaderLabels(['Roll No.', 'Name', 'Attendance %'])
-        self.te_t2.table4.horizontalHeader().setStretchLastSection(True)  
-        self.te_t2.table4.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-
-        self.te_t2.studentName_label4 = QLabel("Student Name:", self.te_t2)
-        self.te_t2.studentName_label4.setGeometry(900, 80, 250, 80)
-        self.te_t2.studentName_label4.setFont(QFont('Times', 15))
-        
-        self.te_t2.studentName_textbox4 = QLineEdit(self.te_t2)
-        self.te_t2.studentName_textbox4.setFont(QFont('Times', 12))
-        self.te_t2.studentName_textbox4.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.te_t2.studentName_textbox4.setGeometry(900, 150, 500, 50)
-
-
-        self.te_t2.conducted_label4 = QLabel("Lectures Conducted:", self.te_t2)
-        self.te_t2.conducted_label4.setGeometry(900, 230, 250, 80)
-        self.te_t2.conducted_label4.setFont(QFont('Times', 15))
-        
-        self.te_t2.conducted_textbox4 = QLineEdit(self.te_t2)
-        self.te_t2.conducted_textbox4.setFont(QFont('Times', 12))
-        self.te_t2.conducted_textbox4.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.te_t2.conducted_textbox4.setGeometry(900, 300, 500, 50)
-        
-        self.te_t2.attended_label4 = QLabel("Lectures Attended:", self.te_t2)
-        self.te_t2.attended_label4.setGeometry(900, 380, 250, 80)
-        self.te_t2.attended_label4.setFont(QFont('Times', 15))
-        
-        self.te_t2.attended_textbox4 = QLineEdit(self.te_t2)
-        self.te_t2.attended_textbox4.setFont(QFont('Times', 12))
-        self.te_t2.attended_textbox4.setStyleSheet("background-color: lightblue; color: black; border-radius: 20px; padding: 10px")
-        self.te_t2.attended_textbox4.setGeometry(900, 450, 500, 50)
-    
-        
-        self.te_t2.date_label4 = QLabel("Date:", self.te_t2)
-        self.te_t2.date_label4.setGeometry(900, 530, 250, 80)
-        self.te_t2.date_label4.setFont(QFont('Times', 15))   
-        
-        self.te_t2.date_picker4 = QDateEdit(self.te_t2)
-        self.te_t2.date_picker4.setGeometry(900, 600, 250, 50)
-        self.te_t2.date_picker4.setStyleSheet("background-color: lightblue; color: black;")
-        self.te_t2.date_picker4.setFont(QFont('Times', 15))
-        self.te_t2.date_picker4.setDate(QDate.currentDate())
-        
-        self.te_t2.submit_attendance4 = QPushButton("Submit", self.te_t2)
-        self.te_t2.submit_attendance4.setGeometry(900, 700, 200, 50)
-        self.te_t2.submit_attendance4.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.te_t2.submit_attendance4.setFont(QFont('Times', 15))
-        self.te_t2.submit_attendance4.clicked.connect(self.on_click_submit4)
-
-        self.te_t2.showTable4 = QPushButton("Show Table", self.te_t2)
-        self.te_t2.showTable4.setGeometry(1200, 700, 200, 50)
-        self.te_t2.showTable4.setStyleSheet("background-color: #3E54AC; color: white; border-radius: 20px")
-        self.te_t2.showTable4.setFont(QFont('Times', 15))
-        self.te_t2.showTable4.clicked.connect(self.on_click_show4)
-
-        
-
         self.footer = QLabel(self)
-        self.footer.setGeometry(0, 900, 1920, 1080)
+        self.footer.setGeometry(0, 900, 1920, 100)
         self.footer.setStyleSheet("QLabel{ background: black; position: fixed;} ")
 
-        self.label1 = QPushButton(self.footer)
-        self.label1.setGeometry(100,0,150,100)
-        self.label1.setStyleSheet("color: white; background: black;")
-        self.label1.setText("@Academia 2023")
-        self.label1.setFont(QFont('Times', 10))
+        footerlbl1 = QPushButton(self.footer)
+        footerlbl1.setGeometry(100,0,150,100)
+        footerlbl1.setStyleSheet("color: white; background: black;")
+        footerlbl1.setText("@Academia 2023")
+        footerlbl1.setFont(QFont('Times', 10))
 
-        self.label2 = QPushButton(self.footer)
-        self.label2.setGeometry(300,0,150,100)
-        self.label2.setStyleSheet("color: white; background: black;")
-        self.label2.setText("Terms of Use")
-        self.label2.setFont(QFont('Times', 10))
+        footerlbl2 = QPushButton(self.footer)
+        footerlbl2.setGeometry(300,0,150,100)
+        footerlbl2.setStyleSheet("color: white; background: black;")
+        footerlbl2.setText("Terms of Use")
+        footerlbl2.setFont(QFont('Times', 10))
 
-        self.label3 = QPushButton(self.footer)
-        self.label3.setGeometry(500,0,200,100)
-        self.label3.setStyleSheet("color: white; background: black;")
-        self.label3.setText("Privacy Policy")
-        self.label3.setFont(QFont('Times', 10))
+        footerlbl3 = QPushButton(self.footer)
+        footerlbl3.setGeometry(500,0,200,100)
+        footerlbl3.setStyleSheet("color: white; background: black;")
+        footerlbl3.setText("Privacy Policy")
+        footerlbl3.setFont(QFont('Times', 10))
                                 
-        self.label4 = QPushButton(self.footer)
-        self.label4.setGeometry(1400,0,500,100)
-        self.label4.setStyleSheet("color: white; background: black;")
-        self.label4.setText("Copyright © 2023 Academia Inc. All rights reserved.")
-        self.label4.setFont(QFont('Times', 10))
+        footerlbl4 = QPushButton(self.footer)
+        footerlbl4.setGeometry(1400,0,500,100)
+        footerlbl4.setStyleSheet("color: white; background: black;")
+        footerlbl4.setText("Copyright © 2023 Academia Inc. All rights reserved.")
+        footerlbl4.setFont(QFont('Times', 10))
         
         self.showMaximized()
         self.show()
-    
-    def on_click_submit(self):
-        global StudentName, lecturesAttended, lecturesConducted
-        StudentName = self.se_s1.studentName_textbox.text()
-        lecturesConducted= self.se_s1.conducted_textbox1.text()
-        lecturesAttended = self.se_s1.attended_textbox1.text()
-
-        fil = db.Student_Data.find_one({"name": StudentName})
-        attendancePercent = str((int(lecturesAttended)/int(lecturesConducted))*100)
-        updatedVals = {"$set": {"attendance": attendancePercent }}
-        db.Student_Data.update_one(fil, updatedVals)
-
-
-        
-
-    def on_click_show(self):
-        fil = db.Student_Data.find_one({"name": StudentName})
-        rolll = str(107)
-        namee = fil["name"]
-        att = fil["attendance"]
-
-
-        row_position = self.se_s1.table1.rowCount()
-        self.se_s1.table1.insertRow(row_position)
-        self.se_s1.table1.setItem(row_position, 0, QTableWidgetItem(rolll))
-        self.se_s1.table1.setItem(row_position, 1, QTableWidgetItem(namee))
-        self.se_s1.table1.setItem(row_position, 2, QTableWidgetItem(att))
-
-
-    def on_click_submit2(self):
-        global StudentName2, lecturesAttended2, lecturesConducted2
-        StudentName2 = self.se_s2.studentName_textbox2.text()
-        lecturesConducted2= self.se_s2.conducted_textbox2.text()
-        lecturesAttended2 = self.se_s2.attended_textbox2.text()
-
-        filt = db.Student_Data.find_one({"name": StudentName2})
-        attendancePercent2 = str((int(lecturesAttended2)/int(lecturesConducted2))*100)
-        updatedVals2 = {"$set": {"attendance": attendancePercent2 }}
-        db.Student_Data.update_one(filt, updatedVals2)
-
-
-        
-
-    def on_click_show2(self):
-        filt = db.Student_Data.find_one({"name": StudentName2})
-        rolll2 = str(107)
-        namee2 = filt["name"]
-        att2 = filt["attendance"]
-
-
-        row_position = self.se_s2.table2.rowCount()
-        self.se_s2.table2.insertRow(row_position)
-        self.se_s2.table2.setItem(row_position, 0, QTableWidgetItem(rolll2))
-        self.se_s2.table2.setItem(row_position, 1, QTableWidgetItem(namee2))
-        self.se_s2.table2.setItem(row_position, 2, QTableWidgetItem(att2))
-
-    
-    def on_click_submit3(self):
-        global StudentName3, lecturesAttended3, lecturesConducted3
-        StudentName3 = self.te_t1.studentName_textbox3.text()
-        lecturesConducted3= self.te_t1.conducted_textbox3.text()
-        lecturesAttended3 = self.te_t1.attended_textbox3.text()
-
-        filt = db.Student_Data.find_one({"name": StudentName3})
-        attendancePercent3 = str((int(lecturesAttended3)/int(lecturesConducted3))*100)
-        updatedVals3 = {"$set": {"attendance": attendancePercent3 }}
-        db.Student_Data.update_one(filt, updatedVals3)
-
-
-        
-
-    def on_click_show3(self):
-        filt = db.Student_Data.find_one({"name": StudentName3})
-        rolll3 = str(107)
-        namee3 = filt["name"]
-        att3 = filt["attendance"]
-
-
-        row_position = self.te_t1.table3.rowCount()
-        self.te_t1.table3.insertRow(row_position)
-        self.te_t1.table3.setItem(row_position, 0, QTableWidgetItem(rolll3))
-        self.te_t1.table3.setItem(row_position, 1, QTableWidgetItem(namee3))
-        self.te_t1.table3.setItem(row_position, 2, QTableWidgetItem(att3))
-
-    
-    def on_click_submit4(self):
-        global StudentName4, lecturesAttended4, lecturesConducted4
-        StudentName4 = self.te_t2.studentName_textbox4.text()
-        lecturesConducted4= self.te_t2.conducted_textbox4.text()
-        lecturesAttended4 = self.te_t2.attended_textbox4.text()
-
-        filt = db.Student_Data.find_one({"name": StudentName4})
-        attendancePercent4 = str((int(lecturesAttended4)/int(lecturesConducted4))*100)
-        updatedVals4 = {"$set": {"attendance": attendancePercent4 }}
-        db.Student_Data.update_one(filt, updatedVals4)
-
-
-        
-
-    def on_click_show4(self):
-        filt = db.Student_Data.find_one({"name": StudentName4})
-        rolll4 = str(107)
-        namee4 = filt["name"]
-        att4 = filt["attendance"]
-
-
-        row_position = self.te_t2.table4.rowCount()
-        self.te_t2.table4.insertRow(row_position)
-        self.te_t2.table4.setItem(row_position, 0, QTableWidgetItem(rolll4))
-        self.te_t2.table4.setItem(row_position, 1, QTableWidgetItem(namee4))
-        self.te_t2.table4.setItem(row_position, 2, QTableWidgetItem(att4))
-        
-
-        
+            
         
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
