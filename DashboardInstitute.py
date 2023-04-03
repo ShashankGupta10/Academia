@@ -58,7 +58,8 @@ class DashboardInstitute(QMainWindow):
         navbarbtn3.setGeometry(1600, 31, 150, 40)
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
-        
+
+
         icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
@@ -73,10 +74,10 @@ class DashboardInstitute(QMainWindow):
         
         size = QSize(60, 60)
         
-        anicon = QIcon('announcement.png')
+        anicon = QIcon('Python-MPR-\\images\\announcements.png.jpg')
         announce = QPushButton(sidebar)
-        announce.setGeometry(15,30, 60, 60)
-        announce.setStyleSheet("border : 1px solid black")
+        announce.setGeometry(20,30, 60, 60)
+        announce.setStyleSheet("border : 0px solid black")
         announce.setIcon(anicon)
         announce.setIconSize(size)
         
@@ -85,10 +86,10 @@ class DashboardInstitute(QMainWindow):
         announce_btn.setStyleSheet("border: none; color: white; text-align: left")
         announce_btn.setFont(QFont('Times', 20))
         
-        aticon = QIcon('attendence.png')
+        aticon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\attendance.png')
         attend = QPushButton(sidebar)
-        attend.setGeometry(15,150, 60, 60)
-        attend.setStyleSheet("border : 1px solid black")
+        attend.setGeometry(20,150, 60, 60)
+        attend.setStyleSheet("border : 0px solid black")
         attend.setIcon(aticon)
         attend.setIconSize(size)
         
@@ -97,10 +98,10 @@ class DashboardInstitute(QMainWindow):
         attend_btn.setStyleSheet("border: none; color: white; text-align: left")
         attend_btn.setFont(QFont('Times', 20))
 
-        asicon = QIcon('assignment.png')
+        asicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\assignment.png.jpg')
         assign = QPushButton(sidebar)
-        assign.setGeometry(15,270, 60, 60)
-        assign.setStyleSheet("border : 1px solid black")
+        assign.setGeometry(25, 270, 60, 60)
+        assign.setStyleSheet("border : 0px solid black")
         assign.setIcon(asicon)
         assign.setIconSize(size)
         
@@ -108,16 +109,28 @@ class DashboardInstitute(QMainWindow):
         assign_btn.setGeometry(120, 270, 300, 60)
         assign_btn.setStyleSheet("border: none; color: white; text-align: left")
         assign_btn.setFont(QFont('Times', 20))
+
+        reicon = QIcon('D:\\python mpr final\\Python-MPR-\\images\\reshala.png')
+        reshaala = QPushButton(sidebar)
+        reshaala.setGeometry(20,390, 60, 60)
+        reshaala.setStyleSheet("border : 0px solid black")
+        reshaala.setIcon(reicon)
+        reshaala.setIconSize(size)
         
-        proficon = QIcon('profile.png')
+        reshaala_btn = QPushButton("Reshaala", sidebar)
+        reshaala_btn.setGeometry(120, 390, 300, 60)
+        reshaala_btn.setStyleSheet("border: none; color: white; text-align: left")
+        reshaala_btn.setFont(QFont('Times', 20))
+        
+        proficon = QIcon('D:\python mpr final\Python-MPR-\images\profile.png-removebg-preview.png')
         profile = QPushButton(sidebar)
-        profile.setGeometry(15,720, 60, 60)
-        profile.setStyleSheet("border : 1px solid black")
+        profile.setGeometry(20, 700, 60, 60)
+        profile.setStyleSheet("border : 0px solid black")
         profile.setIcon(proficon)
         profile.setIconSize(size)
         
         profile_btn = QPushButton("Profile", sidebar)
-        profile_btn.setGeometry(120, 720, 300, 60)
+        profile_btn.setGeometry(120, 700, 300, 60)
         profile_btn.setStyleSheet("border: none; color: white; text-align: left")
         profile_btn.setFont(QFont('Times', 20))
 
