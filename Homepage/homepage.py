@@ -76,14 +76,14 @@ class MainWindow(QMainWindow):
         self.tagline2.setFont(QFont('Helvetica', 20))
     
         self.button6 = QPushButton("Student", self)
-        self.button6.setGeometry(710, 700, 200, 50)
+        self.button6.setGeometry(160, 700, 200, 50)
         self.button6.setStyleSheet("QPushButton{ background: #C47AFF; position: fixed;border-radius:15px;color: black;border-radius:24px;}"
                                    "QPushButton:hover {border-radius:20px;}")
         self.button6.setFont(QFont('Times', 20))
         self.button6.clicked.connect(self.student)
 
         self.button7 = QPushButton("Institute", self)
-        self.button7.setGeometry(1010, 700, 200, 50)
+        self.button7.setGeometry(460, 700, 200, 50)
         self.button7.setStyleSheet("QPushButton{ background: #C47AFF; position: fixed;border-radius:15px;color: black;border-radius:24px;} "
                                    "QPushButton:hover {border-radius:20px;}")
         self.button7.setFont(QFont('Times', 20))
@@ -113,19 +113,19 @@ class MainWindow(QMainWindow):
         
     #-----------CAROUSEL---------#
         self.image_label = QLabel(self)
-        self.image_label.setGeometry(1100, 125, 700, 500)
+        self.image_label.setGeometry(1100, 200, 700, 500)
         self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homepageimage4bgrm.png"))
         self.image_label.setScaledContents(True)
         
         self.button = QPushButton("<", self)
-        self.button.setGeometry(1050, 310, 40, 40)
+        self.button.setGeometry(1050, 385, 40, 40)
         self.button.clicked.connect(self.nextImage)
         self.button.setStyleSheet("QPushButton{ background: transparent; position: fixed;border-radius:15px;color: black;}")
         self.button.setFont(QFont('Times', 25))
 
 
         self.button2 = QPushButton(">", self)
-        self.button2.setGeometry(1800, 310, 60, 60)
+        self.button2.setGeometry(1800, 385, 60, 60)
         self.button2.clicked.connect(self.nextImage)
         self.button2.setStyleSheet("QPushButton{ background: transparent; position: fixed; color: black;}")
         self.button2.setFont(QFont('Times', 25))
@@ -191,7 +191,7 @@ class MainWindow(QMainWindow):
 
     def student(self):
         window.close()
-        os.system("python loginpage\studentlogin.py &")
+        os.system("python studentlogin.py &")
         
 
         
