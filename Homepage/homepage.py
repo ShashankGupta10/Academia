@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
 
         logo = QLabel(self)
         logo.setGeometry(30, 20, 80, 70)
-        self.pixmap = QPixmap("D:\python mpr final\Python-MPR-\loginpage\smalllogo.png")
+        self.pixmap = QPixmap("All icons\logo.png")
         logo.setPixmap(self.pixmap)
         logo.setScaledContents(True)
         self.pixmap = self.pixmap.scaled(100, 200)
@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
         navbarbtn3.setFont(QFont('Times', 20))
 
 
-        icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
+        icon = QIcon("images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
         self.btn10.setStyleSheet("background : black;")
@@ -114,7 +114,7 @@ class MainWindow(QMainWindow):
     #-----------CAROUSEL---------#
         self.image_label = QLabel(self)
         self.image_label.setGeometry(1100, 200, 700, 500)
-        self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homepageimage4bgrm.png"))
+        self.image_label.setPixmap(QPixmap("images\homepageimage4bgrm.png"))
         self.image_label.setScaledContents(True)
         
         self.button = QPushButton("<", self)
@@ -167,16 +167,16 @@ class MainWindow(QMainWindow):
 
     def updateImage(self, value):
         if value == 0:
-            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homepagebanner1.png"))
+            self.image_label.setPixmap(QPixmap("images\homepageimage2bgrm.png"))
             self.current_image = 0
         elif value == 1:
-            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\images\homepageimage2bgrm.png"))
+            self.image_label.setPixmap(QPixmap("Homepage\homepagebanner1.png"))
             self.current_image = 1
         elif value == 2:
-            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\Homepage\homepageimage4bgrm.png"))
+            self.image_label.setPixmap(QPixmap("images\homepageimage4bgrm.png"))
             self.current_image = 2
         elif value == 3:
-            self.image_label.setPixmap(QPixmap("D:\python mpr final\Python-MPR-\images\homepageimage5bgrm.png"))
+            self.image_label.setPixmap(QPixmap("images\homepageimage5bgrm.png"))
             self.current_image = 3
     
     def nextImage(self):
@@ -191,7 +191,7 @@ class MainWindow(QMainWindow):
 
     def student(self):
         window.close()
-        os.system("python studentlogin.py &")
+        os.system("python loginpage\studentlogin.py &")
         
 
         

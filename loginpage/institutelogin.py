@@ -9,7 +9,7 @@ from pymongo import MongoClient
 
 client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
 db = client.get_database("IOP")
-coll = db.Student_Data
+coll = db.Institute_Data
 
 class Studentlogin(QMainWindow):
     def __init__(self):
@@ -101,7 +101,7 @@ class Studentlogin(QMainWindow):
             if(record and password == passwordent):
                 window.close()
                 # path = "D:/python mpr final 2/Python-MPR-/Studentdashboard.py"
-                os.system('python "Studentdashboard.py" &')
+                os.system('python "Institutedashboard.py" &')
                 
  
             else:

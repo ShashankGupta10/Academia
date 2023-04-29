@@ -122,6 +122,12 @@ class Announcements(QMainWindow):
         self.announcements.setGeometry(200, 120, 250, 80)
         self.announcements.setFont(QFont('Times', 20))
         
+        backbtn = QToolButton(self.chatbox)
+        backbtn.setArrowType(Qt.LeftArrow)        
+        backbtn.setGeometry(0,40,50,50)
+        backbtn.setStyleSheet("QToolButton{ background:  transparent; color: #301E67}")
+        backbtn.clicked.connect(self.back)
+        
         self.active_chat = 0
         
         self.chat1 = QPushButton("IT Department", self)
@@ -141,12 +147,12 @@ class Announcements(QMainWindow):
         self.chat2.clicked.connect(lambda: self.switchChat(1))
         # self.chat2.clicked.connect(self.connect)
         
-        self.chat3 = QPushButton("S2 IT", self)
-        self.chat3.setStyleSheet("QPushButton { border: 1px solid black; border-left: none;}"
-                                 "QPushButton:hover{ background: lightblue; border-left: 1px solid black;}")
-        self.chat3.setGeometry(120, 400, 400, 100)
-        self.chat3.setFont(QFont('Times', 12))
-        self.chat3.clicked.connect(lambda: self.switchChat(2))
+        # self.chat3 = QPushButton("S2 IT", self)
+        # self.chat3.setStyleSheet("QPushButton { border: 1px solid black; border-left: none;}"
+        #                          "QPushButton:hover{ background: lightblue; border-left: 1px solid black;}")
+        # self.chat3.setGeometry(120, 400, 400, 100)
+        # self.chat3.setFont(QFont('Times', 12))
+        # self.chat3.clicked.connect(lambda: self.switchChat(2))
         # self.chat3.clicked.connect(self.connect)
         
         
@@ -165,36 +171,36 @@ class Announcements(QMainWindow):
         size = QSize(50, 50)
         self.hod_icon.setIconSize(size)
         
-        self.teacher_icon = QPushButton("" ,self)
-        self.teacher_icon.setStyleSheet("border: none")
-        self.teacher_icon.setGeometry(150,410, 80, 80)
-        self.teacher_icon.setIcon(chat_icon)
-        size = QSize(50, 50)
-        self.teacher_icon.setIconSize(size)
+        # self.teacher_icon = QPushButton("" ,self)
+        # self.teacher_icon.setStyleSheet("border: none")
+        # self.teacher_icon.setGeometry(150,410, 80, 80)
+        # self.teacher_icon.setIcon(chat_icon)
+        # size = QSize(50, 50)
+        # self.teacher_icon.setIconSize(size)
 
 
 
         # Messages displayed here
         self.message_box = QTextEdit(self)
         self.message_box.setFont(QFont('Times', 15))
-        self.message_box.setStyleSheet("background-color: white; color: black")
-        self.message_box.setGeometry(520, 200, 1400, 550)
+        self.message_box.setStyleSheet("background-color: #ECF2FF; color: black")
+        self.message_box.setGeometry(520, 100, 1400, 800)
         self.message_box.setReadOnly(True)
         # self.message_box.setVisible(True)
         
         self.message_box1 = QTextEdit(self)
         self.message_box1.setFont(QFont('Times', 15))
-        self.message_box1.setStyleSheet("background-color: white; color: black")
-        self.message_box1.setGeometry(520, 200, 1400, 550)
+        self.message_box1.setStyleSheet("background-color: #ECF2FF; color: black")
+        self.message_box1.setGeometry(520, 100, 1400, 800)
         self.message_box1.setReadOnly(True)
         self.message_box1.setVisible(False)
         
-        self.message_box2 = QTextEdit(self)
-        self.message_box2.setFont(QFont('Times', 15))
-        self.message_box2.setStyleSheet("background-color: white; color: black")
-        self.message_box2.setGeometry(520, 200, 1400, 550)
-        self.message_box2.setReadOnly(True)
-        self.message_box2.setVisible(False)
+        # self.message_box2 = QTextEdit(self)
+        # self.message_box2.setFont(QFont('Times', 15))
+        # self.message_box2.setStyleSheet("background-color: white; color: black")
+        # self.message_box2.setGeometry(520, 200, 1400, 550)
+        # self.message_box2.setReadOnly(True)
+        # self.message_box2.setVisible(False)
 
         self.footer = QLabel(self)
         self.footer.setGeometry(0, 900, 1920, 1080)
@@ -319,21 +325,20 @@ class Announcements(QMainWindow):
         os.system("python StudentAnnouncement.py &")   
     def attendence(self):
         window.close()
-        os.system("python Attendencestudent.py &")
+        os.system("python Attendancestudent.py &")
     def assignment(self):
         window.close()
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala\\reshalabuy.py &") 
+        os.system("python Reshala_sell\\reshalasell.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
-    def back(Self):
+    def back(self):
         window.close()
         os.system("python Studentdashboard.py &") 
 
 App = QApplication(sys.argv)
-App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
 window = Announcements()
 sys.exit(App.exec())

@@ -17,7 +17,7 @@ class DashboardInstitute(QMainWindow):
 
         siz = QSize(80,80)
         logo = QPushButton(self)
-        logo.setGeometry(30, 20, 80, 80)
+        logo.setGeometry(30, 15, 80, 80)
         logocon = QIcon("All icons\logo.png")
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
@@ -30,8 +30,8 @@ class DashboardInstitute(QMainWindow):
         navbarbtn1.setFont(QFont('Times', 20))
         navbarbtn1.clicked.connect(self.back)
 
-        navbarbtn2= QPushButton("Student Add", self)
-        navbarbtn2.setGeometry(1400, 31, 150, 40)
+        navbarbtn2= QPushButton("Add Student", self)
+        navbarbtn2.setGeometry(1360, 31, 200, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
         navbarbtn2.clicked.connect(self.addstudent)
@@ -42,13 +42,14 @@ class DashboardInstitute(QMainWindow):
         navbarbtn3.setFont(QFont('Times', 20))
 
 
-        icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
+        icon = QIcon("images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
         self.btn10.setStyleSheet("background : black;")
         self.btn10.setIcon(icon)
         size = QSize(100, 100)
         self.btn10.setIconSize(size)
+        # self.btn10.clicked.connect(self.)
         
         sidebar = QLabel(self)
         sidebar.setGeometry(0,100,450,1920)
@@ -111,24 +112,59 @@ class DashboardInstitute(QMainWindow):
         profile_btn.setFont(QFont('Times', 20))
 
         self.panel1 = QPushButton(self)
-        self.panel1.setGeometry(600,350,500,300)
-        self.panel1.setText("Add Student")
-        self.panel1.setStyleSheet("QPushButton{ background: #BFACE2;  border-radius: 20px; padding: 10px;}"
-                                "QPushButton:hover{ background:#3E54AC;border-radius: 20px;padding: 20px; color: white;}")
-        self.panel1.setFont(QFont('Times', 20))
+        self.panel1.setGeometry(500,350,675,400)
+        self.panel1.setStyleSheet("QPushButton{ background: #BFACE2;  border-radius: 20px;}")
         self.panel1.clicked.connect(self.addstudent)
+        
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(10)
+        shadow.setColor(QColor("black"))
+        shadow.setXOffset(5)
+        shadow.setYOffset(5)
+        shadow.setColor(Qt.black)
 
+        f = QFont('Times',15)
+        f.setBold(True)
+        add = QLabel(self.panel1)
+        add.setText("Add Student")
+        add.setGeometry(410, 80, 250, 250)
+        add.setFont(f)
+        self.panel1.setGraphicsEffect(shadow)
+
+        addicon = QPixmap("images\\add-student-removebg.png")
+        addlbl = QLabel(self.panel1)
+        addlbl.setGeometry(20, 20, 350, 350)
+        addlbl.setPixmap(addicon)
+        addlbl.setScaledContents(True)
+        
         self.panel2 = QPushButton(self)
-        self.panel2.setGeometry(1200,350,500,300)
-        self.panel2.setText("Assignments")
-        self.panel2.setStyleSheet("QPushButton{ background: #BFACE2;  border-radius: 20px; padding: 10px;}"
-                                "QPushButton:hover{ background:#3E54AC; border-width: 50px;border-color: #1E90FF;border-radius: 20px;padding: 10px; color: white;}")
-        self.panel2.setFont(QFont('Times', 20))
+        self.panel2.setGeometry(1200,350,675,400)
+        self.panel2.setStyleSheet("QPushButton{ background: #BFACE2;  border-radius: 20px;}")
         self.panel2.clicked.connect(self.assignment)
+
+        shadow1 = QGraphicsDropShadowEffect()
+        shadow1.setBlurRadius(10)
+        shadow1.setColor(QColor("black"))
+        shadow1.setXOffset(5)
+        shadow1.setYOffset(5)
+        shadow1.setColor(Qt.black)
+        
+        ass = QLabel(self.panel2)
+        ass.setText("Assignments")
+        ass.setGeometry(450, 80, 200, 250)
+        ass.setFont(f)
+
+        assicon = QPixmap("images\\assignmentsdashboard.png")
+        asslbl = QLabel(self.panel2)
+        asslbl.setGeometry(0,0, 410, 400)
+        asslbl.setPixmap(assicon)
+        self.panel2.setGraphicsEffect(shadow1)
         
         hello = QLabel(self)
-        hello.setGeometry(900, 150, 500, 100)
-        hello.setStyleSheet("QLabel{ background: #BFACE2}")
+        hello.setGeometry(1000, 150, 500, 100)
+        hello.setText("WELCOME TSEC")
+        hello.setStyleSheet("QLabel{ background: white; font-weight: bold;}")
+        hello.setFont(QFont('Times', 25))
 
         self.footer = QLabel(self)
         self.footer.setGeometry(0, 900, 1920, 100)

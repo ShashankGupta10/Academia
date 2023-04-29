@@ -23,17 +23,16 @@ class InstituteAddStudent(QMainWindow):
         backbtn = QToolButton(self)
         backbtn.setArrowType(Qt.LeftArrow)        
         backbtn.setGeometry(100,100,50,50)
-        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.setStyleSheet("QToolButton{ background: transparent;color: #301E67}")
         backbtn.clicked.connect(self.back)
 
         siz = QSize(80,80)
         logo = QPushButton(self)
-        logo.setGeometry(30, 20, 80, 80)
+        logo.setGeometry(30, 15, 80, 80)
         logocon = QIcon("All icons\logo.png")
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
-        logo.clicked.connect(self.back)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -41,8 +40,8 @@ class InstituteAddStudent(QMainWindow):
         navbarbtn1.setFont(QFont('Times', 20))
         navbarbtn1.clicked.connect(self.back)
 
-        navbarbtn2= QPushButton("Student Add", self)
-        navbarbtn2.setGeometry(1400, 31, 150, 40)
+        navbarbtn2= QPushButton("Add Student", self)
+        navbarbtn2.setGeometry(1360, 31, 200, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
         navbarbtn2.clicked.connect(self.addstudent)
@@ -52,18 +51,20 @@ class InstituteAddStudent(QMainWindow):
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
 
-        icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
+
+        icon = QIcon("images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
         self.btn10.setStyleSheet("background : black;")
         self.btn10.setIcon(icon)
         size = QSize(100, 100)
         self.btn10.setIconSize(size)
+        # self.btn10.clicked.connect(self.)
         
         # ************************MAIN CODE****************************
 
         sidebar = QLabel(self)
-        sidebar.setGeometry(0,100,120,1920)
+        sidebar.setGeometry(0,100,100,1920)
         sidebar.setStyleSheet("background-color: #3E54AC;")
         
         size = QSize(60, 60)
@@ -100,54 +101,54 @@ class InstituteAddStudent(QMainWindow):
         profile.setIconSize(size)
 
         addStudent = QLabel(self)
-        addStudent.setText("ADD STUDENT")
-        addStudent.setGeometry(835, 200, 250, 75) 
+        addStudent.setText("Add Student")
+        addStudent.setGeometry(835, 200, 400, 75) 
         addStudent.setStyleSheet("background-color: transparent; font-weight: bold;")
-        addStudent.setFont(QFont('Times', 20))
+        addStudent.setFont(QFont('Times', 25))
 
         studentPanel = QLabel(self)
         studentPanel.setGeometry(450, 300, 1000, 450)
-        studentPanel.setStyleSheet("background-color: #ECF2FF; border-radius: 20%")
+        studentPanel.setStyleSheet("background-color: white; border-radius: 20%")
 
         studentUsername = QLabel(self)
-        studentUsername.setText("Enter new Student Username  :")
+        studentUsername.setText(" Student Username  :")
         studentUsername.setGeometry(500, 350, 350, 50) 
         studentUsername.setStyleSheet("background-color: transparent; font-weight: bold;")
         studentUsername.setFont(QFont('Times', 12))
 
 
         self.studentUsernameText = QLineEdit(self)
-        self.studentUsernameText.setGeometry(900,350,500,40)
-        self.studentUsernameText.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        self.studentUsernameText.setGeometry(800,350,600,40)
+        self.studentUsernameText.setStyleSheet("QLineEdit{ background: #EDE3FF;border; border-color: black; border-radius: 20px; padding: 10px;}")
         self.studentUsernameText.setFont(QFont('Times', 10))
 
         studentPassword = QLabel(self)
-        studentPassword.setText("Enter new Student Password   :")
+        studentPassword.setText(" Student Password   :")
         studentPassword.setGeometry(500, 450, 350, 50) 
         studentPassword.setStyleSheet("background-color: transparent; font-weight: bold;")
         studentPassword.setFont(QFont('Times', 12))
 
         self.studentPasswordText = QLineEdit(self)
-        self.studentPasswordText.setGeometry(900,450,500,40)
+        self.studentPasswordText.setGeometry(800,450,600,40)
         self.studentPasswordText.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         self.studentPasswordText.setFont(QFont('Times', 10))
 
         studentEmail = QLabel(self)
-        studentEmail.setText("Enter new Student Email          :")
+        studentEmail.setText(" Student Email          :")
         studentEmail.setGeometry(500, 550, 350, 50) 
         studentEmail.setStyleSheet("background-color: transparent; font-weight: bold;")
         studentEmail.setFont(QFont('Times', 12))
 
         self.studentEmailText = QLineEdit(self)
-        self.studentEmailText.setGeometry(900,550,500,40)
+        self.studentEmailText.setGeometry(800,550,600,40)
         self.studentEmailText.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         self.studentEmailText.setFont(QFont('Times', 10))
 
         addStudentButton = QPushButton(self)
-        addStudentButton.setText("ADD STUDENT")
+        addStudentButton.setText("Add Student")
         addStudentButton.setGeometry(850,650,200,40)
         addStudentButton.setStyleSheet("QPushButton{ background: #3E54AC; border-color: black; border-radius: 20px; padding: 10px; color: white}")
-        addStudentButton.setFont(QFont('Times', 10))
+        addStudentButton.setFont(QFont('Times', 12))
         addStudentButton.clicked.connect(self.on_click_addStudentButton)
 
         # ******FOOTER*******        
@@ -194,7 +195,7 @@ class InstituteAddStudent(QMainWindow):
     def addstudent(self):
         window.close()
         os.system("python Instituteaddstudent.py &")
-    def back(Self):
+    def back(self):
         window.close()
         os.system("python Institutedashboard.py &") 
 
@@ -209,7 +210,7 @@ class InstituteAddStudent(QMainWindow):
             "email": newStudentEmail
         })
         window.close()
-        os.system("python Institutedashboard &")  
+        os.system("python Institutedashboard.py &")  
    
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")

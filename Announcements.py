@@ -7,14 +7,14 @@ from PyQt5.QtCore import *
 import sys
 import os
 
-HOST = '192.168.0.106'
+HOST = '192.168.65.156'
 PORT = [9996, 9997, 9998]
 
 class Announcements(QMainWindow):            
     def __init__(self):
         super().__init__()
         
-        os.system("python chat_server.py &")
+        # os.system("python chat_server.py &")
         
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.setWindowTitle("Academia")
@@ -46,8 +46,8 @@ class Announcements(QMainWindow):
         navbarbtn1.clicked.connect(self.back)
 
 
-        navbarbtn2= QPushButton("Student Add", self)
-        navbarbtn2.setGeometry(1400, 31, 150, 40)
+        navbarbtn2= QPushButton("Add Student", self)
+        navbarbtn2.setGeometry(1350, 31, 200, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
         navbarbtn2.clicked.connect(self.addstudent)
@@ -170,24 +170,24 @@ class Announcements(QMainWindow):
         
 
         self.label2 = QLabel(self)
-        self.label2.setGeometry(520, 750, 1400, 100)
+        self.label2.setGeometry(520, 800, 1400, 100)
         self.label2.setStyleSheet("background-color: lightblue; border-top: 2px solid black")
         
         # Type messages here
         self.message_textbox = QLineEdit(self)
         self.message_textbox.setFont(QFont('Times', 12))
-        self.message_textbox.setStyleSheet("background-color: white; color: black; border-radius: 5px")
-        self.message_textbox.setGeometry(580, 780, 1200, 40)
+        self.message_textbox.setStyleSheet("background-color: white; color: black; border-radius: 20px")
+        self.message_textbox.setGeometry(580, 830, 1200, 40)
         self.message_textbox.returnPressed.connect(self.send_message)
 
         # Send Button
-        send_icon = QIcon('D:\python mpr final\Python-MPR-\images\send-icon.png')
+        send_icon = QIcon('images\\send-icon.png')
         self.message_button = QPushButton("", self)
         self.message_button.setStyleSheet("border: none;")
         # self.message_button.setFont(QFont('Times', 12))
         # self.message_button.setStyleSheet("background-color: #464EB8; color: white; border-radius: 20px")
         self.message_button.setIcon(send_icon)
-        self.message_button.setGeometry(1820, 775, 50, 50)
+        self.message_button.setGeometry(1820, 830, 50, 50)
         size = QSize(50, 50)
         self.message_button.setIconSize(size)
         self.message_button.clicked.connect(self.send_message)
@@ -196,21 +196,21 @@ class Announcements(QMainWindow):
         self.message_box = QTextEdit(self)
         self.message_box.setFont(QFont('Times', 15))
         self.message_box.setStyleSheet("background-color: white; color: black")
-        self.message_box.setGeometry(520, 200, 1400, 550)
+        self.message_box.setGeometry(520, 100, 1400, 700)
         self.message_box.setReadOnly(True)
         # self.message_box.setVisible(True)
         
         self.message_box1 = QTextEdit(self)
         self.message_box1.setFont(QFont('Times', 15))
         self.message_box1.setStyleSheet("background-color: white; color: black")
-        self.message_box1.setGeometry(520, 200, 1400, 550)
+        self.message_box1.setGeometry(520, 100, 1400, 700)
         self.message_box1.setReadOnly(True)
         self.message_box1.setVisible(False)
         
         self.message_box2 = QTextEdit(self)
         self.message_box2.setFont(QFont('Times', 15))
         self.message_box2.setStyleSheet("background-color: white; color: black")
-        self.message_box2.setGeometry(520, 200, 1400, 550)
+        self.message_box2.setGeometry(520, 100, 1400, 700)
         self.message_box2.setReadOnly(True)
         self.message_box2.setVisible(False)
 
@@ -344,11 +344,10 @@ class Announcements(QMainWindow):
     def addstudent(self):
         window.close()
         os.system("python Instituteaddstudent.py &")
-    def back(Self):
+    def back(self):
         window.close()
         os.system("python Institutedashboard.py &") 
 
 App = QApplication(sys.argv)
-App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
 window = Announcements()
 sys.exit(App.exec())

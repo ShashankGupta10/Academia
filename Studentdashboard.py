@@ -3,13 +3,21 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from urllib import *
 import sys,os
+from pymongo import MongoClient
+
+
+client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+db = client['IOP']
+
+result = db.Student_Data.find_one({"username": "shashankgupta2003"})
+print(result)
+# welcome = result["name"].upper()
 
 class DashboardStudent(QMainWindow):      
-    def __init__(self):
- 
+    def __init__(self): 
         super().__init__()
-        
-        self.setWindowTitle("Home Page")
+
+        self.setWindowTitle("Student DashBoard")
         self.setGeometry(0,0,1366,768)
 
         self.header = QLabel(self)
@@ -42,13 +50,14 @@ class DashboardStudent(QMainWindow):
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
         
-        icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
+        icon = QIcon("images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
         self.btn10.setStyleSheet("background : black;")
         self.btn10.setIcon(icon)
         size = QSize(100, 100)
         self.btn10.setIconSize(size)
+        self.btn10.clicked.connect(self.prof)
         
         sidebar = QLabel(self)
         sidebar.setGeometry(0,100,450,1920)
@@ -126,39 +135,60 @@ class DashboardStudent(QMainWindow):
         profile_btn.setFont(QFont('Times', 20))
         profile_btn.clicked.connect(self.sprofile)
 
-        self.panel1 = QLabel(self)
-        self.panel1.setGeometry(600,350,500,300)
-        self.panel1.setText("Announcements")
-        self.panel1.setStyleSheet("QLabel{ background: #BFACE2;  border-radius: 20px; padding: 10px;}"
-                                "QLabel:hover{ background:#3E54AC;border-radius: 20px;padding: 20px; color: white;}")
-        self.panel1.setFont(QFont('Times', 20))
-        self.panel1.setAlignment(Qt.AlignCenter)
+        self.panel1 = QPushButton(self)
+        self.panel1.setGeometry(500,350,675,400)
+        self.panel1.setStyleSheet("QPushButton{ background: #BFACE2;  border-radius: 20px;}")
+        self.panel1.clicked.connect(self.announcement)
+        
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(10)
+        shadow.setColor(QColor("black"))
+        shadow.setXOffset(5)
+        shadow.setYOffset(5)
+        shadow.setColor(Qt.black)
 
-        self.panel2 = QLabel(self)
-        self.panel2.setGeometry(1200,350,500,300)
-        self.panel2.setText("Assignments")
-        self.panel2.setStyleSheet("QLabel{ background: #BFACE2;  border-radius: 20px; padding: 10px;}"
-                                "QLabel:hover{ background:#3E54AC; border-width: 50px;border-color: #1E90FF;border-radius: 20px;padding: 10px; color: white;}")
-        self.panel2.setFont(QFont('Times', 20))
-        self.panel2.setAlignment(Qt.AlignCenter)
+        f = QFont('Times',15)
+        f.setBold(True)
+        ann = QLabel(self.panel1)
+        ann.setText("Announcements")
+        ann.setGeometry(410, 80, 250, 250)
+        ann.setFont(f)
+        self.panel1.setGraphicsEffect(shadow)
+
+        annicon = QPixmap("images\\announcementsdashboard.png")
+        annlbl = QLabel(self.panel1)
+        annlbl.setGeometry(0,0, 410, 400)
+        annlbl.setPixmap(annicon)
+        
+        self.panel2 = QPushButton(self)
+        self.panel2.setGeometry(1200,350,675,400)
+        self.panel2.setStyleSheet("QPushButton{ background: #BFACE2;  border-radius: 20px;}")
+        self.panel2.clicked.connect(self.assignment)
+
+        shadow1 = QGraphicsDropShadowEffect()
+        shadow1.setBlurRadius(10)
+        shadow1.setColor(QColor("black"))
+        shadow1.setXOffset(5)
+        shadow1.setYOffset(5)
+        shadow1.setColor(Qt.black)
+        
+        ass = QLabel(self.panel2)
+        ass.setText("Assignments")
+        ass.setGeometry(450, 80, 200, 250)
+        ass.setFont(f)
+
+        assicon = QPixmap("images\\assignmentsdashboard.png")
+        asslbl = QLabel(self.panel2)
+        asslbl.setGeometry(0,0, 410, 400)
+        asslbl.setPixmap(assicon)
+        self.panel2.setGraphicsEffect(shadow1)
+
         
         hello = QLabel(self)
-        hello.setGeometry(900, 150, 500, 100)
-        hello.setStyleSheet("QLabel{ background: #BFACE2}")
-
-        # self.textfield1 = QLineEdit(self)
-        # self.textfield1.setGeometry(830, 375, 300, 40)
-        # self.textfield1.setFont(QFont('Times',15))
-        # self.textfield1.setStyleSheet("QLineEdit{background-color: black;color: white; border-radius: 20px; padding-left: 20px; padding-right: 20px}"
-        #                               "QLineEdit:hover{ border: 2px solid; background-color: #15133C}")
-        
-
-        # self.textfield2 = QLineEdit(self)
-        # self.textfield2.setGeometry(830, 475, 300, 40)
-        # self.textfield2.setFont(QFont('Times',15))
-        # self.textfield2.setStyleSheet("QLineEdit{background-color: black;color: white; border-radius: 20px; padding-left: 20px; padding-right: 20px}"
-        #                               "QLineEdit:hover{ border: 2px solid; background-color: #15133C}")
-        
+        hello.setText("WELCOME  USER")
+        hello.setGeometry(900, 150, 800, 100)
+        hello.setStyleSheet("font-weight: bold")
+        hello.setFont(QFont('Times', 25))
 
         self.footer = QLabel(self)
         self.footer.setGeometry(0, 900, 1920, 100)
@@ -192,22 +222,25 @@ class DashboardStudent(QMainWindow):
         self.show()
     def announcement(self):
         window.close()
-        os.system("python StudentAnnouncement.py &")   
+        os.system('python "StudentAnnouncement.py" &')   
     def attendence(self):
         window.close()
-        os.system("python Attendencestudent.py &")
+        os.system('python "Attendancestudent.py" &')
     def assignment(self):
         window.close()
-        os.system("python AssignmentStudent.py &") 
+        os.system('python AssignmentStudent.py &') 
     def reshaala(self):
         window.close()
-        os.system("python Reshala\\reshalabuy.py &") 
+        os.system('python "Reshala_sell\\reshalasell.py" &') 
     def sprofile(self):
         window.close()
-        os.system("python profilestudent.py &")
-    def back(Self):
+        os.system('python "profilestudent.py" &')
+    def back(self):
         window.close()
-        os.system("python Studentdashboard.py &")
+        os.system('python "Studentdashboard.py" &')
+    def prof(self):
+        window.close()
+        os.system("python StudentProfile.py &")
     def logout(self):
         msgb = QMessageBox(self)
         msgb.setWindowTitle("LOGOUT!")
@@ -216,10 +249,13 @@ class DashboardStudent(QMainWindow):
         returnValue = msgb.exec()
         if returnValue == QMessageBox.Ok:
             window.close()
-            os.system("python Homepage\homepage.py &")
-App = QApplication(sys.argv)
-App.setStyleSheet("QMainWindow{background-color: white }")
+            os.system("python Homepage\\homepage.py &")
 
-window = DashboardStudent()
 
-sys.exit(App.exec())
+if __name__ == "__main__":
+    App = QApplication(sys.argv)
+    App.setStyleSheet("QMainWindow{background-color: white }")
+
+    window = DashboardStudent()
+
+    sys.exit(App.exec())

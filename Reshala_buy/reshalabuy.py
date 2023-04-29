@@ -17,12 +17,12 @@ resultEmail1 = db.Re_Shala.find_one({"price": "200"}, {"email": 1})
 resultImage1 = db.Re_Shala.find_one({"price": "200"}, {"image": 1})
 imageData1 = resultImage1['image']
 
-resultProductName2 = db.Re_Shala.find_one({"price": "50"}, {"productName": 1})
-resultPrice2 = db.Re_Shala.find_one({"price": "50"}, {"price": 1})
-resultDescription2 = db.Re_Shala.find_one({"price": "50"}, {"description": 1})
-resultPhone2 = db.Re_Shala.find_one({"price": "50"}, {"phone_number": 1})
-resultEmail2 = db.Re_Shala.find_one({"price": "50"}, {"email": 1})
-resultImage2 = db.Re_Shala.find_one({"price": "50"}, {"image": 1})
+resultProductName2 = db.Re_Shala.find_one({"price": "500"}, {"productName": 1})
+resultPrice2 = db.Re_Shala.find_one({"price": "500"}, {"price": 1})
+resultDescription2 = db.Re_Shala.find_one({"price": "500"}, {"description": 1})
+resultPhone2 = db.Re_Shala.find_one({"price": "500"}, {"phone_number": 1})
+resultEmail2 = db.Re_Shala.find_one({"price": "500"}, {"email": 1})
+resultImage2 = db.Re_Shala.find_one({"price": "500"}, {"image": 1})
 imageData2 = resultImage2['image']
 
 resultProductName3 = db.Re_Shala.find_one({"price": "100"}, {"productName": 1})
@@ -56,7 +56,7 @@ class reshaalabuy(QMainWindow):
         backbtn = QToolButton(self)
         backbtn.setArrowType(Qt.LeftArrow)        
         backbtn.setGeometry(100,100,50,50)
-        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.setStyleSheet("QToolButton{ background: transparent;color: #301E67}")
         backbtn.clicked.connect(self.back)
 
         siz = QSize(80,80)
@@ -71,13 +71,14 @@ class reshaalabuy(QMainWindow):
         navbarbtn1.setGeometry(1200, 31, 100, 40)
         navbarbtn1.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn1.setFont(QFont('Times', 20))
+        navbarbtn1.clicked.connect(self.back)
 
 
-        navbarbtn2= QPushButton("Sell", self)
+        navbarbtn2= QPushButton("Reshala", self)
         navbarbtn2.setGeometry(1400, 31, 150, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
-        navbarbtn2.clicked.connect(self.sell)
+        navbarbtn2.clicked.connect(self.reshaala)
         
         navbarbtn3= QPushButton("About", self)
         navbarbtn3.setGeometry(1600, 31, 150, 40)
@@ -94,7 +95,7 @@ class reshaalabuy(QMainWindow):
         self.btn10.setIconSize(size)
         
         sidebar = QLabel(self)
-        sidebar.setGeometry(0,100,80,1920)
+        sidebar.setGeometry(0,100,100,1920)
         sidebar.setStyleSheet("background-color: #3E54AC;")
         
         size = QSize(60, 60)
@@ -153,33 +154,34 @@ class reshaalabuy(QMainWindow):
         bgimg1.setPixmap(pixmap1)  
         bgimg1.setGeometry(0,0,300,350)
         bgimg1.setStyleSheet("QLabel{ background: #82C3EC}")
+        bgimg1.setScaledContents(True)
   
         productnametxt1 = QLabel(self.panel1)
-        productnametxt1.setText("Product Name :")
+        productnametxt1.setText("Product Name")
         productnametxt1.setGeometry(300, 2,200,50) 
         productnametxt1.setStyleSheet("background-color: transparent;")
         productnametxt1.setFont(QFont('Times', 12))
 
         productpricetxt1 = QLabel(self.panel1)
-        productpricetxt1.setText("Price :")
+        productpricetxt1.setText("Price")
         productpricetxt1.setGeometry(300, 60,200,50)  
         productpricetxt1.setStyleSheet("background-color: transparent;")
         productpricetxt1.setFont(QFont('Times', 12))
 
         productDescriptiontxt1 = QLabel(self.panel1)
-        productDescriptiontxt1.setText("Description : ")
+        productDescriptiontxt1.setText("Description")
         productDescriptiontxt1.setGeometry(300, 118,200,50) 
         productDescriptiontxt1.setStyleSheet("background-color: transparent;")
         productDescriptiontxt1.setFont(QFont('Times', 12))
 
         Emailtxt1 = QLabel(self.panel1)
-        Emailtxt1.setText("Email :")
+        Emailtxt1.setText("Email")
         Emailtxt1.setGeometry(300, 200,200,50)  
         Emailtxt1.setStyleSheet("background-color: transparent;")
         Emailtxt1.setFont(QFont('Times', 12))
 
         MobileNumbertxt1 = QLabel(self.panel1)
-        MobileNumbertxt1.setText("Phone Number:")
+        MobileNumbertxt1.setText("Phone Number")
         MobileNumbertxt1.setGeometry(300, 258,200,50)  
         MobileNumbertxt1.setStyleSheet("background-color: transparent;")
         MobileNumbertxt1.setFont(QFont('Times', 12))
@@ -221,33 +223,34 @@ class reshaalabuy(QMainWindow):
         bgimg2.setPixmap(pixmap2)  
         bgimg2.setGeometry(0,0,300,350)
         bgimg2.setStyleSheet("QLabel{ background: #82C3EC}")
+        bgimg2.setScaledContents(True)
 
         productnametxt2 = QLabel(self.panel2)
-        productnametxt2.setText("Product Name :")
+        productnametxt2.setText("Product Name")
         productnametxt2.setGeometry(300, 2,200,50) 
         productnametxt2.setStyleSheet("background-color: transparent;")
         productnametxt2.setFont(QFont('Times', 12))
 
         productpricetxt2 = QLabel(self.panel2)
-        productpricetxt2.setText("Price :")
+        productpricetxt2.setText("Price")
         productpricetxt2.setGeometry(300, 60,200,50)  
         productpricetxt2.setStyleSheet("background-color: transparent;")
         productpricetxt2.setFont(QFont('Times', 12))
 
         productDescriptiontxt2 = QLabel(self.panel2)
-        productDescriptiontxt2.setText("Description : ")
+        productDescriptiontxt2.setText("Description")
         productDescriptiontxt2.setGeometry(300, 118,200,50) 
         productDescriptiontxt2.setStyleSheet("background-color: transparent;")
         productDescriptiontxt2.setFont(QFont('Times', 12))
 
         Emailtxt2 = QLabel(self.panel2)
-        Emailtxt2.setText("Email :")
+        Emailtxt2.setText("Email")
         Emailtxt2.setGeometry(300, 200,200,50)  
         Emailtxt2.setStyleSheet("background-color: transparent;")
         Emailtxt2.setFont(QFont('Times', 12))
 
         MobileNumbertxt2 = QLabel(self.panel2)
-        MobileNumbertxt2.setText("Phone Number:")
+        MobileNumbertxt2.setText("Phone Number")
         MobileNumbertxt2.setGeometry(300, 258,200,50)  
         MobileNumbertxt2.setStyleSheet("background-color: transparent;")
         MobileNumbertxt2.setFont(QFont('Times', 12))
@@ -289,33 +292,34 @@ class reshaalabuy(QMainWindow):
         bgimg3.setPixmap(pixmap3)  
         bgimg3.setGeometry(0,0,300,350)
         bgimg3.setStyleSheet("QLabel{ background: #82C3EC}")
+        bgimg3.setScaledContents(True)
         
         productnametxt3 = QLabel(self.panel3)
-        productnametxt3.setText("Product Name :")
+        productnametxt3.setText("Product Name")
         productnametxt3.setGeometry(300, 2,200,50) 
         productnametxt3.setStyleSheet("background-color: transparent;")
         productnametxt3.setFont(QFont('Times', 12))
 
         productpricetxt3 = QLabel(self.panel3)
-        productpricetxt3.setText("Price :")
+        productpricetxt3.setText("Price")
         productpricetxt3.setGeometry(300, 60,200,50)  
         productpricetxt3.setStyleSheet("background-color: transparent;")
         productpricetxt3.setFont(QFont('Times', 12))
 
         productDescriptiontxt3 = QLabel(self.panel3)
-        productDescriptiontxt3.setText("Description : ")
+        productDescriptiontxt3.setText("Description")
         productDescriptiontxt3.setGeometry(300, 118,200,50) 
         productDescriptiontxt3.setStyleSheet("background-color: transparent;")
         productDescriptiontxt3.setFont(QFont('Times', 12))
 
         Emailtxt3 = QLabel(self.panel3)
-        Emailtxt3.setText("Email :")
+        Emailtxt3.setText("Email")
         Emailtxt3.setGeometry(300, 200,200,50)  
         Emailtxt3.setStyleSheet("background-color: transparent;")
         Emailtxt3.setFont(QFont('Times', 12))
 
         MobileNumbertxt3 = QLabel(self.panel3)
-        MobileNumbertxt3.setText("Phone Number:")
+        MobileNumbertxt3.setText("Phone Number")
         MobileNumbertxt3.setGeometry(300, 258,200,50)  
         MobileNumbertxt3.setStyleSheet("background-color: transparent;")
         MobileNumbertxt3.setFont(QFont('Times', 12))
@@ -357,34 +361,35 @@ class reshaalabuy(QMainWindow):
         bgimg4.setPixmap(pixmap4)  
         bgimg4.setGeometry(0,0,300,350)
         bgimg4.setStyleSheet("QLabel{ background: #82C3EC}")
+        bgimg4.setScaledContents(True)
           
 
         productnametxt4 = QLabel(self.panel4)
-        productnametxt4.setText("Product Name :")
+        productnametxt4.setText("Product Name")
         productnametxt4.setGeometry(300, 2,200,50) 
         productnametxt4.setStyleSheet("background-color: transparent;")
         productnametxt4.setFont(QFont('Times', 12))
 
         productpricetxt4 = QLabel(self.panel4)
-        productpricetxt4.setText("Price :")
+        productpricetxt4.setText("Price")
         productpricetxt4.setGeometry(300, 60,200,50)  
         productpricetxt4.setStyleSheet("background-color: transparent;")
         productpricetxt4.setFont(QFont('Times', 12))
 
         productDescriptiontxt4 = QLabel(self.panel4)
-        productDescriptiontxt4.setText("Description : ")
+        productDescriptiontxt4.setText("Description")
         productDescriptiontxt4.setGeometry(300, 118,200,50) 
         productDescriptiontxt4.setStyleSheet("background-color: transparent;")
         productDescriptiontxt4.setFont(QFont('Times', 12))
 
         Emailtxt4 = QLabel(self.panel4)
-        Emailtxt4.setText("Email :")
+        Emailtxt4.setText("Email")
         Emailtxt4.setGeometry(300, 200,200,50)  
         Emailtxt4.setStyleSheet("background-color: transparent;")
         Emailtxt4.setFont(QFont('Times', 12))
 
         MobileNumbertxt4 = QLabel(self.panel4)
-        MobileNumbertxt4.setText("Phone Number:")
+        MobileNumbertxt4.setText("Phone Number")
         MobileNumbertxt4.setGeometry(300, 258,200,50)  
         MobileNumbertxt4.setStyleSheet("background-color: transparent;")
         MobileNumbertxt4.setFont(QFont('Times', 12))
@@ -448,28 +453,26 @@ class reshaalabuy(QMainWindow):
 
     def sell(self):
         window.close()
-        os.system("python Reshala\\reshalasell.py &") 
+        os.system("python Reshala_sell\\reshalasell.py &") 
     def announcement(self):
         window.close()
         os.system("python StudentAnnouncement.py &")   
     def attendence(self):
         window.close()
-        os.system("python Attendencestudent.py &")
+        os.system("python Attendancestudent.py &")
     def assignment(self):
         window.close()
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala\\reshalabuy.py &") 
+        os.system("python Reshala_sell\\reshalasell.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
-    def back(Self):
+    def back(self):
         window.close()
         os.system("python Studentdashboard.py &")
-    def back(Self):
-        window.close()
-        os.system("python Studentdashboard.py &")
+
    
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")

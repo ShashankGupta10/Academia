@@ -3,13 +3,17 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
 import os
+from pymongo import MongoClient
+
+client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+db = client.get_database("IOP")
 
 class DashboardInstitute(QMainWindow):      
     def __init__(self):
         super().__init__()
         
         self.setWindowTitle("Home Page")
-        self.setGeometry(0,0,1366,768)
+        self.setGeometry(0,0,1920, 1080)
 
         self.header = QLabel(self)
         self.header.setGeometry(0, 0, 1920, 100)
@@ -18,7 +22,7 @@ class DashboardInstitute(QMainWindow):
         backbtn = QToolButton(self)
         backbtn.setArrowType(Qt.LeftArrow)        
         backbtn.setGeometry(100,100,50,50)
-        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.setStyleSheet("QToolButton{ background: transparent;color: #301E67}")
         backbtn.clicked.connect(self.back)
 
         siz = QSize(80,80)
@@ -36,8 +40,8 @@ class DashboardInstitute(QMainWindow):
         navbarbtn1.setFont(QFont('Times', 20))
         navbarbtn1.clicked.connect(self.back)
 
-        navbarbtn2= QPushButton("Student Add", self)
-        navbarbtn2.setGeometry(1400, 31, 150, 40)
+        navbarbtn2= QPushButton("Add Student", self)
+        navbarbtn2.setGeometry(1350, 31, 200, 40)
         navbarbtn2.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn2.setFont(QFont('Times', 20))
         navbarbtn2.clicked.connect(self.addstudent)
@@ -47,7 +51,7 @@ class DashboardInstitute(QMainWindow):
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
         
-        icon = QIcon("D:\Pyfon MPR\TkinterGUI\images\homepageimage1bgrm.png")
+        icon = QIcon("images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
         self.btn10.setGeometry(1800, 0, 100, 100)
         self.btn10.setStyleSheet("background : black;")
@@ -88,82 +92,103 @@ class DashboardInstitute(QMainWindow):
         
         proficon = QIcon('All icons\\profile.png')
         profile = QPushButton(sidebar)
-        profile.setGeometry(10,600, 60, 60)
+        profile.setGeometry(10,700, 60, 60)
         profile.setStyleSheet("border : 0px solid black")
         profile.setIcon(proficon)
         profile.setIconSize(size)
 
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(10)
+        shadow.setColor(QColor("black"))
+        shadow.setXOffset(5)
+        shadow.setYOffset(5)
+        shadow.setColor(Qt.black)
+        
+        addAss = QLabel(self)
+        addAss.setText("Recieved Assignment")
+        addAss.setGeometry(780, 100, 500, 75) 
+        addAss.setStyleSheet("background-color: transparent; font-weight: bold;")
+        addAss.setFont(QFont('Times', 23))
+        
         panel1 = QLabel(self)
-        panel1.setGeometry(200,140,500,450)
+        panel1.setGeometry(500,200,1000,600)
         panel1.setStyleSheet("QLabel{ background: white;  border-radius: 20px; padding: 10px;}")
+        panel1.setGraphicsEffect(shadow)
   
+        assgnfac_img = QLabel(panel1)
+        assgnfac_img.pixmap = QPixmap('images\\assgnfac-img-removebg.png')
+        assgnfac_img.setGeometry(500, 50, 500, 500)
+        assgnfac_img.setPixmap(assgnfac_img.pixmap)
 
-        assgn_no = QLineEdit(panel1)
-        assgn_no.setGeometry(250,10,220,50)
-        assgn_no.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        global assgn_no
+        assgn_no = QLabel(panel1)
+        assgn_no.setGeometry(250,50,220,50)
+        assgn_no.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         assgn_no.setFont(QFont('Times', 12))
 
-        assgn_name = QLineEdit(panel1)
-        assgn_name.setGeometry(250,80,220,50)
-        assgn_name.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        global assgn_name
+        assgn_name = QLabel(panel1)
+        assgn_name.setGeometry(250,130,220,50)
+        assgn_name.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         assgn_name.setFont(QFont('Times', 12))
 
-        subject = QLineEdit(panel1)
-        subject.setGeometry(250,150,220,50)
-        subject.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        global subject
+        subject = QLabel(panel1)
+        subject.setGeometry(250,210,220,50)
+        subject.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         subject.setFont(QFont('Times', 12))
         
-        filename = QLineEdit(panel1)
-        filename.setGeometry(250, 220, 220, 50)
-        filename.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
-        filename.setReadOnly(True)
-        filename.setFont(QFont('Times', 12))
+        global classStudent
+        classStudent = QLabel(panel1)
+        classStudent.setGeometry(250, 290, 220, 50)
+        classStudent.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        classStudent.setFont(QFont('Times', 12))
         
-        duedate = QLineEdit(panel1)
-        duedate.setGeometry(250, 290, 220, 50)
-        duedate.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
-        duedate.setReadOnly(True)
-        duedate.setFont(QFont('Times', 12))
+        # global duedate
+        # duedate = QLabel(panel1)
+        # duedate.setGeometry(250, 370, 220, 50)
+        # duedate.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
+        # duedate.setFont(QFont('Times', 12))
         
 
         submit_btn = QPushButton("Schedule", panel1)
-        submit_btn .setGeometry(200, 370, 100, 50)
-        submit_btn .setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 20px; padding: 10px;}"
-                                  "QPushButton:hover{ background: #A084DC;border-radius: 10px;}")
+        submit_btn .setGeometry(200, 450, 200, 50)
+        submit_btn .setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 25px; padding: 10px;}")
         submit_btn .setFont(QFont('Times', 12))
+        submit_btn.clicked.connect(self.on_click)
         
   
         assgn_no_lbl= QLabel(panel1)
-        assgn_no_lbl.setText("Assignment number :")
-        assgn_no_lbl.setGeometry(10, 12,200,50) 
+        assgn_no_lbl.setText("Student Name :")
+        assgn_no_lbl.setGeometry(10, 50,200,50) 
         assgn_no_lbl.setStyleSheet("background-color: transparent;")
         assgn_no_lbl.setFont(QFont('Times', 12))
 
 
         assgn_name_lbl = QLabel(panel1)
-        assgn_name_lbl.setText("Name of Assignment  :")
-        assgn_name_lbl.setGeometry(10, 80,200,50)  
+        assgn_name_lbl.setText("Roll no:")
+        assgn_name_lbl.setGeometry(10, 120,200,50)  
         assgn_name_lbl.setStyleSheet("background-color: transparent;")
         assgn_name_lbl.setFont(QFont('Times', 12))
 
         subject_lbl = QLabel(panel1)
         subject_lbl.setText("Subject : ")
-        subject_lbl.setGeometry(10, 148,200,50) 
+        subject_lbl.setGeometry(10, 210,200,50) 
         subject_lbl.setStyleSheet("background-color: transparent;")
         subject_lbl.setFont(QFont('Times', 12))
 
         class_lbl = QLabel(panel1)
-        class_lbl.setText("Class /Div: ")
-        class_lbl.setGeometry(10, 218,200,50) 
+        class_lbl.setText("Uploaded File: ")
+        class_lbl.setGeometry(10, 290,200,50) 
         class_lbl.setStyleSheet("background-color: transparent;")
         class_lbl.setFont(QFont('Times', 12))
 
 
-        duedate_lbl = QLabel(panel1)
-        duedate_lbl.setText("Due date : ")
-        duedate_lbl.setGeometry(10, 278,200,50) 
-        duedate_lbl.setStyleSheet("background-color: transparent;")
-        duedate_lbl.setFont(QFont('Times', 12))
+        # duedate_lbl = QLabel(panel1)
+        # duedate_lbl.setText("Due date : ")
+        # duedate_lbl.setGeometry(10, 370,200,50) 
+        # duedate_lbl.setStyleSheet("background-color: transparent;")
+        # duedate_lbl.setFont(QFont('Times', 12))
 
         self.footer = QLabel(self)
         self.footer.setGeometry(0, 900, 1920, 100)
@@ -207,14 +232,16 @@ class DashboardInstitute(QMainWindow):
     def addstudent(self):
         window.close()
         os.system("python Instituteaddstudent.py &")
-    def back(Self):
+    def back(self):
         window.close()
         os.system("python Institutedashboard.py &")  
-
+    
+    def on_click(self):
+        pass
 
 
 App = QApplication(sys.argv)
-App.setStyleSheet("QMainWindow{background-color: white }")
+App.setStyleSheet("QMainWindow{background-color: }")
 
 window = DashboardInstitute()
 

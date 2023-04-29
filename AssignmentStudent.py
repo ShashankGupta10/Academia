@@ -3,11 +3,17 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import sys
 import os
-from Attendencestudent import okay
+from pymongo import MongoClient
+
+
+client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+db = client.get_database("IOP")
 
 class AssignmentStudent(QMainWindow):            
     def __init__(self):
         super().__init__()
+        global i
+        i = "1"
         
         self.setWindowTitle("Academia")
         self.setGeometry(0,0,1920,1080)
@@ -19,7 +25,7 @@ class AssignmentStudent(QMainWindow):
         backbtn = QToolButton(self)
         backbtn.setArrowType(Qt.LeftArrow)        
         backbtn.setGeometry(100,100,50,50)
-        backbtn.setStyleSheet("QToolButton{ background:  #A459D1;color: #301E67}")
+        backbtn.setStyleSheet("QToolButton{ background: transparent;color: #301E67}")
         backbtn.clicked.connect(self.back)
         
         siz = QSize(80,80)
@@ -94,76 +100,92 @@ class AssignmentStudent(QMainWindow):
         
         proficon = QIcon('All icons\\profile.png')
         profile = QPushButton(sidebar)
-        profile.setGeometry(10,600, 60, 60)
+        profile.setGeometry(10,700, 60, 60)
         profile.setStyleSheet("border : 0px solid black")
         profile.setIcon(proficon)
         profile.setIconSize(size)
         profile.clicked.connect(self.sprofile)
+        
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(10)
+        shadow.setColor(QColor("black"))
+        shadow.setXOffset(5)
+        shadow.setYOffset(5)
+        shadow.setColor(Qt.black)
             
         self.panel1 = QLabel(self)
-        self.panel1.setGeometry(200,140,400,450)
-        self.panel1.setStyleSheet("QLabel{background: white;  border-radius: 20px; padding: 10px;}")
+        self.panel1.setGeometry(500,200,1000,600)
+        self.panel1.setStyleSheet("QLabel{ background: white;  border-radius: 20px; padding: 10px;}")
+        self.panel1.setGraphicsEffect(shadow)
   
+        assgn_img = QLabel(self.panel1)
+        assgn_img.pixmap = QPixmap('images\\assgn-img-removebg.png')
+        assgn_img.setGeometry(500, 50, 500, 500)
+        assgn_img.setPixmap(assgn_img.pixmap)
 
-        self.Name = QLineEdit(self.panel1)
-        self.Name.setGeometry(150,10,220,50)
-        self.Name.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
-        self.Name.setFont(QFont('Times', 12))
+        global Name
+        Name = QLineEdit(self.panel1)
+        Name.setGeometry(200,50,300,50)
+        Name.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 25px; padding: 10px;")
+        Name.setFont(QFont('Times', 12))
 
-        self.rollno = QLineEdit(self.panel1)
-        self.rollno.setGeometry(150,80,220,50)
-        self.rollno.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
-        self.rollno.setFont(QFont('Times', 12))
+        global rollno
+        rollno = QLineEdit(self.panel1)
+        rollno.setGeometry(200,130,300,50)
+        rollno.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 25px; padding: 10px;")
+        rollno.setFont(QFont('Times', 12))
 
-        self.Subject = QLineEdit(self.panel1)
-        self.Subject.setGeometry(150,150,220,50)
-        self.Subject.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
-        self.Subject.setFont(QFont('Times', 12))
+        global Subject
+        Subject = QLineEdit(self.panel1)
+        Subject.setGeometry(200,210,300,50)
+        Subject.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 25px; padding: 10px;")
+        Subject.setFont(QFont('Times', 12))
         
-        self.filename = QLineEdit(self.panel1)
-        self.filename.setGeometry(150, 220, 220, 50)
-        self.filename.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;")
-        self.filename.setReadOnly(True)
-        self.filename.setFont(QFont('Times', 12))
+        global filename
+        filename = QLineEdit(self.panel1)
+        filename.setGeometry(200, 290, 300, 50)
+
+        filename.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 25px; padding: 10px;")
+        filename.setReadOnly(True)
+        filename.setFont(QFont('Times', 12))
         
-        self.upload_btn = QPushButton("Browse...", self.panel1)
-        self.upload_btn.setGeometry(150, 280, 100, 40)
+        self.upload_btn = QPushButton("Browse", self.panel1)
+        self.upload_btn.setGeometry(300, 360, 100, 40)
         self.upload_btn.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 5px;")       
         self.upload_btn.clicked.connect(self.browseFiles)
         self.upload_btn.setFont(QFont('Times', 12))
 
         self.submit_btn = QPushButton("Submit" ,self.panel1)
-        self.submit_btn .setGeometry(150, 350, 100, 50)
-        self.submit_btn .setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 20px; padding: 10px;}"
-                                "QPushButton:hover{ background: #A084DC;border-radius: 10px;}")
-        self.submit_btn .setFont(QFont('Times', 12))
+        self.submit_btn .setGeometry(250, 450, 200, 50)
+        self.submit_btn .setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 25px; padding: 10px;}")
+        self.submit_btn .setFont(QFont('Times', 15))
+        self.submit_btn.clicked.connect(self.on_click)
         
   
         Nametxt= QLabel(self.panel1)
         Nametxt.setText("Name :")
-        Nametxt.setGeometry(10, 12,200,50) 
+        Nametxt.setGeometry(10, 50,200,50) 
         Nametxt.setStyleSheet("background-color: transparent;")
-        Nametxt.setFont(QFont('Times', 12))
+        Nametxt.setFont(QFont('Times', 15))
 
 
         rolltxt = QLabel(self.panel1)
         rolltxt.setText("Roll No :")
-        rolltxt.setGeometry(10, 80,200,50)  
+        rolltxt.setGeometry(10, 130,200,50)  
         rolltxt.setStyleSheet("background-color: transparent;")
-        rolltxt.setFont(QFont('Times', 12))
+        rolltxt.setFont(QFont('Times', 15))
 
         Subjecttxt = QLabel(self.panel1)
         Subjecttxt.setText("Subject : ")
-        Subjecttxt.setGeometry(10, 148,200,50) 
+        Subjecttxt.setGeometry(10, 210,200,50) 
         Subjecttxt.setStyleSheet("background-color: transparent;")
-        Subjecttxt.setFont(QFont('Times', 12))
+        Subjecttxt.setFont(QFont('Times', 15))
 
         UploadAssignmenttxt = QLabel(self.panel1)
         UploadAssignmenttxt.setText("Upload file : ")
-        UploadAssignmenttxt.setGeometry(10, 218,200,50) 
+        UploadAssignmenttxt.setGeometry(10, 290,200,50) 
         UploadAssignmenttxt.setStyleSheet("background-color: transparent;")
-        UploadAssignmenttxt.setFont(QFont('Times', 12))
-
+        UploadAssignmenttxt.setFont(QFont('Times', 15))
 
         self.footer = QLabel(self)
         self.footer.setGeometry(0, 900, 1920, 100)
@@ -197,28 +219,33 @@ class AssignmentStudent(QMainWindow):
         self.show()
         
     def browseFiles(self):
-        fname = QFileDialog.getOpenFileName(self.panel1, 'Open File', '.')
-        self.filename.setText(fname[0].rsplit('/', 1)[-1])
-        return
+        global file_path, pdf_data
+        file_path, _ = QFileDialog.getOpenFileName(window, 'Open PDF File', '', 'PDF Files (*.pdf)')
+        with open(file_path, 'rb') as pdf_file:
+            pdf_data = pdf_file.read()
+        filename.setText(file_path)
     def announcement(self):
         window.close()
         os.system("python StudentAnnouncement.py &")   
     def attendence(self):
         window.close()
-        os.system("python Attendencestudent.py &")
+        os.system("python Attendancestudent.py &")
     def assignment(self):
         window.close()
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala\\reshalabuy.py &") 
+        os.system("python Reshala_sell\\reshalasell.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
-    def back(Self):
+    def back(self):
         window.close()
         os.system("python Studentdashboard.py &")
-        
+    def on_click(self):
+        db.Assignments.insert_one({"id": "1", "name": Name.text(), "roll No": rollno.text(), "subject": Subject.text(), "UploadFile": pdf_data })
+        QMessageBox.information(self, "GG", "Assignment Submitted")
+
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: #EBC7E6 }")
 window = AssignmentStudent()
