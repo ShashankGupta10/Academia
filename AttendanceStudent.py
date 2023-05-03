@@ -37,6 +37,7 @@ class Attendance(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
+        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -63,6 +64,7 @@ class Attendance(QMainWindow):
         self.btn10.setIcon(icon)
         size = QSize(100, 100)
         self.btn10.setIconSize(size)
+        profile.clicked.connect(self.sprofile)
 
         sidebar = QLabel(self)
         sidebar.setGeometry(0,100,100,1920)
@@ -358,13 +360,22 @@ class Attendance(QMainWindow):
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala_sell\\reshalasell.py &") 
+        os.system("python reshalasell.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
     def back(self):
         window.close()
         os.system("python Studentdashboard.py &")
+    def logout(self):
+        msgb = QMessageBox(self)
+        msgb.setWindowTitle("LOGOUT!")
+        msgb.setText("Are you sure you want to logout?")
+        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        returnValue = msgb.exec()
+        if returnValue == QMessageBox.Ok:
+            window.close()
+            os.system("python homepage.py &")    
 
     def on_submit(self):
             if pintf.text() == dbpin:
