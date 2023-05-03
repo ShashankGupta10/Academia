@@ -220,7 +220,7 @@ class DashboardInstitute(QMainWindow):
         returnValue = msgb.exec()
         if returnValue == QMessageBox.Ok:
             window.close()
-            os.system("python Homepage\homepage.py &")
+            os.system("python homepage.py &")
 
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: white }")

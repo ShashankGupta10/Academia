@@ -7,7 +7,7 @@ from PyQt5.QtCore import *
 import sys
 import os
 
-HOST = '192.168.65.156'
+HOST = socket.gethostbyname(socket.gethostname())
 PORT = [9996, 9997, 9998]
 
 class Announcements(QMainWindow):            
@@ -267,13 +267,15 @@ class Announcements(QMainWindow):
                     # Send the username to the new server
                     username = 'Arun Kulkarni'
                     if username != '':
-                        self.client.sendall(username.encode())
+                        # self.client.sendall(username.encode())
+                        pass
+                        
                     else:
                         QMessageBox.critical(self, "Invalid username", "Username cannot be empty")
                         return
                     
                     # Start listening for messages from the new server in a separate thread
-                    threading.Thread(target=self.listen_for_messages_from_server, args=(self.client, )).start()
+                    threading.Thread(target=self.listen_for_messages_from_server).start()
                 except:
                     QMessageBox.critical(self, "Unable to connect to server", f"Unable to connect to server {HOST[i]} {PORT[i]}")
                     return
@@ -282,13 +284,7 @@ class Announcements(QMainWindow):
 
         self.active_chat = chat_num
 
-
-        
-
-        # self.username_button.setDisabled(False)
-
-
-        
+    # self.username_button.setDisabled(False)
         
     def add_message(self, message):
         if self.active_chat == 0:
@@ -306,31 +302,33 @@ class Announcements(QMainWindow):
 
         
     def send_message(self):
-        message = self.message_textbox.text()
-        if message != '':
+        message1 = self.message_textbox.text()
+        if message1 != '':
             if self.active_chat == 0:
-                self.client.sendall(message.encode('utf-8'))
+                self.client.sendall(message1.encode('utf-8'))
             elif self.active_chat == 1:
-                self.client.sendall(message.encode('utf-8'))
+                self.client.sendall(message1.encode('utf-8'))
             elif self.active_chat == 2:
-                self.client.sendall(message.encode('utf-8'))
+                self.client.sendall(message1.encode('utf-8'))
             self.message_textbox.clear()
         else:
             QMessageBox.critical(self, "Empty message", "Message cannot be empty")
 
-            
-    def listen_for_messages_from_server(self, client):
+     
+    def listen_for_messages_from_server(self):
         while True:
-            message = client.recv(2048).decode('utf-8')
-            print(f"Received message from client: {message}")
+            message = self.client.recv(2048).decode('utf-8')
+            print(f"from Server: {message}")
+            self.client.send(message.encode())
             if message != '':
-                username = message
-                content = message
-                print(f"Username: {username}, Content: {content}")
-                self.add_message(f"  {content}")
+                self.add_message(f"  {message}")
+                
+                
             else:
                 QMessageBox.critical(self, "Error", "Message received from client is empty")
                 break
+        
+        
             
     def announcement(self):
         window.close()

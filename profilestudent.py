@@ -34,6 +34,7 @@ class MainWindow(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
+        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -129,7 +130,7 @@ class MainWindow(QMainWindow):
         nmtf.setGeometry(400,120,800,70)
         nmtf.setPlaceholderText("Enter full name")
         nmtf.setFont(QFont('Times', 15))
-        nmtf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        nmtf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         nmtf.setMaxLength(50)
         
         contactlbl = QLabel("Contact : ",self.bg)
@@ -143,7 +144,7 @@ class MainWindow(QMainWindow):
         contf.setGeometry(400,250,800,70)
         contf.setPlaceholderText("Enter Contact Number")
         contf.setFont(QFont('Times', 15))
-        contf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        contf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         
         re  = QRegExp("[0-9]{10}")                         
         intval = QtGui.QRegExpValidator(re)                            
@@ -160,7 +161,7 @@ class MainWindow(QMainWindow):
         addtf.setGeometry(400,380,800,100)
         addtf.setPlaceholderText("Enter Address")
         addtf.setFont(QFont('Times', 15))
-        addtf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        addtf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         
         agelbl = QLabel("Age (in yrs) : ",self.bg)
         agelbl.setGeometry(150,500,200,100)
@@ -173,7 +174,7 @@ class MainWindow(QMainWindow):
         agetf.setGeometry(400,530,200,50)
         agetf.setPlaceholderText("Enter Age")
         agetf.setFont(QFont('Times', 15))
-        agetf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        agetf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         re1 = QRegExp("[0-9]{3}")
         intval1 = QRegExpValidator(re1)
         agetf.setValidator(intval1)
@@ -187,8 +188,8 @@ class MainWindow(QMainWindow):
         bgcb = QComboBox(self.bg)
         bgcb.addItems(["A+", "B+","AB+","O+","A-","B-","AB-","O-","RH null"])
         bgcb.setGeometry(1000,530,100,50)
-        bgcb.setStyleSheet("QComboBox { background: #FFA3FD; color: black; selection-background-color: #D27685; selection-color: black;Font-size:20px;}"
-                         "QListView{ background: #FFA3FD}")
+        bgcb.setStyleSheet("QComboBox { background: #EDE3FF; color: black; selection-background-color: #D27685; selection-color: black;Font-size:20px;}"
+                         "QListView{ background: #EDE3FF}")
 
         nextbtn = QPushButton("Next",self.bg)
         nextbtn.setGeometry(1120,650,200,50)
@@ -246,7 +247,7 @@ class MainWindow(QMainWindow):
         clnmtf.setGeometry(350,120,650,70)
         clnmtf.setPlaceholderText("College Name:")
         clnmtf.setFont(QFont('Times', 15))
-        clnmtf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        clnmtf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         
         divlbl = QLabel("Division : ",self.bg1)
         divlbl.setGeometry(150,280,200,100)
@@ -258,7 +259,7 @@ class MainWindow(QMainWindow):
         divtf.setGeometry(350,290,150,70)
         divtf.setPlaceholderText("Division")
         divtf.setFont(QFont('Times', 15))
-        divtf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        divtf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         
         rollnbl = QLabel("Roll Number : ",self.bg1)
         rollnbl.setGeometry(530,280,200,100)
@@ -270,7 +271,7 @@ class MainWindow(QMainWindow):
         rollntf.setGeometry(760,290,240,70)
         rollntf.setPlaceholderText("Roll No")
         rollntf.setFont(QFont('Times', 15))
-        rollntf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        rollntf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         
         yrlbl = QLabel("Year : ",self.bg1)
         yrlbl.setGeometry(150,450,200,100)
@@ -281,8 +282,8 @@ class MainWindow(QMainWindow):
         yrcb = QComboBox(self.bg1)
         yrcb.addItems(["First Year", "Second Year","Third Year","Bachelor of Eng"])
         yrcb.setGeometry(350,475,150,50)
-        yrcb.setStyleSheet("QComboBox { background: #FFA3FD; color: black; selection-background-color: #D27685; selection-color: black;Font-size:20px; border-radius: 10px;}"
-                         "QListView{ background: #FFA3FD}")
+        yrcb.setStyleSheet("QComboBox { background: #EDE3FF; color: black; selection-background-color: #D27685; selection-color: black;Font-size:20px; border-radius: 10px;}"
+                         "QListView{ background: #EDE3FF}")
         
         pin_lbl = QLabel("Security PIN:", self.bg1)
         pin_lbl.setGeometry(150, 600, 200, 100)
@@ -291,7 +292,7 @@ class MainWindow(QMainWindow):
         global pintf
         pintf = QLineEdit(self.bg1)
         pintf.setGeometry(350, 610, 250, 70)
-        pintf.setStyleSheet("background: #FFA3FD; border-radius: 25px; padding: 10px")
+        pintf.setStyleSheet("background: #EDE3FF; border-radius: 25px; padding: 10px")
         pintf.setPlaceholderText("4-Digit PIN")
         pintf.setFont(QFont('Times', 15))
         
@@ -312,8 +313,8 @@ class MainWindow(QMainWindow):
         dptcb = QComboBox(self.bg1)
         dptcb.addItems(["Information Technology", "Computer Science","Electronic & Telecom","AI & Data Science","Chemical"])
         dptcb.setGeometry(760,475,240,50)
-        dptcb.setStyleSheet("QComboBox { background: #FFA3FD; color: black; selection-background-color: #D27685; selection-color: black;Font-size:20px; border-radius: 10px;}"
-                         "QListView{ background: #FFA3FD}")
+        dptcb.setStyleSheet("QComboBox { background: #EDE3FF; color: black; selection-background-color: #D27685; selection-color: black;Font-size:20px; border-radius: 10px;}"
+                         "QListView{ background: #EDE3FF}")
         
         
         subbtn = QPushButton("Submit",self.bg1)
@@ -382,7 +383,7 @@ class MainWindow(QMainWindow):
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala\\reshalabuy.py &") 
+        os.system("python reshalabuy.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
@@ -395,6 +396,15 @@ class MainWindow(QMainWindow):
     def backin(self):
         self.bg1.hide()
         self.bg.show()
+    def logout(self):
+        msgb = QMessageBox(self)
+        msgb.setWindowTitle("LOGOUT!")
+        msgb.setText("Are you sure you want to logout?")
+        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        returnValue = msgb.exec()
+        if returnValue == QMessageBox.Ok:
+            window.close()
+            os.system("python homepage.py &")
     
     def nextpg(self):
         self.bg.hide()

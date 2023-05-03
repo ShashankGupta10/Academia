@@ -32,7 +32,7 @@ class DashboardInstitute(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
-        logo.clicked.connect(self.back)
+        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -234,7 +234,16 @@ class DashboardInstitute(QMainWindow):
         os.system("python Instituteaddstudent.py &")
     def back(self):
         window.close()
-        os.system("python Institutedashboard.py &")  
+        os.system("python Institutedashboard.py &") 
+    def logout(self):
+        msgb = QMessageBox(self)
+        msgb.setWindowTitle("LOGOUT!")
+        msgb.setText("Are you sure you want to logout?")
+        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        returnValue = msgb.exec()
+        if returnValue == QMessageBox.Ok:
+            window.close()
+            os.system("python homepage.py &") 
     
     def on_click(self):
         pass

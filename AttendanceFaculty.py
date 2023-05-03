@@ -31,6 +31,7 @@ class Attendance(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
+        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -169,6 +170,9 @@ class Attendance(QMainWindow):
         se_s1.setStyleSheet("background-color: white; color: black")
         se_s1.setVisible(False)
         
+        re  = QRegExp("[0-9]{2}")                         
+        intval = QRegExpValidator(re) 
+        
         header1 = QLabel("SE S1 Attendance", se_s1)
         header1.setGeometry(700, 0, 500, 80)
         header1.setFont(QFont('Times', 20))
@@ -215,7 +219,8 @@ class Attendance(QMainWindow):
         coa_attend1 = QLineEdit(se_s1)
         coa_attend1.setGeometry(400, 220, 150, 50)
         coa_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
-        coa_attend1.setFont(QFont('Times', 12))
+        coa_attend1.setFont(QFont('Times', 12))                           
+        coa_attend1.setValidator(intval) 
         
 
         global coa_conduct1
@@ -223,6 +228,7 @@ class Attendance(QMainWindow):
         coa_conduct1.setGeometry(600, 220, 150, 50)
         coa_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_conduct1.setFont(QFont('Times', 12))
+        coa_conduct1.setValidator(intval)
 
         cn_label = QLabel("Computer Networks:", se_s1)
         cn_label.setGeometry(100, 340, 250, 50)
@@ -233,12 +239,14 @@ class Attendance(QMainWindow):
         cn_attend1.setGeometry(400, 340, 150, 50)
         cn_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_attend1.setFont(QFont('Times', 12))
+        cn_attend1.setValidator(intval)
         
         global cn_conduct1
         cn_conduct1 = QLineEdit(se_s1)
         cn_conduct1.setGeometry(600, 340, 150, 50)
         cn_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_conduct1.setFont(QFont('Times', 12))
+        cn_conduct1.setValidator(intval)
         
         at_label = QLabel("Automata Theory:", se_s1)
         at_label.setGeometry(100, 460, 250, 50)
@@ -250,13 +258,14 @@ class Attendance(QMainWindow):
         at_attend1.setGeometry(400, 460, 150, 50)
         at_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_attend1.setFont(QFont('Times', 12))
-        
+        at_attend1.setValidator(intval)
 
         global at_conduct1
         at_conduct1 = QLineEdit(se_s1)
         at_conduct1.setGeometry(600, 460, 150, 50)
         at_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_conduct1.setFont(QFont('Times', 12))
+        at_conduct1.setValidator(intval)
         
         maths_label = QLabel("Engg. Maths-IV:", se_s1)
         maths_label.setGeometry(100, 580, 250, 50)
@@ -268,12 +277,14 @@ class Attendance(QMainWindow):
         maths_attend1.setGeometry(400, 580, 150, 50)
         maths_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_attend1.setFont(QFont('Times', 12))
+        maths_attend1.setValidator(intval)
         
         global maths_conduct1
         maths_conduct1 = QLineEdit(se_s1)
         maths_conduct1.setGeometry(600, 580, 150, 50)
         maths_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_conduct1.setFont(QFont('Times', 12))
+        maths_conduct1.setValidator(intval)
         
         mpl_label = QLabel("Microprocessor Lab:", se_s1)
         mpl_label.setGeometry(900, 220, 250, 50)
@@ -284,12 +295,14 @@ class Attendance(QMainWindow):
         mpl_attend1.setGeometry(1200, 220, 150, 50)
         mpl_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_attend1.setFont(QFont('Times', 12))
+        mpl_attend1.setValidator(intval)
         
         global mpl_conduct1
         mpl_conduct1 = QLineEdit(se_s1)
         mpl_conduct1.setGeometry(1400, 220, 150, 50)
         mpl_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_conduct1.setFont(QFont('Times', 12))
+        mpl_conduct1.setValidator(intval)
 
         nt_label = QLabel("Networking Lab:", se_s1)
         nt_label.setGeometry(900, 340, 250, 50)
@@ -301,13 +314,14 @@ class Attendance(QMainWindow):
         nt_attend1.setGeometry(1200, 340, 150, 50)
         nt_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_attend1.setFont(QFont('Times', 12))
-        
+        nt_attend1.setValidator(intval)
 
         global nt_conduct1
         nt_conduct1 = QLineEdit(se_s1)
         nt_conduct1.setGeometry(1400, 340, 150, 50)
         nt_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_conduct1.setFont(QFont('Times', 12))
+        nt_conduct1.setValidator(intval)
         
         unix_label = QLabel("Unix Lab:", se_s1)
         unix_label.setGeometry(900, 460, 250, 50)
@@ -318,13 +332,14 @@ class Attendance(QMainWindow):
         unix_attend1.setGeometry(1200, 460, 150, 50)
         unix_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_attend1.setFont(QFont('Times', 12))
-        
+        unix_attend1.setValidator(intval)
 
         global unix_conduct1
         unix_conduct1 = QLineEdit(se_s1)
         unix_conduct1.setGeometry(1400, 460, 150, 50)
         unix_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_conduct1.setFont(QFont('Times', 12))
+        unix_conduct1.setValidator(intval)
         
         python_label = QLabel("Python Lab:", se_s1)
         python_label.setGeometry(900, 580, 250, 50)
@@ -335,13 +350,14 @@ class Attendance(QMainWindow):
         python_attend1.setGeometry(1200, 580, 150, 50)
         python_attend1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_attend1.setFont(QFont('Times', 12))
-        
+        python_attend1.setValidator(intval)
 
         global python_conduct1
         python_conduct1 = QLineEdit(se_s1)
         python_conduct1.setGeometry(1400, 580, 150, 50)
         python_conduct1.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_conduct1.setFont(QFont('Times', 12))
+        python_conduct1.setValidator(intval)
         
         submit_attend1 = QPushButton("Submit", se_s1)
         submit_attend1.setGeometry(650, 700, 200, 50)
@@ -447,12 +463,14 @@ class Attendance(QMainWindow):
         coa_attend2.setGeometry(400, 220, 150, 50)
         coa_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_attend2.setFont(QFont('Times', 12))
+        coa_attend2.setValidator(intval)
         
         global coa_conduct2
         coa_conduct2 = QLineEdit(se_s2)
         coa_conduct2.setGeometry(600, 220, 150, 50)
         coa_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_conduct2.setFont(QFont('Times', 12))
+        coa_conduct2.setValidator(intval)
 
         cn_label = QLabel("Computer Networks:", se_s2)
         cn_label.setGeometry(100, 340, 250, 50)
@@ -463,12 +481,14 @@ class Attendance(QMainWindow):
         cn_attend2.setGeometry(400, 340, 150, 50)
         cn_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_attend2.setFont(QFont('Times', 12))
+        cn_attend2.setValidator(intval)
         
         global cn_conduct2
         cn_conduct2 = QLineEdit(se_s2)
         cn_conduct2.setGeometry(600, 340, 150, 50)
         cn_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_conduct2.setFont(QFont('Times', 12))
+        cn_conduct2.setValidator(intval)
         
         at_label = QLabel("Automata Theory:", se_s2)
         at_label.setGeometry(100, 460, 250, 50)
@@ -479,12 +499,14 @@ class Attendance(QMainWindow):
         at_attend2.setGeometry(400, 460, 150, 50)
         at_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_attend2.setFont(QFont('Times', 12))
+        at_attend2.setValidator(intval)
         
         global at_conduct2
         at_conduct2 = QLineEdit(se_s2)
         at_conduct2.setGeometry(600, 460, 150, 50)
         at_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_conduct2.setFont(QFont('Times', 12))
+        at_conduct2.setValidator(intval)
         
         maths_label = QLabel("Engg. Maths-IV:", se_s2)
         maths_label.setGeometry(100, 580, 250, 50)
@@ -495,12 +517,14 @@ class Attendance(QMainWindow):
         maths_attend2.setGeometry(400, 580, 150, 50)
         maths_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_attend2.setFont(QFont('Times', 12))
+        maths_attend2.setValidator(intval)
         
         global maths_conduct2
         maths_conduct2 = QLineEdit(se_s2)
         maths_conduct2.setGeometry(600, 580, 150, 50)
         maths_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_conduct2.setFont(QFont('Times', 12))
+        maths_conduct2.setValidator(intval)
         
         mpl_label = QLabel("Microprocessor Lab:", se_s2)
         mpl_label.setGeometry(900, 220, 250, 50)
@@ -511,12 +535,14 @@ class Attendance(QMainWindow):
         mpl_attend2.setGeometry(1200, 220, 150, 50)
         mpl_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_attend2.setFont(QFont('Times', 12))
+        mpl_attend2.setValidator(intval)
         
         global mpl_conduct2
         mpl_conduct2 = QLineEdit(se_s2)
         mpl_conduct2.setGeometry(1400, 220, 150, 50)
         mpl_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_conduct2.setFont(QFont('Times', 12))
+        mpl_conduct2.setValidator(intval)
 
         nt_label = QLabel("Networking Lab:", se_s2)
         nt_label.setGeometry(900, 340, 250, 50)
@@ -527,12 +553,14 @@ class Attendance(QMainWindow):
         nt_attend2.setGeometry(1200, 340, 150, 50)
         nt_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_attend2.setFont(QFont('Times', 12))
+        nt_attend2.setValidator(intval)
         
         global nt_conduct2
         nt_conduct2 = QLineEdit(se_s2)
         nt_conduct2.setGeometry(1400, 340, 150, 50)
         nt_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_conduct2.setFont(QFont('Times', 12))
+        nt_conduct2.setValidator(intval)
         
         unix_label = QLabel("Unix Lab:", se_s2)
         unix_label.setGeometry(900, 460, 250, 50)
@@ -543,12 +571,14 @@ class Attendance(QMainWindow):
         unix_attend2.setGeometry(1200, 460, 150, 50)
         unix_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_attend2.setFont(QFont('Times', 12))
+        unix_attend2.setValidator(intval)
         
         global unix_conduct2
         unix_conduct2 = QLineEdit(se_s2)
         unix_conduct2.setGeometry(1400, 460, 150, 50)
         unix_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_conduct2.setFont(QFont('Times', 12))
+        unix_conduct2.setValidator(intval)
         
         python_label = QLabel("Python Lab:", se_s2)
         python_label.setGeometry(900, 580, 250, 50)
@@ -559,12 +589,14 @@ class Attendance(QMainWindow):
         python_attend2.setGeometry(1200, 580, 150, 50)
         python_attend2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_attend2.setFont(QFont('Times', 12))
+        python_attend2.setValidator(intval)
         
         global python_conduct2
         python_conduct2 = QLineEdit(se_s2)
         python_conduct2.setGeometry(1400, 580, 150, 50)
         python_conduct2.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_conduct2.setFont(QFont('Times', 12))
+        unix_conduct2.setValidator(intval)
         
         submit_attend2 = QPushButton("Submit", se_s2)
         submit_attend2.setGeometry(650, 700, 200, 50)
@@ -662,12 +694,14 @@ class Attendance(QMainWindow):
         coa_attend3.setGeometry(400, 220, 150, 50)
         coa_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_attend3.setFont(QFont('Times', 12))
+        coa_attend3.setValidator(intval)
         
         global coa_conduct3
         coa_conduct3 = QLineEdit(te_t1)
         coa_conduct3.setGeometry(600, 220, 150, 50)
         coa_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_conduct3.setFont(QFont('Times', 12))
+        coa_conduct3.setValidator(intval)
 
         cn_label3 = QLabel("Computer Networks:", te_t1)
         cn_label3.setGeometry(100, 340, 250, 50)
@@ -678,12 +712,14 @@ class Attendance(QMainWindow):
         cn_attend3.setGeometry(400, 340, 150, 50)
         cn_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_attend3.setFont(QFont('Times', 12))
+        cn_attend3.setValidator(intval)
         
         global cn_conduct3
         cn_conduct3 = QLineEdit(te_t1)
         cn_conduct3.setGeometry(600, 340, 150, 50)
         cn_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_conduct3.setFont(QFont('Times', 12))
+        cn_conduct3.setValidator(intval)
         
         at_label3 = QLabel("Automata Theory:", te_t1)
         at_label3.setGeometry(100, 460, 250, 50)
@@ -694,12 +730,14 @@ class Attendance(QMainWindow):
         at_attend3.setGeometry(400, 460, 150, 50)
         at_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_attend3.setFont(QFont('Times', 12))
+        at_attend3.setValidator(intval)
         
         global at_conduct3
         at_conduct3 = QLineEdit(te_t1)
         at_conduct3.setGeometry(600, 460, 150, 50)
         at_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_conduct3.setFont(QFont('Times', 12))
+        at_conduct3.setValidator(intval)
         
         maths_label3 = QLabel("Engg. Maths-IV:", te_t1)
         maths_label3.setGeometry(100, 580, 250, 50)
@@ -710,12 +748,14 @@ class Attendance(QMainWindow):
         maths_attend3.setGeometry(400, 580, 150, 50)
         maths_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_attend3.setFont(QFont('Times', 12))
+        maths_attend3.setValidator(intval)
         
         global maths_conduct3
         maths_conduct3 = QLineEdit(te_t1)
         maths_conduct3.setGeometry(600, 580, 150, 50)
         maths_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_conduct3.setFont(QFont('Times', 12))
+        maths_conduct3.setValidator(intval)
         
         mpl_label3 = QLabel("Microprocessor Lab:", te_t1)
         mpl_label3.setGeometry(900, 220, 250, 50)
@@ -726,13 +766,15 @@ class Attendance(QMainWindow):
         mpl_attend3.setGeometry(1200, 220, 150, 50)
         mpl_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_attend3.setFont(QFont('Times', 12))
+        mpl_attend3.setValidator(intval)
         
         global mpl_conduct3
         mpl_conduct3 = QLineEdit(te_t1)
         mpl_conduct3.setGeometry(1400, 220, 150, 50)
         mpl_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_conduct3.setFont(QFont('Times', 12))
-
+        mpl_conduct3.setValidator(intval)
+        
         nt_label3 = QLabel("Networking Lab:", te_t1)
         nt_label3.setGeometry(900, 340, 250, 50)
         nt_label3.setFont(QFont('Times', 15))
@@ -742,13 +784,14 @@ class Attendance(QMainWindow):
         nt_attend3.setGeometry(1200, 340, 150, 50)
         nt_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_attend3.setFont(QFont('Times', 12))
+        nt_attend3.setValidator(intval)
         
         global nt_conduct3
         nt_conduct3 = QLineEdit(te_t1)
         nt_conduct3.setGeometry(1400, 340, 150, 50)
         nt_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_conduct3.setFont(QFont('Times', 12))
-        
+        nt_conduct3.setValidator(intval)
         
         unix_label3 = QLabel("Unix Lab:", te_t1)
         unix_label3.setGeometry(900, 460, 250, 50)
@@ -759,12 +802,14 @@ class Attendance(QMainWindow):
         unix_attend3.setGeometry(1200, 460, 150, 50)
         unix_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_attend3.setFont(QFont('Times', 12))
+        unix_attend3.setValidator(intval)
         
         global unix_conduct3
         unix_conduct3 = QLineEdit(te_t1)
         unix_conduct3.setGeometry(1400, 460, 150, 50)
         unix_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_conduct3.setFont(QFont('Times', 12))
+        unix_conduct3.setValidator(intval)
         
         python_label3 = QLabel("Python Lab:", te_t1)
         python_label3.setGeometry(900, 580, 250, 50)
@@ -775,12 +820,14 @@ class Attendance(QMainWindow):
         python_attend3.setGeometry(1200, 580, 150, 50)
         python_attend3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_attend3.setFont(QFont('Times', 12))
+        python_attend3.setValidator(intval)
         
         global python_conduct3
         python_conduct3 = QLineEdit(te_t1)
         python_conduct3.setGeometry(1400, 580, 150, 50)
         python_conduct3.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_conduct3.setFont(QFont('Times', 12))
+        python_conduct3.setValidator(intval)
         
         submit_attend3 = QPushButton("Submit", te_t1)
         submit_attend3.setGeometry(650, 700, 200, 50)
@@ -882,12 +929,14 @@ class Attendance(QMainWindow):
         coa_attend4.setGeometry(400, 220, 150, 50)
         coa_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_attend4.setFont(QFont('Times', 12))
+        coa_attend4.setValidator(intval)
         
         global coa_conduct4
         coa_conduct4 = QLineEdit(te_t2)
         coa_conduct4.setGeometry(600, 220, 150, 50)
         coa_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         coa_conduct4.setFont(QFont('Times', 12))
+        coa_conduct4.setValidator(intval)
 
         cn_label4 = QLabel("Computer Networks:", te_t2)
         cn_label4.setGeometry(100, 340, 250, 50)
@@ -898,12 +947,14 @@ class Attendance(QMainWindow):
         cn_attend4.setGeometry(400, 340, 150, 50)
         cn_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_attend4.setFont(QFont('Times', 12))
+        cn_attend4.setValidator(intval)
         
         global cn_conduct4
         cn_conduct4 = QLineEdit(te_t2)
         cn_conduct4.setGeometry(600, 340, 150, 50)
         cn_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         cn_conduct4.setFont(QFont('Times', 12))
+        cn_conduct4.setValidator(intval)
         
         at_label4 = QLabel("Automata Theory:", te_t2)
         at_label4.setGeometry(100, 460, 250, 50)
@@ -914,12 +965,14 @@ class Attendance(QMainWindow):
         at_attend4.setGeometry(400, 460, 150, 50)
         at_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_attend4.setFont(QFont('Times', 12))
+        at_attend4.setValidator(intval)
         
         global at_conduct4
         at_conduct4 = QLineEdit(te_t2)
         at_conduct4.setGeometry(600, 460, 150, 50)
         at_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         at_conduct4.setFont(QFont('Times', 12))
+        at_conduct4.setValidator(intval)
         
         maths_label4 = QLabel("Engg. Maths-IV:", te_t2)
         maths_label4.setGeometry(100, 580, 250, 50)
@@ -930,12 +983,14 @@ class Attendance(QMainWindow):
         maths_attend4.setGeometry(400, 580, 150, 50)
         maths_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_attend4.setFont(QFont('Times', 12))
+        maths_attend4.setValidator(intval)
         
         global maths_conduct4
         maths_conduct4 = QLineEdit(te_t2)
         maths_conduct4.setGeometry(600, 580, 150, 50)
         maths_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         maths_conduct4.setFont(QFont('Times', 12))
+        maths_conduct4.setValidator(intval)
         
         mpl_label4 = QLabel("Microprocessor Lab:", te_t2)
         mpl_label4.setGeometry(900, 220, 250, 50)
@@ -946,12 +1001,14 @@ class Attendance(QMainWindow):
         mpl_attend4.setGeometry(1200, 220, 150, 50)
         mpl_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_attend4.setFont(QFont('Times', 12))
+        mpl_attend4.setValidator(intval)
         
         global mpl_conduct4
         mpl_conduct4 = QLineEdit(te_t2)
         mpl_conduct4.setGeometry(1400, 220, 150, 50)
         mpl_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         mpl_conduct4.setFont(QFont('Times', 12))
+        mpl_conduct4.setValidator(intval)
 
         nt_label4 = QLabel("Networking Lab:", te_t2)
         nt_label4.setGeometry(900, 340, 250, 50)
@@ -962,12 +1019,14 @@ class Attendance(QMainWindow):
         nt_attend4.setGeometry(1200, 340, 150, 50)
         nt_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_attend4.setFont(QFont('Times', 12))
+        nt_attend4.setValidator(intval)
         
         global nt_conduct4
         nt_conduct4 = QLineEdit(te_t2)
         nt_conduct4.setGeometry(1400, 340, 150, 50)
         nt_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         nt_conduct4.setFont(QFont('Times', 12))
+        nt_conduct4.setValidator(intval)
         
         unix_label4 = QLabel("Unix Lab:", te_t2)
         unix_label4.setGeometry(900, 460, 250, 50)
@@ -978,12 +1037,14 @@ class Attendance(QMainWindow):
         unix_attend4.setGeometry(1200, 460, 150, 50)
         unix_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_attend4.setFont(QFont('Times', 12))
+        unix_attend4.setValidator(intval)
         
         global unix_conduct4
         unix_conduct4 = QLineEdit(te_t2)
         unix_conduct4.setGeometry(1400, 460, 150, 50)
         unix_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         unix_conduct4.setFont(QFont('Times', 12))
+        unix_conduct4.setValidator(intval)
         
         python_label4 = QLabel("Python Lab:", te_t2)
         python_label4.setGeometry(900, 580, 250, 50)
@@ -994,12 +1055,14 @@ class Attendance(QMainWindow):
         python_attend4.setGeometry(1200, 580, 150, 50)
         python_attend4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_attend4.setFont(QFont('Times', 12))
+        python_attend4.setValidator(intval)
         
         global python_conduct4
         python_conduct4 = QLineEdit(te_t2)
         python_conduct4.setGeometry(1400, 580, 150, 50)
         python_conduct4.setStyleSheet("background: lightblue; border-radius: 25px; padding: 10px")
         python_conduct4.setFont(QFont('Times', 12))
+        python_conduct4.setValidator(intval)
         
         submit_attend4 = QPushButton("Submit", te_t2)
         submit_attend4.setGeometry(650, 700, 200, 50)
@@ -1105,6 +1168,15 @@ class Attendance(QMainWindow):
     def back(self):
         window.close()
         os.system("python Institutedashboard.py &") 
+    def logout(self):
+        msgb = QMessageBox(self)
+        msgb.setWindowTitle("LOGOUT!")
+        msgb.setText("Are you sure you want to logout?")
+        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        returnValue = msgb.exec()
+        if returnValue == QMessageBox.Ok:
+            window.close()
+            os.system("python homepage.py &")
         
     def on_click_se_s1(self):
         studentName = student_name1.text()

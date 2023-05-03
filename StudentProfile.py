@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
+        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -375,13 +376,22 @@ class MainWindow(QMainWindow):
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala\\reshalabuy.py &") 
+        os.system("python reshalabuy.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
     def back(self):
         window.close()
         os.system("python Studentdashboard.py &") 
+    def logout(self):
+        msgb = QMessageBox(self)
+        msgb.setWindowTitle("LOGOUT!")
+        msgb.setText("Are you sure you want to logout?")
+        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        returnValue = msgb.exec()
+        if returnValue == QMessageBox.Ok:
+            window.close()
+            os.system("python homepage.py &")
     def backin(self):
         self.bg1.hide()
         self.bg.show()

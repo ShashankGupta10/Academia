@@ -228,10 +228,10 @@ class DashboardStudent(QMainWindow):
         os.system('python "Attendancestudent.py" &')
     def assignment(self):
         window.close()
-        os.system('python AssignmentStudent.py &') 
+        os.system('python "AssignmentStudent.py" &') 
     def reshaala(self):
         window.close()
-        os.system('python "Reshala_sell\\reshalasell.py" &') 
+        os.system('python "reshalasell.py" &') 
     def sprofile(self):
         window.close()
         os.system('python "profilestudent.py" &')
@@ -249,7 +249,7 @@ class DashboardStudent(QMainWindow):
         returnValue = msgb.exec()
         if returnValue == QMessageBox.Ok:
             window.close()
-            os.system("python Homepage\\homepage.py &")
+            os.system("python homepage.py &")
 
 
 if __name__ == "__main__":

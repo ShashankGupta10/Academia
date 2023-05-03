@@ -33,6 +33,7 @@ class InstituteAddStudent(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
+        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -198,6 +199,15 @@ class InstituteAddStudent(QMainWindow):
     def back(self):
         window.close()
         os.system("python Institutedashboard.py &") 
+    def logout(self):
+        msgb = QMessageBox(self)
+        msgb.setWindowTitle("LOGOUT!")
+        msgb.setText("Are you sure you want to logout?")
+        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        returnValue = msgb.exec()
+        if returnValue == QMessageBox.Ok:
+            window.close()
+            os.system("python homepage.py &")
 
     def on_click_addStudentButton(self):
         newStudentUsername = self.studentUsernameText.text()

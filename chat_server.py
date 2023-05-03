@@ -2,7 +2,7 @@ import socket
 import threading
 
 # Change these values as per your requirements
-HOST = '192.168.0.106'
+HOST = socket.gethostbyname(socket.gethostname())
 PORTS = [9996, 9997, 9998]
 
 # List of all connected clients
@@ -66,19 +66,18 @@ def main():
 
     # Create a socket object for each port
     sockets = []
-    for port in PORTS:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        try:
-            # Bind the socket to the host and port
-            sock.bind((HOST, port))
-            sockets.append(sock)
-            print(f"Socket bound to {HOST} on port {port}")
-        except socket.error as e:
-            print(f"Error binding socket to {HOST} on port {port}: {e}")
-            continue
+    
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        # Bind the socket to the host and port
+        sock.bind((HOST, PORTS[0]))
+        sockets.append(sock)
+        print(f"Socket bound to {HOST} on port {PORTS[0]}")
+    except socket.error as e:
+        print(f"Error binding socket to {HOST} on port {PORTS[0]}: {e}")
 
-        # Start listening for incoming connections
-        sock.listen(LISTENER_LIMIT)
+     # Start listening for incoming connections
+    sock.listen(LISTENER_LIMIT)
 
     # Accept incoming connections and handle each one in a new thread
     while True:
@@ -86,6 +85,25 @@ def main():
             conn, addr = sock.accept()
             print(f"Connected by {addr} on port {sock.getsockname()[1]}")
             threading.Thread(target=client_handler, args=(conn, )).start()
+            # try:
+            while True:
+                try:
+                    message = conn.recv(1024).decode()
+                    if not message:
+                        print("Connection closed by", addr)
+                        break
+                    print("Received message from {}: {}".format(addr, message))
+                except ConnectionResetError:
+                    print("Connection closed unexpectedly  \n")
+                    break
+            # except ConnectionResetError:
+            #     # connection closed by the client
+            #     print("Connection closed by client")
 
+            # finally:
+            #     # close the client socket
+            #     pass
+            
+            
 if __name__ == '__main__':
     main()
