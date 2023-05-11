@@ -7,7 +7,9 @@ import sys
 import os
 
 HOST = socket.gethostbyname(socket.gethostname())
-PORT = [9996, 9997, 9998]
+PORT = 5555
+
+
 
 class Announcements(QMainWindow):            
     def __init__(self):
@@ -34,7 +36,6 @@ class Announcements(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
-        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -145,7 +146,7 @@ class Announcements(QMainWindow):
                                  "QPushButton:hover{ background: lightblue; border: 1px solid black;}")
         self.chat2.setGeometry(120, 300, 400, 100)
         self.chat2.setFont(QFont('Times', 12))
-        self.chat2.clicked.connect(lambda: self.switchChat(1))
+        # self.chat2.clicked.connect(lambda: self.switchChat(1))
         # self.chat2.clicked.connect(self.connect)
         
         # self.chat3 = QPushButton("S2 IT", self)
@@ -234,54 +235,48 @@ class Announcements(QMainWindow):
         
         self.showMaximized()
         self.show()
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+        print("ghdfghgs")
+        def receive():
+            while True:
+                # receive data from the server
+                data = s.recv(1024)
+                print("mo")
+                if not data:
+                    break
+                print(data.decode())
+                self.add_message(data.decode())
+
+        # start a separate thread to receive messages
+        threading.Thread(target=receive).start()
         
     def switchChat(self, chat_num):
         global username
-        chat_boxes = [self.message_box, self.message_box1]#, self.message_box2]
+        chat_boxes = [self.message_box]
         for i, box in enumerate(chat_boxes):
             if i == chat_num:
                 box.setVisible(True)
-                try:
-                    # Close the previous connection, if any
-                    if self.client is not None:
-                        self.client.close()
-                    
-                    # Connect to the new server
-                    print(PORT[i])
-                    self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    self.client.connect((HOST, PORT[i]))
-                    print("Successfully connected to server")
-                    self.add_message("[SERVER] Successfully connected to the server")
-                    
-                    # Send the username to the new server
-                    # username = 'Arun Kulkarni'
-                    # if username != '':
-                    #     self.client.sendall(username.encode())
-                    # else:
-                    #     QMessageBox.critical(self, "Invalid username", "Username cannot be empty")
-                    #     return
-                    
-                    # Start listening for messages from the new server in a separate thread
-                    threading.Thread(target=self.listen_for_messages_from_server).start()
-                except:
-                    QMessageBox.critical(self, "Unable to connect to server", f"Unable to connect to server {HOST[i]} {PORT[i]}")
-                    return
+                return
             else:
                 box.setVisible(False)
 
         self.active_chat = chat_num
+
+
+        
+
         # self.username_button.setDisabled(False)
+
+
+        
         
     def add_message(self, message):
         if self.active_chat == 0:
             message_box = self.message_box
-        elif self.active_chat == 1:
-            message_box = self.message_box1
-        # elif self.active_chat == 2:
-        #     message_box = self.message_box2
         else:
             return
-            
+          
         message_box.moveCursor(QTextCursor.End)
         message_box.insertPlainText(message + '\n')
         message_box.moveCursor(QTextCursor.End)
@@ -301,19 +296,26 @@ class Announcements(QMainWindow):
     #         QMessageBox.critical(self, "Empty message", "Message cannot be empty")
 
             
-    def listen_for_messages_from_server(self):
-        while True:
-            message = self.client.recv(2048).decode('utf-8')
-            print(f"from Server: {message}")
-            self.client.send(message.encode())
-            if message != '':
-                self.add_message(f"  {message}")
-                
-                
-            else:
-                QMessageBox.critical(self, "Error", "Message received from client is empty")
-                break
-            
+    # def listen_for_messages_from_server(self, client):
+    #     while True:
+    #         message = client.recv(2048).decode('utf-8')
+    #         print(f"Received message from client: {message}")
+    #         if message != '':
+    #             username = message
+    #             content = message
+    #             print(f"Username: {username}, Content: {content}")
+    #             self.add_message(f"  {content}")
+    #         else:
+    #             QMessageBox.critical(self, "Error", "Message received from client is empty")
+    #             break
+
+    # create a socket objecthgsjdgfsj
+
+        # create a socket object
+
+
+   
+                    
     def announcement(self):
         window.close()
         os.system("python StudentAnnouncement.py &")   
@@ -325,22 +327,13 @@ class Announcements(QMainWindow):
         os.system("python AssignmentStudent.py &") 
     def reshaala(self):
         window.close()
-        os.system("python Reshala_sell\\reshalasell.py &") 
+        os.system("python reshalasell.py &") 
     def sprofile(self):
         window.close()
         os.system("python profilestudent.py &")
     def back(self):
         window.close()
         os.system("python Studentdashboard.py &") 
-    def logout(self):
-        msgb = QMessageBox(self)
-        msgb.setWindowTitle("LOGOUT!")
-        msgb.setText("Are you sure you want to logout?")
-        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        returnValue = msgb.exec()
-        if returnValue == QMessageBox.Ok:
-            window.close()
-            os.system("python homepage.py &")
 
 App = QApplication(sys.argv)
 window = Announcements()

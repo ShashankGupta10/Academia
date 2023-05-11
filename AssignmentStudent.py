@@ -35,13 +35,11 @@ class AssignmentStudent(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
-        logo.clicked.connect(self.logout)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
         navbarbtn1.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn1.setFont(QFont('Times', 20))
-        navbarbtn1.clicked.connect(self.back)
 
         navbarbtn2= QPushButton("Reshala", self)
         navbarbtn2.setGeometry(1400, 31, 150, 40)
@@ -154,7 +152,7 @@ class AssignmentStudent(QMainWindow):
         self.upload_btn = QPushButton("Browse", self.panel1)
         self.upload_btn.setGeometry(300, 360, 100, 40)
         self.upload_btn.setStyleSheet("background: #EDE3FF; border-color: black; border-radius: 20px; padding: 5px;")       
-        self.upload_btn.clicked.connect(self.browseFiles)
+        self.upload_btn.clicked.connect(self.select_image)
         self.upload_btn.setFont(QFont('Times', 12))
 
         self.submit_btn = QPushButton("Submit" ,self.panel1)
@@ -220,12 +218,18 @@ class AssignmentStudent(QMainWindow):
         self.showMaximized()
         self.show()
         
-    def browseFiles(self):
-        global file_path, pdf_data
-        file_path, _ = QFileDialog.getOpenFileName(window, 'Open PDF File', '', 'PDF Files (*.pdf)')
-        with open(file_path, 'rb') as pdf_file:
-            pdf_data = pdf_file.read()
-        filename.setText(file_path)
+    def select_image(self):
+            options = QFileDialog.Options()
+            options |= QFileDialog.DontUseNativeDialog
+            global fileName
+            fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Image Files (*.png *.jpg *.jpeg)", options=options)
+            with open(fileName, 'rb') as f:
+                global image_data
+                image_data = f.read()
+
+            
+
+        
     def announcement(self):
         window.close()
         os.system("python StudentAnnouncement.py &")   
@@ -244,17 +248,8 @@ class AssignmentStudent(QMainWindow):
     def back(self):
         window.close()
         os.system("python Studentdashboard.py &")
-    def logout(self):
-        msgb = QMessageBox(self)
-        msgb.setWindowTitle("LOGOUT!")
-        msgb.setText("Are you sure you want to logout?")
-        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        returnValue = msgb.exec()
-        if returnValue == QMessageBox.Ok:
-            window.close()
-            os.system("python homepage.py &")
     def on_click(self):
-        db.Assignments.insert_one({"id": "1", "name": Name.text(), "roll No": rollno.text(), "subject": Subject.text(), "UploadFile": pdf_data })
+        db.Assignments.insert_one({"id": "1", "name": Name.text(), "roll No": rollno.text(), "subject": Subject.text(), "UploadFile": image_data })
         QMessageBox.information(self, "GG", "Assignment Submitted")
 
 App = QApplication(sys.argv)

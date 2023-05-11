@@ -8,15 +8,16 @@ import sys
 import os
 
 HOST = socket.gethostbyname(socket.gethostname())
-PORT = [9996, 9997, 9998]
+PORT = 5555
 
 class Announcements(QMainWindow):            
     def __init__(self):
         super().__init__()
+
         
         # os.system("python chat_server.py &")
         
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.setWindowTitle("Academia")
         self.setGeometry(0,0,1920,1080)
 
@@ -125,7 +126,7 @@ class Announcements(QMainWindow):
                                  "QPushButton:hover{ background: lightblue; border: 1px solid black;}")
         self.chat1.setGeometry(120, 200, 400, 100)
         self.chat1.setFont(QFont('Times', 12))
-        self.chat1.clicked.connect(lambda: self.switchChat(0))
+        # self.chat1.clicked.connect(self.call)
         
         
         
@@ -134,7 +135,7 @@ class Announcements(QMainWindow):
                                  "QPushButton:hover{ background: lightblue; border: 1px solid black;}")
         self.chat2.setGeometry(120, 300, 400, 100)
         self.chat2.setFont(QFont('Times', 12))
-        self.chat2.clicked.connect(lambda: self.switchChat(1))
+        # self.chat2.clicked.connect(lambda: self.switchChat(1))
         # self.chat2.clicked.connect(self.connect)
         
         self.chat3 = QPushButton("S2 IT", self)
@@ -142,7 +143,7 @@ class Announcements(QMainWindow):
                                  "QPushButton:hover{ background: lightblue; border-left: 1px solid black;}")
         self.chat3.setGeometry(120, 400, 400, 100)
         self.chat3.setFont(QFont('Times', 12))
-        self.chat3.clicked.connect(lambda: self.switchChat(2))
+        # self.chat3.clicked.connect(lambda: self.switchChat(2))
         # self.chat3.clicked.connect(self.connect)
         
         
@@ -178,7 +179,7 @@ class Announcements(QMainWindow):
         self.message_textbox.setFont(QFont('Times', 12))
         self.message_textbox.setStyleSheet("background-color: white; color: black; border-radius: 20px")
         self.message_textbox.setGeometry(580, 830, 1200, 40)
-        self.message_textbox.returnPressed.connect(self.send_message)
+        # self.message_textbox.returnPressed.connect(self.send_message)
 
         # Send Button
         send_icon = QIcon('images\\send-icon.png')
@@ -190,7 +191,7 @@ class Announcements(QMainWindow):
         self.message_button.setGeometry(1820, 830, 50, 50)
         size = QSize(50, 50)
         self.message_button.setIconSize(size)
-        self.message_button.clicked.connect(self.send_message)
+        # self.message_button.clicked.connect(self.send_message)
 
         # Messages displayed here
         self.message_box = QTextEdit(self)
@@ -241,95 +242,124 @@ class Announcements(QMainWindow):
         self.label4.setStyleSheet("color: white; background: black;")
         self.label4.setText("Copyright © 2023 Academia Inc. All rights reserved.")
         self.label4.setFont(QFont('Times', 10))
-
         
         self.showMaximized()
         self.show()
+    # def call(self):
+
+        # create a socket object
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+
+        def receive():
+            while True:
+                # receive data from the server
+                data = s.recv(1024)
+                if not data:
+                    break
+                print(data.decode())
+
+        # start a separate thread to receive messages
+        threading.Thread(target=receive).start()
+
+        # start the main chat loop
+        while True:
+            # read input from the user
+            message = input('> ')
+            # send message to the server
+            s.sendall(message.encode())
+            self.add_message(message)
+
+
+
         
-    def switchChat(self, chat_num):
-        global username
-        chat_boxes = [self.message_box, self.message_box1, self.message_box2]
-        for i, box in enumerate(chat_boxes):
-            if i == chat_num:
-                box.setVisible(True)
-                try:
-                    # Close the previous connection, if any
-                    if self.client is not None:
-                        self.client.close()
-                    
-                    # Connect to the new server
-                    print(PORT[i])
-                    self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    self.client.connect((HOST, PORT[i]))
-                    print("Successfully connected to server")
-                    # self.add_message("[SERVER] Successfully connected to the server")
-                    
-                    # Send the username to the new server
-                    username = 'Arun Kulkarni'
-                    if username != '':
-                        # self.client.sendall(username.encode())
-                        pass
-                        
-                    else:
-                        QMessageBox.critical(self, "Invalid username", "Username cannot be empty")
-                        return
-                    
-                    # Start listening for messages from the new server in a separate thread
-                    threading.Thread(target=self.listen_for_messages_from_server).start()
-                except:
-                    QMessageBox.critical(self, "Unable to connect to server", f"Unable to connect to server {HOST[i]} {PORT[i]}")
-                    return
-            else:
-                box.setVisible(False)
 
-        self.active_chat = chat_num
+        
+    # def switchChat(self, chat_num):
+    #     global username
+    #     chat_boxes = [self.message_box, self.message_box1, self.message_box2]
+    #     for i, box in enumerate(chat_boxes):
+    #         if i == chat_num:
+    #             box.setVisible(True)
+    #             try:
+    #                 # Close the previous connection, if any
+    #                 if self.client is not None:
+    #                     self.client.close()
+                    
+    #                 # Connect to the new server
+    #                 print(PORT[i])
+    #                 self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #                 self.client.connect((HOST, PORT[i]))
+    #                 print("Successfully connected to server")
+    #                 # self.add_message("[SERVER] Successfully connected to the server")
+                    
+    #                 # Send the username to the new server
+    #                 username = 'Arun Kulkarni'
+    #                 if username != '':
+    #                     self.client.sendall(username.encode())
+    #                 else:
+    #                     QMessageBox.critical(self, "Invalid username", "Username cannot be empty")
+    #                     return
+                    
+    #                 # Start listening for messages from the new server in a separate thread
+    #                 threading.Thread(target=self.listen_for_messages_from_server, args=(self.client, )).start()
+    #             except:
+    #                 QMessageBox.critical(self, "Unable to connect to server", f"Unable to connect to server {HOST[i]} {PORT[i]}")
+    #                 return
+    #         else:
+    #             box.setVisible(False)
 
-    # self.username_button.setDisabled(False)
+    #     self.active_chat = chat_num
+
+
+        
+
+    #     # self.username_button.setDisabled(False)
+
+
+        
         
     def add_message(self, message):
         if self.active_chat == 0:
             message_box = self.message_box
-        elif self.active_chat == 1:
-            message_box = self.message_box1
-        elif self.active_chat == 2:
-            message_box = self.message_box2
+            
         else:
             return
-            
         message_box.moveCursor(QTextCursor.End)
         message_box.insertPlainText(message + '\n')
         message_box.moveCursor(QTextCursor.End)
 
         
-    def send_message(self):
-        message1 = self.message_textbox.text()
-        if message1 != '':
-            if self.active_chat == 0:
-                self.client.sendall(message1.encode('utf-8'))
-            elif self.active_chat == 1:
-                self.client.sendall(message1.encode('utf-8'))
-            elif self.active_chat == 2:
-                self.client.sendall(message1.encode('utf-8'))
-            self.message_textbox.clear()
-        else:
-            QMessageBox.critical(self, "Empty message", "Message cannot be empty")
+    # def send_message(self):
+    #     message = self.message_textbox.text()
+    #     if message != '':
+    #         if self.active_chat == 0:
+    #             self.client.sendall(message.encode('utf-8'))
+    #         elif self.active_chat == 1:
+    #             self.client.sendall(message.encode('utf-8'))
+    #         elif self.active_chat == 2:
+    #             self.client.sendall(message.encode('utf-8'))
+    #         self.message_textbox.clear()
+    #     else:
+    #         QMessageBox.critical(self, "Empty message", "Message cannot be empty")
 
-     
-    def listen_for_messages_from_server(self):
-        while True:
-            message = self.client.recv(2048).decode('utf-8')
-            print(f"from Server: {message}")
-            self.client.send(message.encode())
-            if message != '':
-                self.add_message(f"  {message}")
-                
-                
-            else:
-                QMessageBox.critical(self, "Error", "Message received from client is empty")
-                break
-        
-        
             
+    # def listen_for_messages_from_server(self, client):
+    #     while True:
+    #         message = client.recv(2048).decode('utf-8')
+    #         print(f"Received message from client: {message}")
+    #         if message != '':
+    #             username = message
+    #             content = message
+    #             print(f"Username: {username}, Content: {content}")
+    #             self.add_message(f"  {content}")
+    #         else:
+    #             QMessageBox.critical(self, "Error", "Message received from client is empty")
+    #             break
+            
+
+
+
     def announcement(self):
         window.close()
         os.system("python Announcements.py &")

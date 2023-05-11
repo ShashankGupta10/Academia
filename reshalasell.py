@@ -130,9 +130,7 @@ class HomePage(QMainWindow):
         self.mail = QLineEdit(self.panel1)
         self.mail.setGeometry(200,325,220,50)
         self.mail.setStyleSheet("QLineEdit{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
-        re2  = QRegExp('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')                         
-        m = QRegExpValidator(re2)                            
-        self.mail.setValidator(m)
+        
 
         self.number = QLineEdit(self.panel1)
         self.number.setGeometry(200,400,220,50)

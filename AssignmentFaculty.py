@@ -4,15 +4,22 @@ from PyQt5.QtCore import *
 import sys
 import os
 from pymongo import MongoClient
+from io import BytesIO
+
 
 client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
 db = client.get_database("IOP")
 
-class DashboardInstitute(QMainWindow):      
+ass = db.Assignments.find_one({"id":"1"})
+resultName = (ass['name'])
+resultRoll = (ass['roll No'])
+resultSubject = (ass['subject'])
+resultFile = (ass['UploadFile'])
+
+class AssignmentFac(QMainWindow):      
     def __init__(self):
         super().__init__()
-        
-        self.setWindowTitle("Home Page")
+        self.setWindowTitle("ACADEMIA")
         self.setGeometry(0,0,1920, 1080)
 
         self.header = QLabel(self)
@@ -32,7 +39,7 @@ class DashboardInstitute(QMainWindow):
         logo.setStyleSheet("background: transparent")
         logo.setIcon(logocon)
         logo.setIconSize(siz)
-        logo.clicked.connect(self.logout)
+        logo.clicked.connect(self.back)
 
         navbarbtn1 = QPushButton("Home", self)
         navbarbtn1.setGeometry(1200, 31, 100, 40)
@@ -50,6 +57,7 @@ class DashboardInstitute(QMainWindow):
         navbarbtn3.setGeometry(1600, 31, 150, 40)
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
+        navbarbtn3.clicked.connect(self.about)
         
         icon = QIcon("images\homepageimage1bgrm.png")
         self.btn10 = QPushButton("" ,self)
@@ -122,27 +130,34 @@ class DashboardInstitute(QMainWindow):
 
         global assgn_no
         assgn_no = QLabel(panel1)
+        assgn_no.setText(resultName)
         assgn_no.setGeometry(250,50,220,50)
         assgn_no.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         assgn_no.setFont(QFont('Times', 12))
 
         global assgn_name
         assgn_name = QLabel(panel1)
+        assgn_name.setText(resultRoll)
         assgn_name.setGeometry(250,130,220,50)
         assgn_name.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         assgn_name.setFont(QFont('Times', 12))
 
         global subject
         subject = QLabel(panel1)
+        subject.setText(resultSubject)
         subject.setGeometry(250,210,220,50)
         subject.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         subject.setFont(QFont('Times', 12))
         
         global classStudent
         classStudent = QLabel(panel1)
-        classStudent.setGeometry(250, 290, 220, 50)
+        pixmap = QPixmap()
+        pixmap.loadFromData(resultFile)
+        classStudent.setPixmap(pixmap) 
+        classStudent.setGeometry(250, 290, 200, 200)
         classStudent.setStyleSheet("QLabel{ background: #EDE3FF; border-color: black; border-radius: 20px; padding: 10px;}")
         classStudent.setFont(QFont('Times', 12))
+        classStudent.setScaledContents(True)
         
         # global duedate
         # duedate = QLabel(panel1)
@@ -151,32 +166,28 @@ class DashboardInstitute(QMainWindow):
         # duedate.setFont(QFont('Times', 12))
         
 
-        submit_btn = QPushButton("Schedule", panel1)
-        submit_btn .setGeometry(200, 450, 200, 50)
-        submit_btn .setStyleSheet("QPushButton{ background: #580599; color: white; border-radius: 25px; padding: 10px;}")
-        submit_btn .setFont(QFont('Times', 12))
-        submit_btn.clicked.connect(self.on_click)
-        
-  
+        global assgn_no_lbl
         assgn_no_lbl= QLabel(panel1)
         assgn_no_lbl.setText("Student Name :")
         assgn_no_lbl.setGeometry(10, 50,200,50) 
         assgn_no_lbl.setStyleSheet("background-color: transparent;")
         assgn_no_lbl.setFont(QFont('Times', 12))
 
-
+        global assgn_name_lbl
         assgn_name_lbl = QLabel(panel1)
         assgn_name_lbl.setText("Roll no:")
         assgn_name_lbl.setGeometry(10, 120,200,50)  
         assgn_name_lbl.setStyleSheet("background-color: transparent;")
         assgn_name_lbl.setFont(QFont('Times', 12))
 
+        global subject_lbl
         subject_lbl = QLabel(panel1)
         subject_lbl.setText("Subject : ")
         subject_lbl.setGeometry(10, 210,200,50) 
         subject_lbl.setStyleSheet("background-color: transparent;")
         subject_lbl.setFont(QFont('Times', 12))
 
+        global class_lbl
         class_lbl = QLabel(panel1)
         class_lbl.setText("Uploaded File: ")
         class_lbl.setGeometry(10, 290,200,50) 
@@ -220,6 +231,7 @@ class DashboardInstitute(QMainWindow):
     
         self.showMaximized()
         self.show()
+
     def announcement(self):
         window.close()
         os.system("python Announcements.py &")
@@ -234,24 +246,18 @@ class DashboardInstitute(QMainWindow):
         os.system("python Instituteaddstudent.py &")
     def back(self):
         window.close()
-        os.system("python Institutedashboard.py &") 
-    def logout(self):
-        msgb = QMessageBox(self)
-        msgb.setWindowTitle("LOGOUT!")
-        msgb.setText("Are you sure you want to logout?")
-        msgb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        returnValue = msgb.exec()
-        if returnValue == QMessageBox.Ok:
-            window.close()
-            os.system("python homepage.py &") 
+        os.system("python Institutedashboard.py &")  
+    def about(self):
+        window.close()
+        os.system("python aboutus.py &")
     
-    def on_click(self):
-        pass
+
+
+        
 
 
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: }")
-
-window = DashboardInstitute()
-
+window = AssignmentFac()
+window.show()
 sys.exit(App.exec())

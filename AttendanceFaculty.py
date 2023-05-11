@@ -1210,6 +1210,7 @@ class Attendance(QMainWindow):
         filterr = db.Student_Data.find_one({"name": studentName})
         updatedVals = {"$set": {"COA_Attendance": coa, "CN_Attendance": cn, "At_Attendance": at, "Maths_Attendance": maths, "MPL_Attendance": mpl, "NT_Attendance": nt, "Unix_Attendance": unix, "Python_Attendance": python }}
         db.Student_Data.update_one({"name": filterr["name"]}, updatedVals)
+        QMessageBox.information(self, "Great", "Attendance Submitted")
     
     def on_click_se_s1_table(self):
         i = 2

@@ -40,6 +40,7 @@ class DashboardInstitute(QMainWindow):
         navbarbtn3.setGeometry(1600, 31, 150, 40)
         navbarbtn3.setStyleSheet("QPushButton{ background: Black; position: fixed;border-radius:15px;color: white;}")
         navbarbtn3.setFont(QFont('Times', 20))
+        navbarbtn3.clicked.connect(self.about)
 
 
         icon = QIcon("images\homepageimage1bgrm.png")
@@ -221,6 +222,9 @@ class DashboardInstitute(QMainWindow):
         if returnValue == QMessageBox.Ok:
             window.close()
             os.system("python homepage.py &")
+    def about(self):
+        window.close()
+        os.system("python aboutus.py &")
 
 App = QApplication(sys.argv)
 App.setStyleSheet("QMainWindow{background-color: white }")
