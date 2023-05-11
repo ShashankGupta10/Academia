@@ -4,7 +4,7 @@ from PyQt5.QtCore import *
 from pymongo import MongoClient
 import sys,os
 
-client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+client = MongoClient("")
 db = client['IOP']
 
 class HomePage(QMainWindow):

@@ -5,7 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtGui
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+client = MongoClient("")
 db = client.get_database("IOP")
 
 result = db.Student_Data.find_one({"pin": "1234"})

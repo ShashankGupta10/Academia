@@ -7,7 +7,7 @@ import sys,os
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+client = MongoClient("")
 db = client.get_database("IOP")
 coll = db.Student_Data
 

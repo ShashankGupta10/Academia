@@ -7,7 +7,7 @@ from pymongo import MongoClient
 from io import BytesIO
 
 
-client = MongoClient("mongodb+srv://shashankgupta2003:Shashank10@cluster0.x6bsdlb.mongodb.net/test")
+client = MongoClient("")
 db = client.get_database("IOP")
 
 ass = db.Assignments.find_one({"id":"1"})
