@@ -49,11 +49,15 @@ Before you begin, ensure you have met the following requirements:
    ```
 
 3. Create a virtual environment and activate it (recommended):
+   For Windows
 
    ```bash
    python -m venv venv
-   venv\Scripts\activate #on windows
-   source venv/bin/activate   
+   venv\Scripts\activate
+   ```
+
+   ```bash
+      source venv/bin/activate
    ```
 
 4. Install the project dependencies:
