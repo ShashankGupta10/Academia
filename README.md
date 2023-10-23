@@ -31,7 +31,6 @@ Before you begin, ensure you have met the following requirements:
 
 - Python 3.x
 - MongoDB
-- Any web server (e.g., Nginx, Apache) for production deployment
 - [Additional dependencies listed in requirements.txt](requirements.txt)
 
 ## Installation
@@ -39,13 +38,13 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/institute-organizing-platform.git
+   git clone https://github.com/ShashankGupta10/Academia.git
    ```
 
 2. Change into the project directory:
 
    ```bash
-   cd institute-organizing-platform
+   cd Academia
    ```
 
 3. Create a virtual environment and activate it (recommended):
@@ -78,8 +77,6 @@ Before you begin, ensure you have met the following requirements:
 
 ## Usage
 
-- Access the platform through your web browser at `http://localhost:5000` (by default).
-
 - Create user accounts for students and teachers.
 
 - Explore the features of the platform, including assignment submission, video calls, chat, and announcements.
@@ -96,4 +93,4 @@ We welcome contributions from the community. If you'd like to contribute to this
 
 ---
 
-Thank you for using the Institute Organizing Platform! If you have any questions or encounter any issues, please feel free to open an issue on this repository.
+Thank you for using Academia! If you have any questions or encounter any issues, please feel free to open an issue on this repository.
